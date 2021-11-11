@@ -74,3 +74,10 @@ CloudQuery env name
 {{- define "cloudquery.env" -}}
 {{ include "cloudquery.name" . }}-env
 {{- end }}
+
+{{/*
+CloudQuery secret name
+*/}}
+{{- define "cloudquery.secret" -}}
+{{ include "cloudquery.name" . }}-secret
+{{- end }}
