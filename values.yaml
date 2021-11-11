@@ -5,6 +5,7 @@
 cloudquery:
   config: ""
   env: {}
+  secret: {}
 
 schedule: "*/1 * * * *"
 

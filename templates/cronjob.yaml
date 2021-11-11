@@ -34,6 +34,8 @@ spec:
               envFrom:
               - configMapRef:
                   name: {{ include "cloudquery.env" . }}
+              - secretRef:
+                  name: {{ include "cloudquery.secret" . }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               command:
