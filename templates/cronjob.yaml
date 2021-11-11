@@ -1,0 +1,71 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "cloudquery.fullname" . }}
+  labels:
+  {{- include "cloudquery.labels" . | nindent 4 }}
+spec:
+  schedule: "{{ .Values.schedule }}"
+  jobTemplate:
+    spec:
+      selector:
+        matchLabels:
+        {{- include "cloudquery.selectorLabels" . | nindent 10 }}
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+          {{- include "cloudquery.selectorLabels" . | nindent 12 }}
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
+          securityContext:
+          {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+              {{- toYaml .Values.securityContext | nindent 16 }}
+              envFrom:
+              - configMapRef:
+                  name: {{ include "cloudquery.env" . }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+              {{- toYaml .Values.image.command | nindent 16 }}
+              env:
+              {{- toYaml .Values.image.env | nindent 16 }}
+              resources:
+              {{- toYaml .Values.resources | nindent 16 }}
+              volumeMounts:
+              - name: config
+                mountPath: /app/config.hcl
+              - name: cq
+                mountPath: /app/.cq
+          volumes:
+          - name: config
+            configMap:
+              name: {{ include "cloudquery.config" . }}
+              items:
+              - key: config.hcl
+                path: config.hcl
+          - name: cq
+            emptyDir: {}
+          restartPolicy: {{ .Values.image.restartPolicy }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
