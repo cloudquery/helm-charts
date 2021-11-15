@@ -15,6 +15,7 @@ image:
   pullPolicy: IfNotPresent
   command:
   - fetch
+  workingDir: /app/fetch
   env: []
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
