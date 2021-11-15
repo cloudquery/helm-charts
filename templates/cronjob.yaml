@@ -12,9 +12,6 @@ spec:
   schedule: "{{ .Values.schedule }}"
   jobTemplate:
     spec:
-      selector:
-        matchLabels:
-        {{- include "cloudquery.selectorLabels" . | nindent 10 }}
       template:
         metadata:
           {{- with .Values.podAnnotations }}
