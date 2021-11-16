@@ -2,12 +2,16 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-cloudquery:
-  config: ""
+config:
+  cloudquery: |-
+    cloudquery {
+      plugin_directory = "./cq/providers"
+    }
+  dsn: "host=<service-name>.<namespace>.svc.cluster.local user=postgres password=pa55WOrd database=postgres port=5432 sslmode=disable"
   env: {}
   secret: {}
 
-schedule: "*/1 * * * *"
+schedule: "0 0 * * *"
 
 image:
   repository: ghcr.io/cloudquery/cloudquery

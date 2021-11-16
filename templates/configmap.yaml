@@ -6,7 +6,7 @@ metadata:
   {{- include "cloudquery.labels" . | nindent 4 }}
 data:
   config.hcl: |-
-  {{- .Values.cloudquery.config | nindent 4 }}
+  {{- .Values.config.cloudquery | nindent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -15,4 +15,4 @@ metadata:
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
 data:
-{{- toYaml .Values.cloudquery.env | nindent 2 }}
+{{- toYaml .Values.config.env | nindent 2 }}
