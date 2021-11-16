@@ -70,3 +70,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# -- Section for Promtail.
+promtail:
+  # -- Enable Promtail dependency.
+  enabled: false
+  # -- Section for crafting Promtails config file.
+  config:
+    # -- The Loki address to post logs to.
+    lokiAddress: http://loki-gateway/loki/api/v1/push
