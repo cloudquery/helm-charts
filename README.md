@@ -43,6 +43,12 @@ config:
 # Every day at 00:00.
 # More information at: https://crontab.guru/#0_0_*_*_*
 schedule: "0 0 * * *"
+
+# Optional Promtail config.
+promtail:
+  enabled: true
+  config:
+    lokiAddress: http://loki-gateway/loki/api/v1/push
 ```
 
 Run helm installation:
