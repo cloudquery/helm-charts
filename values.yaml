@@ -2,19 +2,27 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-cloudquery:
-  config: ""
+config:
+  cloudquery: |-
+    cloudquery {
+      plugin_directory = "./cq/providers"
+    }
+  dsn: "host=<service-name>.<namespace>.svc.cluster.local user=postgres password=pa55WOrd database=postgres port=5432 sslmode=disable"
   env: {}
   secret: {}
 
-schedule: "*/1 * * * *"
+schedule: "0 0 * * *"
 
 image:
   repository: ghcr.io/cloudquery/cloudquery
   restartPolicy: OnFailure
   pullPolicy: IfNotPresent
   command:
+  - /app/cloudquery
+  - --enable-console-log=true
+  - --enable-file-logging=false
   - fetch
+  workingDir: /app/fetch
   env: []
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -62,3 +70,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# -- Section for Promtail.
+promtail:
+  # -- Enable Promtail dependency.
+  enabled: false
+  # -- Section for crafting Promtails config file.
+  config:
+    # -- The Loki address to post logs to.
+    lokiAddress: http://loki-gateway/loki/api/v1/push
