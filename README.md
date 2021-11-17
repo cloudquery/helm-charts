@@ -1,4 +1,30 @@
-Create values file:
+# Helm Chart
+
+This repository contains a basic Helm v3 chart that deploys CloudQuery to a Kubernetes cluster.
+The Helm chart deploys a CloudQuery fetch CronJob and everything required to execute it.
+The dependencies that are bundled are all optional and not enabled by default.
+
+More documentation can be found here [docs.cloudquery.io](https://docs.cloudquery.io/docs/deployment/helm-chart)
+
+## Install CloudQuery on a Kubernetes cluster
+
+### Prerequisites
+
+* system configured to access a kubernetes cluster
+* [Helm v3](https://helm.sh) installed and able to access the cluster
+* PostgreSQL database (>11) (e.g. self hosted, via Helm, CloudSQL, RDS, etc.)
+
+### Download Helm Chart Dependencies
+
+Download Helm dependencies:
+
+```bash
+~/helm-charts$ helm dependencies update
+```
+ 
+### Install CloudQuery with Helm Chart
+
+Create values override file:
 
 ```yaml
 # override.yaml
@@ -53,4 +79,6 @@ promtail:
 
 Run helm installation:
 
-`helm install -f override.yaml cloudquery .`
+```bash
+~/helm-charts$ helm install -f override.yaml cloudquery .
+```
