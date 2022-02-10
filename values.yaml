@@ -2,80 +2,119 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-config:
-  cloudquery: |-
-    cloudquery {
-      plugin_directory = "./cq/providers"
-    }
-  dsn: "host=<service-name>.<namespace>.svc.cluster.local user=postgres password=pa55WOrd database=postgres port=5432 sslmode=disable"
-  env: {}
-  secret: {}
+## @section Common parameters
+##
 
-schedule: "0 0 * * *"
-
-image:
-  repository: ghcr.io/cloudquery/cloudquery
-  restartPolicy: OnFailure
-  pullPolicy: IfNotPresent
-  command:
-  - /app/cloudquery
-  - --enable-console-log=true
-  - --enable-file-logging=false
-  - fetch
-  workingDir: /app/fetch
-  env: []
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-imagePullSecrets: []
+## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+##
 nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
 fullnameOverride: ""
 
+## @section CloudQuery parameters
+##
+
+## CloudQuery image version
+## ref: https://github.com/cloudquery/cloudquery/pkgs/container/cloudquery
+## @param image.registry CloudQuery image registry
+## @param image.repository CloudQuery image repository
+## @param image.tag CloudQuery image tag (immutable tags are recommended)
+## @param image.pullPolicy CloudQuery image pull policy
+image:
+  registry: ghcr.io
+  repository: cloudquery/cloudquery
+  # Overrides the image tag whose default is the chart appVersion
+  tag: "0.20.1"
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+
+## Pod Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## @param securityContext.enabled Enable security context
+## @param securityContext.fsGroup Group ID for the pod
+##
+securityContext:
+  enabled: true
+  fsGroup: 1001
+
+## Container Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## @param containerSecurityContext.enabled Enable container security context
+## @param containerSecurityContext.runAsUser User ID for the container
+##
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+
+## Pod Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
 serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
-# -- Section for Promtail.
-promtail:
-  # -- Enable Promtail dependency.
+  ## @param serviceAccount.enabled Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set)
+  ##
   enabled: false
-  # -- Section for crafting Promtails config file.
-  config:
-    # -- The Loki address to post logs to.
-    lokiAddress: http://loki-gateway/loki/api/v1/push
+  ## @param serviceAccount.name Name of an already existing service account. Setting this value disables the automatic service account creation
+  ##
+  name: ""
+  ## @param serviceAccount.autoMount Auto-mount the service account token in the pod
+  ##
+  autoMount: false
+
+## Sensible environment variables that will be rendered as new secret object
+## This can be useful for auth tokens, etc
+envRenderSecret:
+  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=disable"
+
+  # For AWS see https://docs.cloudquery.io/docs/getting-started/getting-started-with-aws
+  # AWS_ACCESS_KEY_ID: ""
+  # AWS_SECRET_ACCESS_KEY: ""
+  # AWS_SESSION_TOKEN: ""
+
+  # For GCP see https://docs.cloudquery.io/docs/getting-started/getting-started-with-gcp
+  # GOOGLE_APPLICATION_CREDENTIALS: ""
+
+  # For Azure see https://docs.cloudquery.io/docs/getting-started/getting-started-with-azure
+  # AZURE_TENANT_ID: ""
+  # AZURE_CLIENT_ID: ""
+  # AZURE_CLIENT_SECRET: ""
+
+  # For any other provider checkout https://hub.cloudquery.io/providers
+
+## Configure resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+## @param resources.requests [object] The requested resources for the container
+##
+# resources:
+#   requests:
+#     memory: 1024Mi
+#     cpu: 1000m
+
+# Every day at 00:00.
+# More information at: https://crontab.guru/#0_0_*_*_*
+schedule: "0 0 * * *"
+
+
+# Full configuration: https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+postgresql:
+  enabled: true
+  # If bringing your own PostgreSQL, the full uri to use
+  # url: postgresql://postgres:pass@database:5432/postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: pass
+  postgresqlDatabase: postgres
+  # Persistent Volume Storage configuration.
+  # ref: https://kubernetes.io/docs/user-guide/persistent-volumes
+  persistence:
+    enabled: false
+  pullPolicy: IfNotPresent
+  image:
+    repository: bitnami/postgresql
+    tag: 14
+  resources:
+    requests:
+      memory: 50Mi
+      cpu: 50m

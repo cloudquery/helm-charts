@@ -1,11 +1,7 @@
-{{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: batch/v1
-{{- else -}}
-apiVersion: batch/v1beta1
-{{- end }}
 kind: CronJob
 metadata:
-  name: {{ include "cloudquery.fullname" . }}
+  name: {{ include "cloudquery.name" . }}-cron
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
 spec:
@@ -14,62 +10,32 @@ spec:
     spec:
       template:
         metadata:
-          {{- with .Values.podAnnotations }}
-          annotations:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
           labels:
           {{- include "cloudquery.selectorLabels" . | nindent 12 }}
         spec:
-          {{- with .Values.imagePullSecrets }}
-          imagePullSecrets:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
-          securityContext:
-          {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
-            - name: {{ .Chart.Name }}
-              securityContext:
-              {{- toYaml .Values.securityContext | nindent 16 }}
+            - name: cloudquery
               envFrom:
-              - configMapRef:
-                  name: {{ include "cloudquery.env" . }}
               - secretRef:
-                  name: {{ include "cloudquery.secret" . }}
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-              imagePullPolicy: {{ .Values.image.pullPolicy }}
-              workingDir: {{ .Values.image.workingDir }}
-              command:
-              {{- toYaml .Values.image.command | nindent 16 }}
-              env:
-              {{- toYaml .Values.image.env | nindent 16 }}
+                  name: {{ include "cloudquery.name" . }}-secret
+              image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: IfNotPresent
+              args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log"]
               resources:
               {{- toYaml .Values.resources | nindent 16 }}
               volumeMounts:
               - name: config
-                mountPath: {{ .Values.image.workingDir }}
+                mountPath: /app/config
               - name: cq
-                mountPath: {{ .Values.image.workingDir }}/.cq
+                mountPath: /app/.cq
           volumes:
           - name: config
             configMap:
-              name: {{ include "cloudquery.config" . }}
+              name: {{ include "cloudquery.name" . }}-config
               items:
               - key: config.hcl
                 path: config.hcl
           - name: cq
-            emptyDir: {}
-          restartPolicy: {{ .Values.image.restartPolicy }}
-          {{- with .Values.nodeSelector }}
-          nodeSelector:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.affinity }}
-          affinity:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.tolerations }}
-          tolerations:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
+            persistentVolumeClaim:
+              claimName: {{ template "cloudquery.name" . }}-pvc
+          restartPolicy: Never

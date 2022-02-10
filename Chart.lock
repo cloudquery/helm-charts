@@ -1,6 +1,6 @@
 dependencies:
-- name: promtail
-  repository: https://grafana.github.io/helm-charts
-  version: 3.9.1
-digest: sha256:63df83d1dcd2b8a0766befbcb547496d07457fe0ba4f7182dd28732c8fd8168c
-generated: "2021-11-15T15:51:07.69792+01:00"
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.9.5
+digest: sha256:c0ce6d63bb7c4934c86e4c38687cecb3d8e5c30e5022559a2b15c42f07de8fb8
+generated: "2022-01-29T18:18:22.262739+02:00"

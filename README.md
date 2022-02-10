@@ -19,66 +19,56 @@ More documentation can be found here [docs.cloudquery.io](https://docs.cloudquer
 Download Helm dependencies:
 
 ```bash
-~/helm-charts$ helm dependencies update
+helm dependencies update
 ```
  
 ### Install CloudQuery with Helm Chart
 
-Create values override file:
+CloudQuery can be configured to run with various dependencies.
 
-```yaml
-# override.yaml
+The suggested way is to use your own external database (potentially managed RDS, GCP CloudSQL) but you can also spawn together with the helm chart.
 
-# Required CloudQuery config.
-config:
-  # CloudQuery config.hcl content.
-  cloudquery: |-
-    cloudquery {
-      plugin_directory = "./cq/providers"
+#### Installing CloudQuery without PostgreSQL
 
-      provider "aws" {
-        source  = ""
-        // Use environment variable from block below.
-        version = "${AWS_VERSION}"
-      }
-    }
+Following are the minimum steps you need to do before running `helm install`:
 
-    provider "aws" {
-      configuration {
-        // Optional. Enable AWS SDK debug logging.
-        aws_debug = false
-      }
+* Edit the `config.hcl` file to define what and how you want cloudquery to fetch the information.
 
-      // list of resources to fetch
-      resources = [
-        "ec2.instances",
-      ]
-      // enables partial fetching, allowing for any failures to not stop full resource pull
-      enable_partial_fetch = true
-    }
-  # The connection block specifies to which database you should connect via dsn argument.
-  dsn: "host=postgres.svc.cluster.local user=postgres password=pass database=postgres port=5432 sslmode=disable"
-  # Environment variables for CloudQuery run. 
-  env:
-    CQ_VAR_AWS_VERSION: "latest"
-  # Secret environment variables for CloudQuery run.
-  secret:
-    AWS_ACCESS_KEY_ID: "AKIAIOSFODNN7EXAMPLE"
-    AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+In `values.yaml`:
+* Update `envRenderSecret:CQ_DSN` to point to your external database.
+* Add any additional envirmoent variables under `envRenderSecret` needed for CloudQuery to authenticate with your CloudProvider.
+* Update `schedule` with the required scheduled you want CloudQuery to run (https://crontab.guru/).
 
-# Every day at 00:00.
-# More information at: https://crontab.guru/#0_0_*_*_*
-schedule: "0 0 * * *"
-
-# Optional Promtail config.
-promtail:
-  enabled: true
-  config:
-    lokiAddress: http://loki-gateway/loki/api/v1/push
-```
-
-Run helm installation:
+To install just run:
 
 ```bash
-~/helm-charts$ helm install -f override.yaml cloudquery .
+helm install cloudquery .
 ```
+
+You will see the following output
+
+```text
+oudquery . 
+NAME: cloudquery
+LAST DEPLOYED: Thu Feb 10 13:59:29 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Welcome! CloudQuery is Installed.
+2. To trigger the cronjob manually run:
+   kubectl create job --from=cronjob/cloudquery-cron cloudquery-cron
+3. To see logs for the job run:
+   kubectl logs -f jobs/cloudquery-cron
+4. To exec to the admin container with cloudquery binary for debugging purposes run:
+   kubectl exec -it deployment/cloudquery-admin -- /bin/sh
+```
+
+#### Installing CloudQuery with PostgreSQL
+
+In addition to the steps defined in the previou section you need to do the following before running `helm install cloudquery .`
+
+In `values.yaml`
+* Update `postgresql.enabled` to `true`
+* Under `postgresql`, update `postgresqlUsername`,  `postgresqlPassword` and `postgresqlDatabase` to your wanted values.

@@ -1,7 +1,11 @@
 apiVersion: v2
 name: cloudquery
 description: The open-source cloud asset inventory powered by SQL.
+home: https://cloudquery.io
 type: application
+kubeVersion: "^1.8.0-0"
+keywords:
+  - cloudquery
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
@@ -15,7 +19,7 @@ version: 0.1.0
 appVersion: "0.15.10"
 
 dependencies:
-  - name: promtail
-    version: "3.9.1"
-    repository: "https://grafana.github.io/helm-charts"
-    condition: promtail.enabled
+  - name: postgresql
+    version: "10.9.5"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
