@@ -61,23 +61,3 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-CloudQuery config name
-*/}}
-{{- define "cloudquery.config" -}}
-{{ include "cloudquery.name" . }}-config
-{{- end }}
-
-{{/*
-CloudQuery env name
-*/}}
-{{- define "cloudquery.env" -}}
-{{ include "cloudquery.name" . }}-env
-{{- end }}
-
-{{/*
-CloudQuery secret name
-*/}}
-{{- define "cloudquery.secret" -}}
-{{ include "cloudquery.name" . }}-secret
-{{- end }}
