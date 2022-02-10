@@ -20,7 +20,7 @@ spec:
           - secretRef:
               name: {{ include "cloudquery.name" . }}-secret
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: ["/bin/sh"]
           # we want users to be able to exec into this pod and be able to debug and investigate cloudquery binary, envs and runtime
           args: ["-c", "echo admin container is running. run 'kubectl exec -it deploy/cloudquery-admin -- /bin/sh' to debug; while true; do sleep 10000; done"]

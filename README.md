@@ -72,3 +72,11 @@ In addition to the steps defined in the previou section you need to do the follo
 In `values.yaml`
 * Update `postgresql.enabled` to `true`
 * Under `postgresql`, update `postgresqlUsername`,  `postgresqlPassword` and `postgresqlDatabase` to your wanted values.
+
+### Uninstalling helm chart
+
+To uninstall, run:
+
+```bash
+helm uninstall cloudquery
+```
