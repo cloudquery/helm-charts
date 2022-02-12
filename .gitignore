@@ -2,3 +2,5 @@
 override.yaml
 .cq
 cloudquery.log
+**/.terraform
+terraform.tfstate

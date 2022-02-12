@@ -25,3 +25,4 @@
 # CloudQuery
 .cq/
 cloudquery.log
+terraform
