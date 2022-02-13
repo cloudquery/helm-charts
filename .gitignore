@@ -4,3 +4,4 @@ override.yaml
 cloudquery.log
 **/.terraform
 terraform.tfstate
+terraform.tfvars

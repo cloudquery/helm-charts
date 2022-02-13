@@ -1,0 +1,11 @@
+# project_id to deploy GKE on
+# type: string
+project_id = "cloudquery"
+
+# Name to use on all resources created (VPC)
+# type: string
+name = "cloudquery"
+
+# Zones to deploy GKE nodes in
+# type: list(string)
+zones = ["us-central1-a"]

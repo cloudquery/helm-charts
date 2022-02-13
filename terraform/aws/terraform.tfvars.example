@@ -14,7 +14,7 @@ name = "cloudquery"
 cidr = "10.10.0.0/16"
 
 # A list of availability zones names or ids in the region
-# type: list(string)
+# type: list(sring)
 azs = ["eu-west-1a", "eu-west-1b"]
 
 # A list of public subnets
