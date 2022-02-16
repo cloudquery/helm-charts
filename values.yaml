@@ -63,6 +63,11 @@ serviceAccount:
   ## @param serviceAccount.autoMount Auto-mount the service account token in the pod
   ##
   autoMount: false
+  ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  ##
+  annotations: {}
+  ## to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
+  #  eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME
 
 ## Sensible environment variables that will be rendered as new secret object
 ## This can be useful for auth tokens, etc
