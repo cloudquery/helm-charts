@@ -1,4 +1,4 @@
-# Terraform GKE example
+# Terraform EKS example
 
 This is an example reference on how to spawn a zonal EKS cluster to run CloudQuery on.
 
