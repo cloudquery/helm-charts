@@ -2,7 +2,7 @@
 2. To trigger the cronjob manually run:
    kubectl create job --from=cronjob/{{ include "cloudquery.name" . }}-cron {{ include "cloudquery.name" . }}-cron
 3. To see logs for the job run:
-   kubectl logs -f jobs/{{ include "cloudquery.name" . }}-cron
+   kubectl logs -f jobs/{JOB NAME}
 4. To exec to the admin container with cloudquery binary for debugging purposes run:
    kubectl exec -it deployment/{{ include "cloudquery.name" . }}-admin -- /bin/sh
 
