@@ -5,4 +5,5 @@
    kubectl logs -f jobs/{JOB NAME}
 4. To exec to the admin container with cloudquery binary for debugging purposes run:
    kubectl exec -it deployment/{{ include "cloudquery.name" . }}-admin -- /bin/sh
+   # You can install psql in the admin-container with "apk --update add postgresql-client"
 
