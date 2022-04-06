@@ -4,6 +4,7 @@ description: The open-source cloud asset inventory powered by SQL.
 home: https://cloudquery.io
 type: application
 kubeVersion: "^1.8.0-0"
+icon: https://avatars.githubusercontent.com/u/74616112
 keywords:
   - cloudquery
 sources:
