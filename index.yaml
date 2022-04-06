@@ -1,0 +1,18 @@
+apiVersion: v1
+entries:
+  cloudquery:
+  - apiVersion: v2
+    appVersion: 0.15.10
+    created: "2022-04-06T09:19:15.046835106Z"
+    description: The open-source cloud asset inventory powered by SQL.
+    digest: b8f7e2e11955c472b1ac2f69bd0a948c7ca89195b16e14c818bb021ae0c7b764
+    home: https://cloudquery.io
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    name: cloudquery
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
+    version: 0.1.2
+generated: "2022-04-06T09:19:15.046849506Z"
