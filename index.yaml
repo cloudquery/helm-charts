@@ -1,6 +1,33 @@
 apiVersion: v1
 entries:
   cloudquery:
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |-
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: 0.15.10
+    created: "2022-04-06T13:46:37.160604128Z"
+    description: The open-source cloud asset inventory powered by SQL.
+    digest: 797797092aedd96507669bb7c8621c3127dd987c8fb64f33d2b04f12d25c9d8e
+    home: https://cloudquery.io
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: cloudquery
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.3/cloudquery-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 0.15.10
     created: "2022-04-06T09:19:15.046835106Z"
@@ -15,4 +42,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
     version: 0.1.2
-generated: "2022-04-06T09:19:15.046849506Z"
+generated: "2022-04-06T13:46:37.160619229Z"
