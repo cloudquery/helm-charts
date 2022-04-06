@@ -6,6 +6,12 @@ type: application
 kubeVersion: "^1.8.0-0"
 keywords:
   - cloudquery
+sources:
+  - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
+
+maintainers:
+  - name: yevgenypats
+    email: yp@cloudquery.io
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
@@ -17,3 +23,14 @@ version: 0.1.2
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "0.15.10"
+
+
+# https://artifacthub.io/docs/topics/repositories/
+annotations:
+  artifacthub.io/license: MPL-2.0
+  artifacthub.io/links: |
+    - name: cloudquery
+      url: https://github.com/cloudquery/cloudquery
+  artifacthub.io/maintainers: |
+    - name: yevgenypats
+      email: yp@cloudquery.io

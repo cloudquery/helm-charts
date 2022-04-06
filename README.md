@@ -5,6 +5,9 @@
 </a>
 </p>
 
+
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/cloudquery)](https://artifacthub.io/packages/search?repo=cloudquery)
+
 The open-source cloud asset inventory powered by SQL.
 
 CloudQuery extracts, transforms, and loads your cloud assets into [normalized](https://hub.cloudquery.io) PostgreSQL tables. CloudQuery enables you to assess, audit, and monitor the configurations of your cloud assets.
