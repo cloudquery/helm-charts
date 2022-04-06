@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "cloudquery.name" . }}-cron
+  labels:
+  {{- include "cloudquery.labels" . | nindent 4 }}
+spec:
+  schedule: "{{ .Values.schedule }}"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+          {{- include "cloudquery.selectorLabels" . | nindent 12 }}
+        spec:
+          {{- if .Values.serviceAccount.enabled }}
+          serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
+          {{- end }}
+          containers:
+            - name: cloudquery
+              envFrom:
+              - secretRef:
+                  name: {{ include "cloudquery.name" . }}-secret
+              image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: Always
+              args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log"]
+              resources:
+              {{- toYaml .Values.resources | nindent 16 }}
+              volumeMounts:
+              - name: config
+                mountPath: /app/config
+              - name: cq
+                mountPath: /app/.cq
+          volumes:
+          - name: config
+            configMap:
+              name: {{ include "cloudquery.name" . }}-config
+              items:
+              - key: config.hcl
+                path: config.hcl
+          - name: cq
+            persistentVolumeClaim:
+              claimName: {{ template "cloudquery.name" . }}-pvc
+          restartPolicy: Never
