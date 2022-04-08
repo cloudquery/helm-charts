@@ -6,4 +6,4 @@ metadata:
   {{- include "cloudquery.labels" . | nindent 4 }}
 data:
   config.hcl: |-
-  {{ .Files.Get "config.hcl" | nindent 4 }}
+  {{ .Values.config | nindent 4 }}
