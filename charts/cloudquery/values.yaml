@@ -33,7 +33,7 @@ image:
   pullPolicy: IfNotPresent
 
 ascp:
-  enable: false
+  enable: true
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
