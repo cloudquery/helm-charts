@@ -33,7 +33,20 @@ spec:
                 mountPath: /app/config
               - name: cq
                 mountPath: /app/.cq
+              {{- if .Values.serviceAccount.enabled -}}
+              - name: secrets-store-inline
+                mountPath: "/mnt/secrets-store"
+                readOnly: true
+              {{- end }}
           volumes:
+          {{- if .Values.serviceAccount.enabled -}}
+          - name: secrets-store-inline
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: "cloudquery"
+          {{- end }}
           - name: config
             configMap:
               name: {{ include "cloudquery.name" . }}-config
