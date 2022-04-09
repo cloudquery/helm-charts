@@ -35,3 +35,8 @@ annotations:
   artifacthub.io/maintainers: |
     - name: yevgenypats
       email: yp@cloudquery.io
+
+dependencies:
+- name: secrets-store-csi-driver
+  version: "1.1.2"
+  repository: "https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts"

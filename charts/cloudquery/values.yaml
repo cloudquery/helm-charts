@@ -25,12 +25,15 @@ image:
   registry: ghcr.io
   repository: cloudquery/cloudquery
   # Overrides the image tag whose default is the chart appVersion
-  tag: "0.20"
+  tag: "0.22"
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
+
+ascp:
+  enable: false
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -56,7 +59,7 @@ containerSecurityContext:
 serviceAccount:
   ## @param serviceAccount.enabled Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set)
   ##
-  enabled: false
+  enabled: true
   ## @param serviceAccount.name Name of an already existing service account. Setting this value disables the automatic service account creation
   ##
   name: ""
@@ -106,7 +109,7 @@ config: |
     }
 
     connection {
-      dsn = "${DSN}"
+      dsn = file("/mnt/secrets-store/cloudquery_rds")
     }
   }
 
