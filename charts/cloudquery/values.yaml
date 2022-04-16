@@ -68,9 +68,9 @@ serviceAccount:
   autoMount: false
   ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
   ##
-  annotations: {}
+  annotations:
   ## to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
-  #  eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME
+    eks.amazonaws.com/role-arn: arn:aws:iam::615713231484:role/cloudquery-complete-example-eksa-irsa
 
 ## Sensible environment variables that will be rendered as new secret object
 ## This can be useful for auth tokens, etc
@@ -109,7 +109,7 @@ config: |
     }
 
     connection {
-      dsn = file("/mnt/secrets-store/cloudquery_rds")
+      dsn = file("/mnt/secrets-store/cloudquery-complete-example_rds_creds")
     }
   }
 
