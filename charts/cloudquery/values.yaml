@@ -26,7 +26,7 @@ containerSecurityContext:
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:
   # -- Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set)
-  enabled: true
+  enabled: false
   # -- Name of an already existing service account. Setting this value disables the automatic service account creation
   name: ""
   # -- Auto-mount the service account token in the pod
