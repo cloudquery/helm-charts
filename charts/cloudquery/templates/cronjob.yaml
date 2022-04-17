@@ -21,6 +21,10 @@ spec:
           containers:
             - name: cloudquery
               envFrom:
+              {{- if .Values.ascp.enabled }}
+              - secretRef:
+                name: cloudquery-sm
+              {{- end }}
               - secretRef:
                   name: {{ include "cloudquery.fullname" . }}-secret
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -33,19 +37,19 @@ spec:
                 mountPath: /app/config
               - name: cq
                 mountPath: /app/.cq
-              {{- if .Values.serviceAccount.enabled }}
+              {{- if .Values.ascp.enabled }}
               - name: secrets-store-inline
                 mountPath: "/mnt/secrets-store"
                 readOnly: true
               {{- end }}
           volumes:
-          {{- if .Values.serviceAccount.enabled }}
+          {{- if .Values.ascp.enabled }}
           - name: secrets-store-inline
             csi:
               driver: secrets-store.csi.k8s.io
               readOnly: true
               volumeAttributes:
-                secretProviderClass: "cloudquery"
+                secretProviderClass: {{ include "cloudquery.fullname" . }}
           {{- end }}
           - name: config
             configMap:
