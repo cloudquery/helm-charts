@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cloudquery.name" . }}-admin
+  name: {{ include "cloudquery.fullname" . }}-admin
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
 spec:
@@ -21,7 +21,9 @@ spec:
         - name: cloudquery
           envFrom:
           - secretRef:
-              name: {{ include "cloudquery.name" . }}-secret
+              name: cloudquery-sm
+          - secretRef:
+              name: {{ include "cloudquery.fullname" . }}-secret
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: Always
           command: ["/bin/sh"]
@@ -41,10 +43,10 @@ spec:
       volumes:
         - name: cq
           persistentVolumeClaim:
-            claimName: {{ template "cloudquery.name" . }}-pvc
+            claimName: {{ template "cloudquery.fullname" . }}-pvc
         - name: config
           configMap:
-            name: {{ include "cloudquery.name" . }}-config
+            name: {{ include "cloudquery.fullname" . }}-config
             items:
             - key: config.hcl
               path: config.hcl

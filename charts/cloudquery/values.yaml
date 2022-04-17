@@ -34,6 +34,8 @@ image:
 
 ascp:
   enable: true
+  secrets: []
+
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -68,14 +70,15 @@ serviceAccount:
   autoMount: false
   ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
   ##
-  annotations:
+  annotations: {}
   ## to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
-    eks.amazonaws.com/role-arn: arn:aws:iam::615713231484:role/cloudquery-complete-example-eksa-irsa
+    # eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE
 
 ## Sensible environment variables that will be rendered as new secret object
 ## This can be useful for auth tokens, etc
-envRenderSecret:
-  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=disable"
+## Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other)
+envRenderSecret: {}
+#  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=disable"
 
   # For AWS see https://docs.cloudquery.io/docs/getting-started/getting-started-with-aws
   # AWS_ACCESS_KEY_ID: ""
@@ -148,3 +151,7 @@ config: |
 #   requests:
 #     memory: 1024Mi
 #     cpu: 1000m
+
+secrets-store-csi-driver:
+  syncSecret:
+    enabled: true
