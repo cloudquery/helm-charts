@@ -2,7 +2,6 @@
 nameOverride: ""
 fullnameOverride: ""
 
-
 image:
   registry: ghcr.io
   repository: cloudquery/cloudquery
@@ -11,7 +10,7 @@ image:
   pullPolicy: IfNotPresent
 
 ascp:
-  enable: true
+  enabled: false
   secrets: []
 
 securityContext:
@@ -76,7 +75,7 @@ config: |
     }
 
     connection {
-      dsn = file("/mnt/secrets-store/cloudquery-complete-example_rds_creds")
+      dsn = "${DSN}"
     }
   }
 
@@ -106,7 +105,6 @@ config: |
       "*"
     ]
   }
-
 
 # resources:
 #   requests:

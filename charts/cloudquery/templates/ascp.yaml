@@ -1,4 +1,4 @@
-{{- if .Values.serviceAccount.enabled -}}
+{{- if .Values.ascp.enabled -}}
 apiVersion: v1
 # https://kubernetes.io/docs/reference/access-authn-authz/rbac
 # ASCP (AWS Secret & Configuration Provider) - https://docs.aws.amazon.com/secretsmanager/latest/userguide/integrating_csi_driver.html
