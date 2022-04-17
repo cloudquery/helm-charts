@@ -28,7 +28,7 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| ascp.enable | bool | `true` |  |
+| ascp.enabled | bool | `false` |  |
 | ascp.secrets | list | `[]` |  |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery config.hcl content |
 | containerSecurityContext.enabled | bool | `true` |  |
@@ -40,21 +40,13 @@ Kubernetes: `^1.8.0-0`
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | schedule | string | `"0 0 * * *"` | Schedule fetch time Every day at 00:00. More information at: https://crontab.guru/#0_0_*_*_* |
-<<<<<<< HEAD
-<<<<<<< HEAD
 | secrets-store-csi-driver.syncSecret.enabled | bool | `true` | Enable integration with aws secrets store service |
-=======
-| secrets-store-csi-driver.syncSecret.enabled | bool | `true` |  |
->>>>>>> 0264b69 (Add docs generation)
-=======
-| secrets-store-csi-driver.syncSecret.enabled | bool | `true` | Enable integration with aws secrets store service |
->>>>>>> 80e0381 (update helm-docs)
 | securityContext.enabled | bool | `true` |  |
 | securityContext.fsGroup | int | `1001` |  |
-| serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":true,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
 | serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |
-| serviceAccount.enabled | bool | `true` | Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set) |
+| serviceAccount.enabled | bool | `false` | Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set) |
 | serviceAccount.name | string | `""` | Name of an already existing service account. Setting this value disables the automatic service account creation |
 
 ----------------------------------------------
