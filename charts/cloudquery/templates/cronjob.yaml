@@ -23,7 +23,7 @@ spec:
               envFrom:
               {{- if .Values.ascp.enabled }}
               - secretRef:
-                name: cloudquery-sm
+                  name: cloudquery-sm
               {{- end }}
               - secretRef:
                   name: {{ include "cloudquery.fullname" . }}-secret
