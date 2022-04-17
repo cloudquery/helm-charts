@@ -1,50 +1,53 @@
+# cloudquery
 
-# CloudQuery Helm Chart
-
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/cloudquery)](https://artifacthub.io/packages/search?repo=cloudquery)
+![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22](https://img.shields.io/badge/AppVersion-0.22-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
-CloudQuery extracts, transforms, and loads your cloud assets into [normalized](https://hub.cloudquery.io) PostgreSQL tables. CloudQuery enables you to assess, audit, and monitor the configurations of your cloud assets.
+**Homepage:** <https://cloudquery.io>
 
-## Prerequisites
+## Maintainers
 
-* [Helm V3](https://helm.sh/) installed.
-* [Kubernetes 1.18+]
+| Name | Email | Url |
+| ---- | ------ | --- |
+| yevgenypats | <yp@cloudquery.io> |  |
 
-## Usage
+## Source Code
 
-```bash
-helm repo add cloudquery https://cloudquery.github.io/helm-charts/
-helm install cloudquery cloudquery/cloudquery --version 0.1.4
-```
+* <https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery>
 
-## Uninstall Chart
+## Requirements
 
-```bash
-helm uninstall cloudquery
-```
+Kubernetes: `^1.8.0-0`
 
-## Upgrading Chart
+| Repository | Name | Version |
+|------------|------|---------|
+| https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts | secrets-store-csi-driver | 1.1.2 |
 
-```bash
-helm upgrade cloudquery cloudquery --install
-```
+## Values
 
-## Configuration
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| ascp.enable | bool | `true` |  |
+| ascp.secrets | list | `[]` |  |
+| config | string | The chart will use a default CloudQuery aws config | CloudQuery config.hcl content |
+| containerSecurityContext.enabled | bool | `true` |  |
+| containerSecurityContext.runAsUser | int | `1001` |  |
+| envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
+| fullnameOverride | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"cloudquery/cloudquery"` |  |
+| nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
+| schedule | string | `"0 0 * * *"` | Schedule fetch time Every day at 00:00. More information at: https://crontab.guru/#0_0_*_*_* |
+| secrets-store-csi-driver.syncSecret.enabled | bool | `true` | Enable integration with aws secrets store service |
+| securityContext.enabled | bool | `true` |  |
+| securityContext.fsGroup | int | `1001` |  |
+| serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":true,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
+| serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
+| serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |
+| serviceAccount.enabled | bool | `true` | Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set) |
+| serviceAccount.name | string | `""` | Name of an already existing service account. Setting this value disables the automatic service account creation |
 
-The following table lists the configurable parameters of cloudquery chart and their default values.
-
-| Parameter | Description | Default |
-| --------- | ----------- | ------- |
-| `config` | Config.hcl to be provided for cloudquery | `0 0 * * *` |
-| `schedule` | Schedule on which to run fetch | `''` |
-| `envRenderSecret` | Secrets to mount as environment variable for cloudquery. Including database URI, and authentication tokens | `{}` |
-| `image.registry` | Image repository | `ghcr.io` |
-| `image.repository` | Image repository | `cloudquery/cloudquery` |
-| `image.tag` | Image tag | `{{RELEASE_VERSION}}` |
-| `image.pullPolicy` | Image pull policy | `IfNotPresent` |
-| `serviceAccount.create` | If `true`, create a new service account | `true` |
-| `serviceAccount.name` | Service account to be used. If not set and `serviceAccount.create` is `true`, a name is generated using the fullname template |  |
-| `serviceAccount.annotations` | Annotations to add to the service account |  |
-| `serviceAccount.automountServiceAccountToken` | Automount API credentials for the Service Account | `true` |
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.8.1](https://github.com/norwoodj/helm-docs/releases/v1.8.1)

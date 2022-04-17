@@ -1,9 +1,8 @@
 1. Welcome! CloudQuery is Installed.
 2. To trigger the cronjob manually run:
-   kubectl create job --from=cronjob/{{ include "cloudquery.name" . }}-cron {{ include "cloudquery.name" . }}-cron
+   kubectl create job --from=cronjob/{{ include "cloudquery.name" . }}-cron {{ include "cloudquery.name" . }}-cron -n {{ .Release.Namespace }}
 3. To see logs for the job run:
-   kubectl logs -f jobs/{JOB NAME}
+   kubectl logs -f jobs/{JOB NAME} -n {{ .Release.Namespace }}
 4. To exec to the admin container with cloudquery binary for debugging purposes run:
-   kubectl exec -it deployment/{{ include "cloudquery.name" . }}-admin -- /bin/sh
+   kubectl exec -it deployment/{{ include "cloudquery.name" . }}-admin -n {{ .Release.Namespace }} -- /bin/sh
    # You can install psql in the admin-container with "apk --update add postgresql-client"
-

@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cloudquery.name" . }}-admin
+  name: {{ include "cloudquery.fullname" . }}-admin
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "cloudquery.selectorLabels" . | nindent 12 }}
+      {{- include "cloudquery.selectorLabels" . | nindent 8 }}
   template:
     metadata:
       labels:
-      {{- include "cloudquery.selectorLabels" . | nindent 12 }}
+      {{- include "cloudquery.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
@@ -21,39 +21,40 @@ spec:
         - name: cloudquery
           envFrom:
           - secretRef:
-              name: {{ include "cloudquery.name" . }}-secret
+              name: cloudquery-sm
+          - secretRef:
+              name: {{ include "cloudquery.fullname" . }}-secret
           image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: Always
           command: ["/bin/sh"]
           # we want users to be able to exec into this pod and be able to debug and investigate cloudquery binary, envs and runtime
           args: ["-c", "echo admin container is running. run 'kubectl exec -it deploy/cloudquery-admin -- /bin/sh' to debug; while true; do sleep 10000; done"]
           resources:
-          {{- toYaml .Values.resources | nindent 16 }}
+          {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: config
             mountPath: /app/config
           - name: cq
             mountPath: /app/.cq
-          {{- if .Values.serviceAccount.enabled -}}
+          {{- if .Values.serviceAccount.enabled }}
           - name: secrets-store-inline
             mountPath: "/mnt/secrets-store"
-            readOnly: true
           {{- end }}
       volumes:
-      {{- if .Values.serviceAccount.enabled -}}
-      - name: secrets-store-inline
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: "cloudquery"
-      {{- end }}
-      - name: cq
-        persistentVolumeClaim:
-          claimName: {{ template "cloudquery.name" . }}-pvc
-      - name: config
-        configMap:
-          name: {{ include "cloudquery.name" . }}-config
-          items:
-          - key: config.hcl
-            path: config.hcl
+        - name: cq
+          persistentVolumeClaim:
+            claimName: {{ template "cloudquery.fullname" . }}-pvc
+        - name: config
+          configMap:
+            name: {{ include "cloudquery.fullname" . }}-config
+            items:
+            - key: config.hcl
+              path: config.hcl
+        {{- if .Values.serviceAccount.enabled }}
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "cloudquery"
+        {{- end }}

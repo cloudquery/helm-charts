@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "cloudquery.name" . }}-cron
+  name: {{ include "cloudquery.fullname" . }}-cron
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
 spec:
@@ -22,7 +22,7 @@ spec:
             - name: cloudquery
               envFrom:
               - secretRef:
-                  name: {{ include "cloudquery.name" . }}-secret
+                  name: {{ include "cloudquery.fullname" . }}-secret
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: Always
               args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log"]
@@ -33,13 +33,13 @@ spec:
                 mountPath: /app/config
               - name: cq
                 mountPath: /app/.cq
-              {{- if .Values.serviceAccount.enabled -}}
+              {{- if .Values.serviceAccount.enabled }}
               - name: secrets-store-inline
                 mountPath: "/mnt/secrets-store"
                 readOnly: true
               {{- end }}
           volumes:
-          {{- if .Values.serviceAccount.enabled -}}
+          {{- if .Values.serviceAccount.enabled }}
           - name: secrets-store-inline
             csi:
               driver: secrets-store.csi.k8s.io
@@ -49,11 +49,11 @@ spec:
           {{- end }}
           - name: config
             configMap:
-              name: {{ include "cloudquery.name" . }}-config
+              name: {{ include "cloudquery.fullname" . }}-config
               items:
               - key: config.hcl
                 path: config.hcl
           - name: cq
             persistentVolumeClaim:
-              claimName: {{ template "cloudquery.name" . }}-pvc
+              claimName: {{ template "cloudquery.fullname" . }}-pvc
           restartPolicy: Never

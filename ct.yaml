@@ -1,0 +1,9 @@
+# See https://github.com/helm/chart-testing#configuration
+remote: origin
+target-branch: main
+chart-dirs:
+  - charts
+chart-repos:
+  - cloudquery=https://cloudquery.github.io/helm-charts/
+  - seccrets-store-csi-driver=https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+helm-extra-args: --timeout 600s
