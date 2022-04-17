@@ -115,5 +115,5 @@ config: |
 
 secrets-store-csi-driver:
   syncSecret:
-    # - Enable integration with aws secrets store service
+    # -- Enable integration with aws secrets store service
     enabled: true
