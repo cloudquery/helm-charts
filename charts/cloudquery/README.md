@@ -41,10 +41,14 @@ Kubernetes: `^1.8.0-0`
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | schedule | string | `"0 0 * * *"` | Schedule fetch time Every day at 00:00. More information at: https://crontab.guru/#0_0_*_*_* |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | secrets-store-csi-driver.syncSecret.enabled | bool | `true` | Enable integration with aws secrets store service |
 =======
 | secrets-store-csi-driver.syncSecret.enabled | bool | `true` |  |
 >>>>>>> 0264b69 (Add docs generation)
+=======
+| secrets-store-csi-driver.syncSecret.enabled | bool | `true` | Enable integration with aws secrets store service |
+>>>>>>> 80e0381 (update helm-docs)
 | securityContext.enabled | bool | `true` |  |
 | securityContext.fsGroup | int | `1001` |  |
 | serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":true,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
