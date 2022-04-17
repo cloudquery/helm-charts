@@ -58,4 +58,3 @@ spec:
             volumeAttributes:
               secretProviderClass: "cloudquery"
         {{- end }}
- 
