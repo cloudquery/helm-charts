@@ -4,3 +4,4 @@ cloudquery.log
 **/.terraform
 terraform.tfstate
 terraform.tfvars
+.vscode

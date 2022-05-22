@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22](https://img.shields.io/badge/AppVersion-0.22-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22](https://img.shields.io/badge/AppVersion-0.22-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
@@ -28,8 +28,6 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| ascp.enabled | bool | `false` |  |
-| ascp.secrets | list | `[]` |  |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery config.hcl content |
 | containerSecurityContext.enabled | bool | `true` |  |
 | containerSecurityContext.runAsUser | int | `1001` |  |
