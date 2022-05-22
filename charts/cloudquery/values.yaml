@@ -9,10 +9,6 @@ image:
   # tag: "0.22"
   pullPolicy: IfNotPresent
 
-ascp:
-  enabled: false
-  secrets: []
-
 securityContext:
   enabled: true
   fsGroup: 1001
