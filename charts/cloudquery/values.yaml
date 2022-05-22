@@ -106,8 +106,3 @@ config: |
 #   requests:
 #     memory: 1024Mi
 #     cpu: 1000m
-
-secrets-store-csi-driver:
-  syncSecret:
-    # -- Enable integration with aws secrets store service
-    enabled: true

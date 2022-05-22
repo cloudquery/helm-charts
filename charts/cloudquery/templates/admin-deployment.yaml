@@ -33,9 +33,6 @@ spec:
           - name: config
             mountPath: /app/config
       volumes:
-        - name: cq
-          persistentVolumeClaim:
-            claimName: {{ template "cloudquery.fullname" . }}-pvc
         - name: config
           configMap:
             name: {{ include "cloudquery.fullname" . }}-config
