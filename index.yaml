@@ -11,6 +11,38 @@ entries:
           email: yp@cloudquery.io
     apiVersion: v2
     appVersion: "0.22"
+    created: "2022-05-22T17:33:59.246915142Z"
+    dependencies:
+    - name: secrets-store-csi-driver
+      repository: https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+      version: 1.1.2
+    description: The open-source cloud asset inventory powered by SQL.
+    digest: 3e92005002e1235f7fc2f9720cd7841ef32d38b2a4dc307a2061638ff4a76f55
+    home: https://cloudquery.io
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: cloudquery
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.2.0/cloudquery-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: "0.22"
     created: "2022-04-17T21:22:08.555798871Z"
     dependencies:
     - name: secrets-store-csi-driver
@@ -226,4 +258,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
     version: 0.1.2
-generated: "2022-04-17T21:22:08.555839972Z"
+generated: "2022-05-22T17:33:59.246950442Z"
