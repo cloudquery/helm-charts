@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.24](https://img.shields.io/badge/AppVersion-0.24-informational?style=flat-square)
+![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.24](https://img.shields.io/badge/AppVersion-0.24-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
@@ -37,7 +37,7 @@ Kubernetes: `^1.8.0-0`
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
-| schedule | string | `"0 0 * * *"` | Schedule fetch time Every day at 00:00. More information at: https://crontab.guru/#0_0_*_*_* |
+| schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | securityContext.enabled | bool | `true` |  |
 | securityContext.fsGroup | int | `1001` |  |
 | serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
