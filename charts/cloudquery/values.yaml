@@ -52,9 +52,9 @@ envRenderSecret: {}
 
   # For any other provider checkout https://hub.cloudquery.io/providers
 
-# -- Schedule fetch time Every day at 00:00.
+# -- Schedule fetch time Every 6 hours.
 # More information at: https://crontab.guru/#0_0_*_*_*
-schedule: "0 0 * * *"
+schedule: "0 */6 * * *"
 
 # Enable cloudwatch logs when deployed on EKS
 cloudwatch:
