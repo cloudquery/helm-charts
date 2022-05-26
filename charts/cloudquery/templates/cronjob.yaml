@@ -25,7 +25,7 @@ spec:
                   name: {{ include "cloudquery.fullname" . }}-secret
               image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: Always
-              args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log", "--encode-json"]
+              args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log"]
               resources:
               {{- toYaml .Values.resources | nindent 16 }}
               volumeMounts:
