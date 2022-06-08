@@ -16,7 +16,7 @@ CloudQuery extracts, transforms, and loads your cloud assets into [normalized](h
 
 This repository contains Helm v3 chart that deploys CloudQuery to a Kubernetes cluster.
 
-Documentation and tutorial can be found here [docs.cloudquery.io](https://docs.cloudquery.io/docs/deployment/helm-chart).
+Documentation and tutorial can be found here [./charts/cloudquery](./charts/cloudquery).
 
 ### Other Links
 
