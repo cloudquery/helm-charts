@@ -71,9 +71,6 @@ config: |
   // This is a default config.hcl for cloudquery with aws provider.
   // Change this to the needed config.hcl
   cloudquery {
-    plugin_directory = "./cq/providers"
-    policy_directory = "./cq/policies"
-
     provider "aws" {
       version = "latest"
     }
