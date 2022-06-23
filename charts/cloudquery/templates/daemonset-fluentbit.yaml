@@ -73,7 +73,7 @@ data:
         Docker_Mode         On
         Docker_Mode_Flush   5
         Docker_Mode_Parser  container_firstline
-        Parser              docker
+        Parser              crio
         DB                  /var/fluent-bit/state/flb_container.db
         Mem_Buf_Limit       50MB
         Skip_Long_Lines     On
@@ -228,6 +228,13 @@ data:
         extra_user_agent    container-insights
 
   parsers.conf: |
+    [PARSER]
+        Name                crio
+        Format              Regex
+        Regex               ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>P|F) (?<log>.*)$
+        Time_Key            time
+        Time_Format         %Y-%m-%dT%H:%M:%S.%L%z
+
     [PARSER]
         Name                docker
         Format              json
