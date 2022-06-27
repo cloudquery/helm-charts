@@ -16,11 +16,13 @@ jobs:
         with:
           path: terraform-aws-cloudquery
           repository: cloudquery/terraform-aws-cloudquery
+          token: ${{ secrets.GH_PAT }}
       - name: 'Checkout terraform-gcp-cloudquery source code'
         uses: 'actions/checkout@v3'
         with:
           path: terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
+          token: ${{ secrets.GH_PAT }}
       - run: |
           helm_chart_version=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
           cd /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery
