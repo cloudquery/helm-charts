@@ -25,28 +25,8 @@ jobs:
           token: ${{ secrets.GH_PAT }}
       - run: |
           helm_chart_version=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
-#          cd /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery
-#          git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
           sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery/variables.tf
-#          cd /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery
-#          git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
           sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/variables.tf
-#          cd /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery
-#          git add variables.tf
-#          if [[ `git status --porcelain` ]]; then
-#            git config user.name github-actions
-#            git config user.email github-actions@github.com
-#            git commit -m "chore: Bump CloudQuery helm chart version to $helm_chart_version"
-#            git push origin -u "chore/bump-terraform-chart-version-$GITHUB_RUN_ID"
-#          fi
-#          cd /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery
-#          git add variables.tf
-#          if [[ `git status --porcelain` ]]; then
-#            git config user.name github-actions
-#            git config user.email github-actions@github.com
-#            git commit -m "chore: Bump CloudQuery helm chart version to $helm_chart_version"
-#            git push origin -u "chore/bump-terraform-chart-version-$GITHUB_RUN_ID"
-#          fi
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
