@@ -1,0 +1,53 @@
+name: Bump Terraform Chart Version
+on:
+  release:
+    types: [published]
+jobs:
+  bump-terraform-chart-version:
+    name: Bump Terraform Chart Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout helm-charts source code'
+        uses: 'actions/checkout@v3'
+        with:
+          path: ./helm-charts
+      - name: 'Checkout terraform-aws-cloudquery source code'
+        uses: 'actions/checkout@v3'
+        with:
+          path: ./terraform-aws-cloudquery
+          repository: cloudquery/terraform-aws-cloudquery
+      - name: 'Checkout terraform-gcp-cloudquery source code'
+        uses: 'actions/checkout@v3'
+        with:
+          path: ./terraform-gcp-cloudquery
+          repository: cloudquery/terraform-gcp-cloudquery
+      - name: 'Bump versions in Terraform templates'
+        uses: 'actions/checkout@v3'
+        run: |
+          helm_chart_version=$(grep version: ./helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
+          cd terraform-aws-cloudquery
+          git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
+          cd ..
+          sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' ./terraform-aws-cloudquery/variables.tf
+          cd terraform-gcp-cloudquery
+          git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
+          cd ..
+          sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' ./terraform-gcp-cloudquery/variables.tf
+          cd terraform-aws-cloudquery
+          git add variables.tf
+          if [[ `git status --porcelain` ]]; then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git commit -m "chore: Bump CloudQuery helm chart version to $helm_chart_version"
+            git push -u "origin/chore/bump-terraform-chart-version-$helm_chart_version"
+          fi
+          cd ..
+          cd terraform-gcp-cloudquery
+          git add variables.tf
+          if [[ `git status --porcelain` ]]; then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git commit -m "chore: Bump CloudQuery helm chart version to $helm_chart_version"
+            git push -u "origin/chore/bump-terraform-chart-version-$helm_chart_version"
+          fi
+          cd ..
