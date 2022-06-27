@@ -23,6 +23,7 @@ jobs:
           repository: cloudquery/terraform-gcp-cloudquery
       - run: |
           helm_chart_version=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
+          pwd
           cd /home/runner/work/helm-charts/terraform-aws-cloudquery
           git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
           sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' ./terraform-aws-cloudquery/variables.tf
