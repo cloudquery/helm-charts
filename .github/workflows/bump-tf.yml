@@ -21,9 +21,8 @@ jobs:
         with:
           path: ./terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
-      - name: 'Bump versions in Terraform templates'
-        uses: 'actions/checkout@v3'
-        run: |
+      - uses: 'actions/checkout@v3'
+      - run: |
           helm_chart_version=$(grep version: ./helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
           cd terraform-aws-cloudquery
           git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
