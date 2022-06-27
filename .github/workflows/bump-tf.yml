@@ -1,7 +1,5 @@
 name: Bump Terraform Chart Version
 on: [push]
-#release:
-#types: [published]
 jobs:
   bump-terraform-chart-version:
     name: Bump Terraform Chart Version
@@ -34,7 +32,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_CQ_BOT }}
           commit-message: 'chore: Bump CloudQuery helm chart version'
           committer: GitHub <noreply@github.com>
           author: CloudQuery Bot <102256036+cq-bot@users.noreply.github.com>
@@ -52,7 +50,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_CQ_BOT }}
           commit-message: 'chore: Bump CloudQuery helm chart version'
           committer: GitHub <noreply@github.com>
           author: CloudQuery Bot <102256036+cq-bot@users.noreply.github.com>
