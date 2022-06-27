@@ -1,7 +1,7 @@
 name: Bump Terraform Chart Version
 on: [push]
-  # release:
-  #   types: [published]
+#release:
+#types: [published]
 jobs:
   bump-terraform-chart-version:
     name: Bump Terraform Chart Version
@@ -21,9 +21,7 @@ jobs:
         with:
           path: /home/runner/work/helm-charts/terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
-      - name: 'Bump versions in Terraform templates'
-        uses: 'actions/checkout@v3'
-        run: |
+      - run: |
           helm_chart_version=$(grep version: /home/runner/work/helm-charts/helm-charts | cut -d\  -f2)
           cd /home/runner/work/helm-charts/terraform-aws-cloudquery
           git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
