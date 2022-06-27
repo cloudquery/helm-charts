@@ -22,6 +22,8 @@ jobs:
           path: terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
       - run: |
+          ls -la
+          ls -la helm-charts
           helm_chart_version=$(grep version: /home/runner/work/helm-charts/helm-charts/Chart.yaml | cut -d\  -f2)
           cd /home/runner/work/helm-charts/terraform-aws-cloudquery
           git checkout -b "chore/bump-terraform-chart-version-$helm_chart_version"
