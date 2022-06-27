@@ -49,7 +49,6 @@ jobs:
           draft: false
           path: /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GH_PAT }}
