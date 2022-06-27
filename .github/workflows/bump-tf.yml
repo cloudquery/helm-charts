@@ -26,7 +26,9 @@ jobs:
       - run: |
           helm_chart_version=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
           sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery/variables.tf
+          sed -i 's/\(The\ version\ of\ CloudQuery\ helm\ chart\ | `string`\ | `"\)\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1'"$helm_chart_version"'/' /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery/README.md
           sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$helm_chart_version"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/variables.tf
+          sed -i 's/\(The\ version\ of\ CloudQuery\ helm\ chart\ | `string`\ | `"\)\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1'"$helm_chart_version"'/' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/README.md
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
@@ -34,9 +36,9 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           commit-message: 'chore: Bump CloudQuery helm chart version'
           committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          author: CloudQuery Bot <102256036+cq-bot@users.noreply.github.com>
           signoff: false
-          branch: chore/bump-terraform-chart-version
+          branch: chore/bump-terraform-chart-version-${{ GITHUB_RUN_ID }}
           delete-branch: true
           title: 'chore: Bump CloudQuery helm chart version'
           labels: |
@@ -54,9 +56,9 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           commit-message: 'chore: Bump CloudQuery helm chart version'
           committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          author: CloudQuery Bot <102256036+cq-bot@users.noreply.github.com>
           signoff: false
-          branch: chore/bump-terraform-chart-version
+          branch: chore/bump-terraform-chart-version-${{ GITHUB_RUN_ID }}
           delete-branch: true
           title: 'chore: Bump CloudQuery helm chart version'
           labels: |
