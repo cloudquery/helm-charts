@@ -45,10 +45,8 @@ jobs:
           labels: |
             chore
             automerge
-          assignees: spangenberg
-          reviewers: spangenberg
-          team-reviewers: |
-            cloudquery/cloudquery-opensource
+          assignees: cq-bot
+          reviewers: cq-bot
           draft: false
           path: /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery
       - name: Create Pull Request
@@ -65,9 +63,7 @@ jobs:
           labels: |
             chore
             automerge
-          assignees: spangenberg
-          reviewers: spangenberg
-          team-reviewers: |
-            cloudquery/cloudquery-opensource
+          assignees: cq-bot
+          reviewers: cq-bot
           draft: false
           path: /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery
