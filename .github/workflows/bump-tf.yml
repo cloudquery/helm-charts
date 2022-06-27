@@ -1,7 +1,7 @@
 name: Bump Terraform Chart Version
-on:
-  release:
-    types: [published]
+on: [push]
+  # release:
+  #   types: [published]
 jobs:
   bump-terraform-chart-version:
     name: Bump Terraform Chart Version
