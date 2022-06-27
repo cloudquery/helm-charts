@@ -10,16 +10,16 @@ jobs:
       - name: 'Checkout helm-charts source code'
         uses: 'actions/checkout@v3'
         with:
-          path: /home/runner/work/helm-charts/helm-charts
+          path: helm-charts
       - name: 'Checkout terraform-aws-cloudquery source code'
         uses: 'actions/checkout@v3'
         with:
-          path: /home/runner/work/helm-charts/terraform-aws-cloudquery
+          path: terraform-aws-cloudquery
           repository: cloudquery/terraform-aws-cloudquery
       - name: 'Checkout terraform-gcp-cloudquery source code'
         uses: 'actions/checkout@v3'
         with:
-          path: /home/runner/work/helm-charts/terraform-gcp-cloudquery
+          path: terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
       - run: |
           helm_chart_version=$(grep version: /home/runner/work/helm-charts/helm-charts | cut -d\  -f2)
