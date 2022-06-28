@@ -23,6 +23,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
       - name: Bump Versions if required
         run: |
+          # Bump Versions if required
           HELM_CHART_VERSION=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
           echo "HELM_CHART_VERSION=$(echo $HELM_CHART_VERSION)" >> $GITHUB_ENV
           HELM_CHART_MAJORMINOR_VERSION=$(echo $HELM_CHART_VERSION | sed 's/\([0-9]\+\.[0-9]\+\)\.[0-9]\+/\1/')
