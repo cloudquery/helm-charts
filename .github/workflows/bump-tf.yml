@@ -21,7 +21,8 @@ jobs:
           path: terraform-gcp-cloudquery
           repository: cloudquery/terraform-gcp-cloudquery
           token: ${{ secrets.GH_PAT }}
-      - run: |
+      - name: Bump Versions if required
+        run: |
           HELM_CHART_VERSION=$(grep version: helm-charts/charts/cloudquery/Chart.yaml | cut -d\  -f2)
           echo "HELM_CHART_VERSION=$(echo $HELM_CHART_VERSION)" >> $GITHUB_ENV
           HELM_CHART_MAJORMINOR_VERSION=$(echo $HELM_CHART_VERSION | sed 's/\([0-9]\+\.[0-9]\+\)\.[0-9]\+/\1/')
@@ -31,6 +32,8 @@ jobs:
             echo "Bumping AWS Terraform Helm Chart Version to $HELM_CHART_VERSION"
             sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$HELM_CHART_VERSION"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery/variables.tf
             sed -i 's/\(The\ version\ of\ CloudQuery\ helm\ chart\ | `string`\ | `"\)\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1'"$HELM_CHART_VERSION"'/' /home/runner/work/helm-charts/helm-charts/terraform-aws-cloudquery/README.md
+          else
+            echo "Skipping AWS Terraform Helm Chart Version bump since Major and Minor are the same"
           fi
 
           GCP_HELM_CHART_MAJORMINOR_VERSION=$(grep 'default[ \t]*=[ \t]*"[0-9]\+\.[0-9]\+\.[0-9]\+"[ \t]*# Do not change CloudQuery helm chart version as it is automatically updated by Workflow' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/variables.tf | sed 's/^\s*default\s*=\s*\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\".*/\1/' | sed 's/\([0-9]\+\.[0-9]\+\)\.[0-9]\+/\1/')
@@ -38,6 +41,8 @@ jobs:
             echo "Bumping GCP Terraform Helm Chart Version to $HELM_CHART_VERSION"
             sed -i 's/^\(\s*\)default\(\s*\)=\(\s*\)\"\([0-9]\+\.[0-9]\+\.[0-9]\+\)\"\s*#\ Do\ not\ change\ CloudQuery\ helm\ chart\ version\ as\ it\ is\ automatically\ updated\ by\ Workflow\s*$/\1default\2=\3"'"$HELM_CHART_VERSION"'" # Do not change CloudQuery helm chart version as it is automatically updated by Workflow/' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/variables.tf
             sed -i 's/\(The\ version\ of\ CloudQuery\ helm\ chart\ | `string`\ | `"\)\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1'"$HELM_CHART_VERSION"'/' /home/runner/work/helm-charts/helm-charts/terraform-gcp-cloudquery/README.md
+          else
+            echo "Skipping GCP Terraform Helm Chart Version bump since Major and Minor are the same"
           fi
       - name: Create Pull Request
         id: cpr
