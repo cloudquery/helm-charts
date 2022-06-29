@@ -10,5 +10,4 @@
       versioningTemplate: "loose",
     },
   ],
-  repositories: ["cloudquery/helm-charts"],
 }
