@@ -10,4 +10,10 @@
       versioningTemplate: "loose",
     },
   ],
+  packageRules: [
+    {
+      matchPackageNames: ["cloudquery/cloudquery"],
+      extractVersion: "^v(?<version>.+)\\.\\d$",
+    },
+  ],
 }
