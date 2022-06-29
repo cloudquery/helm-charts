@@ -1,0 +1,14 @@
+{
+  extends: ["github>cloudquery/.github//.github/renovate-default.json5"],
+  schedule: ["at any time"],
+  regexManagers: [
+    {
+      fileMatch: ["^charts/cloudquery/Chart.yaml$"],
+      matchStrings: ['appVersion: "(?<currentValue>.*)"'],
+      depNameTemplate: "cloudquery/cloudquery",
+      datasourceTemplate: "github-releases",
+      versioningTemplate: "loose",
+    },
+  ],
+  repositories: ["cloudquery/helm-charts"],
+}
