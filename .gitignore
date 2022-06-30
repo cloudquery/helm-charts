@@ -5,3 +5,4 @@ cloudquery.log
 terraform.tfstate
 terraform.tfvars
 .vscode
+.kind-kubeconfig
