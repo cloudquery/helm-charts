@@ -18,7 +18,9 @@
   ],
   postUpgradeTasks: {
     // Bump patch version of chart when updating the CloudQuery CLI version
-    commands: ["grep '^version' charts/cloudquery/Chart.yaml | cut -d" " -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g'"],
+    commands: [
+      "grep '^version' charts/cloudquery/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g'",
+    ],
     fileFilters: ["charts/cloudquery/Chart.yaml"],
     executionMode: "branch",
   },
