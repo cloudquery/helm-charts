@@ -15,11 +15,19 @@
       matchPackageNames: ["cloudquery/cloudquery"],
       extractVersion: "^v(?<version>.+)\\.\\d$",
       postUpgradeTasks: {
-        // Bump patch version of chart when updating the CloudQuery CLI version
         commands: [
+          // Bump patch version of chart when updating the CloudQuery CLI version
           "sed -i \"s/^version.*/version: $(grep '^version' charts/cloudquery/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/cloudquery/Chart.yaml",
+          // Bump chart and cloudquery versions in README.md
+          "sed -i \"s/\\[Version:[^]]*/[Version: $(grep -o '\\[Version:[^]]*' charts/cloudquery/README.md | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/cloudquery/README.md",
+          "sed -i \"s/\\/Version-[^-]*/\\/Version-$(grep -o '/Version-[^-]*' charts/cloudquery/README.md | cut -d\"-\" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/cloudquery/README.md",
+          'sed -i "s/\\[AppVersion:[^]]*/[AppVersion: {{{newVersion}}}/g" charts/cloudquery/README.md',
+          'sed -i "s/\\/AppVersion-[^-]*//AppVersion-{{{newVersion}}}/g" charts/cloudquery/README.md',
         ],
-        fileFilters: ["charts/cloudquery/Chart.yaml"],
+        fileFilters: [
+          "charts/cloudquery/Chart.yaml",
+          "charts/cloudquery/README.md",
+        ],
         executionMode: "update",
       },
     },
