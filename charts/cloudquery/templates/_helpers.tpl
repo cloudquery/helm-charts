@@ -65,9 +65,5 @@ Create the name of the service account to use
 Return the image to use depending on the AppVersion and image tag defined
 */}}
 {{- define "cloudquery.image" -}}
-{{- if eq .Values.image.tag "{{ .Chart.AppVersion }}" -}}
-{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Chart.AppVersion }}
-{{- else -}}
-{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}
-{{- end }}
+{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
 {{- end }}

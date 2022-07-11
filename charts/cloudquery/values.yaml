@@ -5,8 +5,8 @@ fullnameOverride: ""
 image:
   registry: ghcr.io
   repository: cloudquery/cloudquery
-  # Overrides the image tag whose default is the chart appVersion
-  tag: "{{ .Chart.AppVersion }}"
+  # -- (string) Overrides the image tag whose default is the chart appVersion
+  tag:
   pullPolicy: IfNotPresent
 
 securityContext:
