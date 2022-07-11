@@ -19,6 +19,9 @@ spec:
       {{- end }}
       containers:
         - name: cloudquery
+          env:
+          - name: CQ_INSTALL_SRC
+            value: "{{ .Values.cqInstallSrc | default "HELM" }}"
           envFrom:
           - secretRef:
               name: {{ include "cloudquery.fullname" . }}-secret
