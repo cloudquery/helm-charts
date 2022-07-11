@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.2.10](https://img.shields.io/badge/Version-0.2.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.31](https://img.shields.io/badge/AppVersion-0.31-informational?style=flat-square)
+![Version: 0.2.11](https://img.shields.io/badge/Version-0.2.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.31](https://img.shields.io/badge/AppVersion-0.31-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
