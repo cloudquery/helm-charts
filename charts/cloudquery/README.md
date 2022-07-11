@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.31](https://img.shields.io/badge/AppVersion-0.31-informational?style=flat-square)
+![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.31](https://img.shields.io/badge/AppVersion-0.31-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
@@ -28,7 +28,7 @@ Kubernetes: `^1.8.0-0`
 | cloudwatch.enabled | bool | `false` |  |
 | cloudwatch.region | string | `"us-east-1"` |  |
 | cloudwatch.role_arn | string | `"arn:aws:iam::xxxxxxx:role/cloudquery-complete-example-eksa-irsa-cloudwatch"` |  |
-| config | string | The chart will use a default CloudQuery aws config | CloudQuery config.hcl content |
+| config | string | The chart will use a default CloudQuery aws config | CloudQuery config.yml content |
 | containerSecurityContext.enabled | bool | `true` |  |
 | containerSecurityContext.runAsUser | int | `1001` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
@@ -36,6 +36,7 @@ Kubernetes: `^1.8.0-0`
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"cloudquery/cloudquery"` |  |
+| image.tag | string | `"{{ .Chart.AppVersion }}"` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | securityContext.enabled | bool | `true` |  |

@@ -27,6 +27,7 @@
         ],
         executionMode: "update",
       },
+      automerge: true,
     },
   ],
 }

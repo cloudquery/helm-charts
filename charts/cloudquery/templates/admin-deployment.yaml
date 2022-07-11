@@ -22,7 +22,7 @@ spec:
           envFrom:
           - secretRef:
               name: {{ include "cloudquery.fullname" . }}-secret
-          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "cloudquery.image" . }}"
           imagePullPolicy: Always
           command: ["/bin/sh"]
           # we want users to be able to exec into this pod and be able to debug and investigate cloudquery binary, envs and runtime
@@ -37,5 +37,5 @@ spec:
           configMap:
             name: {{ include "cloudquery.fullname" . }}-config
             items:
-            - key: config.hcl
-              path: config.hcl
+            - key: config.yml
+              path: config.yml
