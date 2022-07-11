@@ -23,7 +23,7 @@ spec:
               envFrom:
               - secretRef:
                   name: {{ include "cloudquery.fullname" . }}-secret
-              image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              image: "{{ include "cloudquery.image" . }}"
               imagePullPolicy: Always
               args: ["fetch", "--config", "/app/config/config.hcl", "--enable-console-log", "--encode-json"]
               resources:

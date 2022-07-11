@@ -36,6 +36,7 @@ Kubernetes: `^1.8.0-0`
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"cloudquery/cloudquery"` |  |
+| image.tag | string | `"{{ .Chart.AppVersion }}"` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | securityContext.enabled | bool | `true` |  |

@@ -6,7 +6,7 @@ image:
   registry: ghcr.io
   repository: cloudquery/cloudquery
   # Overrides the image tag whose default is the chart appVersion
-  # tag: "0.22"
+  tag: "{{ .Chart.AppVersion }}"
   pullPolicy: IfNotPresent
 
 securityContext:
