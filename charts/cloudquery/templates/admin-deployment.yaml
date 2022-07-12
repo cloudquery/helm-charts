@@ -40,5 +40,5 @@ spec:
           configMap:
             name: {{ include "cloudquery.fullname" . }}-config
             items:
-            - key: config.yml
-              path: config.yml
+            - key: cloudquery.yml
+              path: cloudquery.yml
