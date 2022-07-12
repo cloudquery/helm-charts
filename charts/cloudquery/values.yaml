@@ -64,7 +64,7 @@ cloudwatch:
   # Service account ARN with CloudWatchAgentServerPolicy role to be able to create and write to the logs
   role_arn: "arn:aws:iam::xxxxxxx:role/cloudquery-complete-example-eksa-irsa-cloudwatch"
 
-# -- CloudQuery config.yml content
+# -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
 config: |
   cloudquery:
