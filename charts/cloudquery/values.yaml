@@ -97,6 +97,11 @@ config: |
     # list of resources to fetch
     - "*"
 
+# Optional. Additional volumes to mount in the pod.
+volumes:
+
+# Optional. Additional volumes to mount in the pod.
+volumeMounts:
 
 # resources:
 #   requests:
