@@ -33,12 +33,18 @@ spec:
           resources:
           {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+          {{- if .Values.volumeMounts }}
+          {{- toYaml .Values.volumeMounts | nindent 10 }}
+          {{- end }}
           - name: config
             mountPath: /app/config
       volumes:
-        - name: config
-          configMap:
-            name: {{ include "cloudquery.fullname" . }}-config
-            items:
-            - key: cloudquery.yml
-              path: cloudquery.yml
+      {{- if .Values.volumes }}
+      {{- toYaml .Values.volumes | nindent 6 }}
+      {{- end }}
+      - name: config
+        configMap:
+          name: {{ include "cloudquery.fullname" . }}-config
+          items:
+          - key: cloudquery.yml
+            path: cloudquery.yml
