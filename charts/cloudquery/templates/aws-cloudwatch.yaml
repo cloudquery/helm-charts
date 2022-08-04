@@ -1,9 +1,0 @@
-{{- if .Values.cloudwatch.enabled -}}
-# create amazon-cloudwatch namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: amazon-cloudwatch
-  labels:
-    name: amazon-cloudwatch
-{{- end }}

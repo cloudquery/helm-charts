@@ -56,14 +56,6 @@ envRenderSecret: {}
 # More information at: https://crontab.guru/#0_0_*_*_*
 schedule: "0 */6 * * *"
 
-# Enable cloudwatch logs when deployed on EKS
-cloudwatch:
-  enabled: false
-  cluster_name: cloudquery-complete-example
-  region: us-east-1
-  # Service account ARN with CloudWatchAgentServerPolicy role to be able to create and write to the logs
-  role_arn: "arn:aws:iam::xxxxxxx:role/cloudquery-complete-example-eksa-irsa-cloudwatch"
-
 # -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
 config: |
