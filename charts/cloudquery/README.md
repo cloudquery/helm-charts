@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.2.14](https://img.shields.io/badge/Version-0.2.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.32](https://img.shields.io/badge/AppVersion-0.32-informational?style=flat-square)
+![Version: 0.2.15](https://img.shields.io/badge/Version-0.2.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.32](https://img.shields.io/badge/AppVersion-0.32-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
@@ -20,6 +20,10 @@ The open-source cloud asset inventory powered by SQL.
 
 Kubernetes: `^1.8.0-0`
 
+| Repository | Name | Version |
+|------------|------|---------|
+| https://grafana.github.io/helm-charts | promtail | 6.2.2 |
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -38,6 +42,8 @@ Kubernetes: `^1.8.0-0`
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
+| promtail.config.clients[0].url | string | `"http://loki-gateway/loki/api/v1/push"` |  |
+| promtail.enabled | bool | `false` |  |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | securityContext.enabled | bool | `true` |  |
 | securityContext.fsGroup | int | `1001` |  |

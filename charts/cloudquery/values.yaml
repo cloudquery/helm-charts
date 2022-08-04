@@ -107,3 +107,9 @@ volumeMounts:
 #   requests:
 #     memory: 1024Mi
 #     cpu: 1000m
+
+promtail:
+  enabled: false
+  config:
+    clients:
+    - url: http://loki-gateway/loki/api/v1/push
