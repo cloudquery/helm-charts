@@ -11,6 +11,39 @@ entries:
           email: yp@cloudquery.io
     apiVersion: v2
     appVersion: "0.32"
+    created: "2022-08-05T10:38:31.254663059Z"
+    dependencies:
+    - condition: promtail.enabled
+      name: promtail
+      repository: https://grafana.github.io/helm-charts
+      version: 6.2.2
+    description: The open-source cloud asset inventory powered by SQL.
+    digest: d4183c4d367d8361bf0625288cf7ae7ebee25b4efdba99afc7988476689c4a45
+    home: https://cloudquery.io
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: cloudquery
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.3.0/cloudquery-0.3.0.tgz
+    version: 0.3.0
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: "0.32"
     created: "2022-08-01T12:33:08.185456109Z"
     description: The open-source cloud asset inventory powered by SQL.
     digest: 9091388b9373febc229d5902959ce4414259d67a45542a17558660cefd4fb6f6
@@ -650,4 +683,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
     version: 0.1.2
-generated: "2022-08-01T12:33:08.185627411Z"
+generated: "2022-08-05T10:38:31.25481916Z"
