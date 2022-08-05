@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 0.2.15](https://img.shields.io/badge/Version-0.2.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.32](https://img.shields.io/badge/AppVersion-0.32-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.32](https://img.shields.io/badge/AppVersion-0.32-informational?style=flat-square)
 
 The open-source cloud asset inventory powered by SQL.
 
@@ -28,10 +28,6 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cloudwatch.cluster_name | string | `"cloudquery-complete-example"` |  |
-| cloudwatch.enabled | bool | `false` |  |
-| cloudwatch.region | string | `"us-east-1"` |  |
-| cloudwatch.role_arn | string | `"arn:aws:iam::xxxxxxx:role/cloudquery-complete-example-eksa-irsa-cloudwatch"` |  |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext.enabled | bool | `true` |  |
 | containerSecurityContext.runAsUser | int | `1001` |  |
