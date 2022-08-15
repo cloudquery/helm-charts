@@ -13,7 +13,7 @@
   packageRules: [
     {
       matchPackageNames: ["cloudquery/cloudquery"],
-      extractVersion: "^v(?<version>.+)\\.\\d$",
+      extractVersion: "cli/^v(?<version>.+)\\.\\d$",
       postUpgradeTasks: {
         commands: [
           // Bump patch version of chart when updating the CloudQuery CLI version
