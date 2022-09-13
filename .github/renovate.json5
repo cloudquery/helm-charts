@@ -9,6 +9,12 @@
       datasourceTemplate: "github-releases",
       versioningTemplate: "loose",
     },
+    {
+      fileMatch: ["^.github/workflows/.+.ya?ml$", "^.github/renovate.json5$"],
+      matchStrings: ["jnorwood\\/helm-docs\\:(?<currentValue>.*)"],
+      depNameTemplate: "jnorwood/helm-docs",
+      datasourceTemplate: "docker",
+    },
   ],
   packageRules: [
     {
