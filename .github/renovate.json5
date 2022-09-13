@@ -1,6 +1,5 @@
 {
   extends: ["github>cloudquery/.github//.github/renovate-default.json5"],
-  schedule: ["at any time"],
   regexManagers: [
     {
       fileMatch: ["^charts/cloudquery/Chart.yaml$"],
@@ -30,6 +29,7 @@
       automerge: true,
     },
     {
+      schedule: ["at any time"],
       matchPackageNames: ["cloudquery/cloudquery"],
       extractVersion: "^cli/v(?<version>.+)\\.\\d$",
     },
