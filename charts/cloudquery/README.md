@@ -22,7 +22,7 @@ Kubernetes: `^1.8.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://grafana.github.io/helm-charts | promtail | 6.2.2 |
+| https://grafana.github.io/helm-charts | promtail | 6.2.3 |
 
 ## Values
 
@@ -31,6 +31,7 @@ Kubernetes: `^1.8.0-0`
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext.enabled | bool | `true` |  |
 | containerSecurityContext.runAsUser | int | `1001` |  |
+| deploymentAnnotations | object | `{}` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
