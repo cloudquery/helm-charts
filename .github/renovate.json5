@@ -32,13 +32,13 @@
         ],
         executionMode: "update",
       },
-      automerge: true,
     },
     {
       schedule: ["at any time"],
       matchPackageNames: ["cloudquery/cloudquery"],
       extractVersion: "^cli/v(?<version>.+)\\.\\d$",
       commitMessagePrefix: "fix(deps): ",
+      labels: ["automerge"],
     },
   ],
 }
