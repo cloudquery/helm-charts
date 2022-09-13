@@ -12,6 +12,7 @@
   ],
   packageRules: [
     {
+      matchManagers: ["helm-values", "helmv3"],
       matchPackageNames: ["cloudquery/cloudquery"],
       extractVersion: "^cli/v(?<version>.+)\\.\\d$",
       postUpgradeTasks: {
