@@ -19,7 +19,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    needs: [ok_to_test]
+    needs: [ok_to_bump]
     if: github.event_name == 'repository_dispatch' && needs.ok_to_bump.outputs.status == 'true'
     runs-on: ubuntu-latest
     steps:
