@@ -14,7 +14,6 @@
     {
       matchManagers: ["helm-values", "helmv3"],
       matchPackageNames: ["cloudquery/cloudquery"],
-      extractVersion: "^cli/v(?<version>.+)\\.\\d$",
       postUpgradeTasks: {
         commands: [
           // Bump patch version of chart when updating the CloudQuery CLI version
@@ -29,6 +28,10 @@
         executionMode: "update",
       },
       automerge: true,
+    },
+    {
+      matchPackageNames: ["cloudquery/cloudquery"],
+      extractVersion: "^cli/v(?<version>.+)\\.\\d$",
     },
   ],
 }
