@@ -105,3 +105,6 @@ promtail:
   config:
     clients:
     - url: http://loki-gateway/loki/api/v1/push
+
+# Optional. Admin Deployment annotations.
+deploymentAnnotations: {}

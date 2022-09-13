@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
       {{- include "cloudquery.selectorLabels" . | nindent 8 }}
+      annotations:
+      {{- toYaml .Values.deploymentAnnotations | nindent 8 }}
     spec:
       {{- if .Values.serviceAccount.enabled }}
       serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
