@@ -24,7 +24,7 @@
           // Bump patch version of chart when updating the CloudQuery CLI version
           "sed -i \"s/^version.*/version: $(grep '^version' charts/cloudquery/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/cloudquery/Chart.yaml",
           // Bump chart and cloudquery versions in README.md
-          'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.8.1',
+          'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
         ],
         fileFilters: [
           "charts/cloudquery/Chart.yaml",
