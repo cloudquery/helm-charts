@@ -10,7 +10,7 @@
     },
     {
       fileMatch: ["^.github/workflows/.+.ya?ml$", "^.github/renovate.json5$"],
-      matchStrings: ["jnorwood\\/helm-docs\\:(?<currentValue>.*)"],
+      matchStrings: ["jnorwood\\/helm-docs\\:(?<currentValue>.*\d)"],
       depNameTemplate: "jnorwood/helm-docs",
       datasourceTemplate: "docker",
     },
