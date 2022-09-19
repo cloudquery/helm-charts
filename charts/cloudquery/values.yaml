@@ -58,7 +58,7 @@ schedule: "0 */6 * * *"
 
 # -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
-config: |
+config:
   cloudquery:
     providers:
     - name: aws
