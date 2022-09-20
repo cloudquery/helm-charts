@@ -1,11 +1,11 @@
-name: Bump Versions
+name: Manual Triggers
 
 on:
   repository_dispatch:
-    types: [bump-command]
+    types: [bump-command, docs-command]
 
 jobs:
-  ok_to_bump:
+  ok-to-run:
     runs-on: ubuntu-latest
     outputs:
       status: ${{ steps.manually_approved.outputs.result }}
@@ -19,8 +19,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    needs: [ok_to_bump]
-    if: github.event_name == 'repository_dispatch' && needs.ok_to_bump.outputs.status == 'true'
+    needs: [ok-to-run]
+    if: github.event_name == 'repository_dispatch' && github.event_type == 'bump-command' && needs.ok-to-run.outputs.status == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -40,4 +40,27 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore: Update version and docs"
+          branch: ${{ github.event.client_payload.pull_request.head.ref }}
+  docs:
+    permissions:
+      id-token: write
+      contents: read
+    needs: [ok-to-run]
+    if: github.event_name == 'repository_dispatch' && github.event_type == 'docs-command' && needs.ok-to-run.outputs.status == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.slash_command.args.named.sha }}
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          token: ${{ secrets.GH_CQ_BOT }}
+
+      - name: Update Docs
+        run: |
+          docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: Update docs"
           branch: ${{ github.event.client_payload.pull_request.head.ref }}
