@@ -1,11 +1,11 @@
-name: Dispatch Bump Version Command
+name: Manual Approve
 
 on:
   issue_comment:
     types: [created]
 
 jobs:
-  manual-approve:
+  bump:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Bump Version Command
@@ -15,4 +15,15 @@ jobs:
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
           issue-type: pull-request
           commands: bump
+          permission: write
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Docs Generation Command
+        uses: peter-evans/slash-command-dispatch@v3
+        with:
+          token: ${{ secrets.GH_CQ_BOT }}
+          reaction-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-type: pull-request
+          commands: docs
           permission: write
