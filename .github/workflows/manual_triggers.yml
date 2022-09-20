@@ -20,7 +20,7 @@ jobs:
       id-token: write
       contents: read
     needs: [ok-to-run]
-    if: github.event_name == 'repository_dispatch' && github.event_type == 'bump-command' && needs.ok-to-run.outputs.status == 'true'
+    if: github.event_name == 'repository_dispatch' && github.event.event_type == 'bump-command' && needs.ok-to-run.outputs.status == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,7 +46,7 @@ jobs:
       id-token: write
       contents: read
     needs: [ok-to-run]
-    if: github.event_name == 'repository_dispatch' && github.event_type == 'docs-command' && needs.ok-to-run.outputs.status == 'true'
+    if: github.event_name == 'repository_dispatch' && github.event.event_type == 'docs-command' && needs.ok-to-run.outputs.status == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
