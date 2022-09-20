@@ -28,7 +28,7 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
+| config | object | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext.enabled | bool | `true` |  |
 | containerSecurityContext.runAsUser | int | `1001` |  |
 | deploymentAnnotations | object | `{}` |  |
