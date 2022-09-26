@@ -25,7 +25,11 @@ spec:
                 value: "{{ .Values.cqInstallSrc | default "HELM" }}"
               envFrom:
               - secretRef:
-                  name: {{ include "cloudquery.fullname" . }}-secret
+                  {{- if .Values.secretRef}}
+                  name: {{ .Values.secretRef }}
+                  {{- else}}
+                  name: {{ include "cloudquery.fullname" . }}-secret                
+                  {{- end}}
               image: "{{ include "cloudquery.image" . }}"
               imagePullPolicy: Always
               args: ["fetch", "--config", "/app/config/cloudquery.yml", "--enable-console-log", "--encode-json"]

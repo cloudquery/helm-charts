@@ -24,9 +24,13 @@ spec:
           env:
           - name: CQ_INSTALL_SRC
             value: "{{ .Values.cqInstallSrc | default "HELM" }}"
-          envFrom:
+          envFrom:          
           - secretRef:
+              {{- if .Values.secretRef}}
+              name: {{ .Values.secretRef }}              
+              {{- else}}              
               name: {{ include "cloudquery.fullname" . }}-secret
+              {{- end}}
           image: "{{ include "cloudquery.image" . }}"
           imagePullPolicy: Always
           command: ["/bin/sh"]
