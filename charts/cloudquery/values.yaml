@@ -52,6 +52,11 @@ envRenderSecret: {}
 
   # For any other provider checkout https://hub.cloudquery.io/providers
 
+# -- Reference to an external secret that contains sensible environment variables
+# This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
+# If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). 
+secretRef: 
+
 # -- Schedule fetch time Every 6 hours.
 # More information at: https://crontab.guru/#0_0_*_*_*
 schedule: "0 */6 * * *"
