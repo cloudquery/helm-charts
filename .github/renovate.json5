@@ -32,7 +32,6 @@
         ],
         executionMode: "update",
       },
-      automerge: true,
     },
     {
       schedule: ["at any time"],
