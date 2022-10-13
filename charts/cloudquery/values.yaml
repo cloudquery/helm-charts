@@ -35,27 +35,27 @@ serviceAccount:
 # This can be useful for auth tokens, etc
 # Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other)
 envRenderSecret: {}
-#  CQ_VAR_DSN: "postgres://postgres:pass@cloudquery-postgresql:5432/postgres?sslmode=disable"
+#  CQ_DSN: "postgresql://postgres:pass@localhost:5432/postgres"
 
-  # For AWS see https://docs.cloudquery.io/docs/getting-started/getting-started-with-aws
-  # AWS_ACCESS_KEY_ID: ""
-  # AWS_SECRET_ACCESS_KEY: ""
-  # AWS_SESSION_TOKEN: ""
+# For AWS see https://github.com/cloudquery/cloudquery/blob/main/plugins/source/aws/README.md
+# AWS_ACCESS_KEY_ID: ""
+# AWS_SECRET_ACCESS_KEY: ""
+# AWS_SESSION_TOKEN: ""
 
-  # For GCP see https://docs.cloudquery.io/docs/getting-started/getting-started-with-gcp
-  # GOOGLE_APPLICATION_CREDENTIALS: ""
+# For GCP see https://github.com/cloudquery/cloudquery/blob/main/plugins/source/gcp/README.md
+# GOOGLE_APPLICATION_CREDENTIALS: ""
 
-  # For Azure see https://docs.cloudquery.io/docs/getting-started/getting-started-with-azure
-  # AZURE_TENANT_ID: ""
-  # AZURE_CLIENT_ID: ""
-  # AZURE_CLIENT_SECRET: ""
+# For Azure see https://github.com/cloudquery/cloudquery/blob/main/plugins/source/azure/README.md
+# AZURE_TENANT_ID: ""
+# AZURE_CLIENT_ID: ""
+# AZURE_CLIENT_SECRET: ""
 
-  # For any other provider checkout https://hub.cloudquery.io/providers
+# For any other plugins visit https://cloudquery.io/docs/plugins/sources
 
 # -- Reference to an external secret that contains sensible environment variables
 # This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
-# If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). 
-secretRef: 
+# If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content).
+secretRef:
 
 # -- Schedule fetch time Every 6 hours.
 # More information at: https://crontab.guru/#0_0_*_*_*
@@ -64,35 +64,21 @@ schedule: "0 */6 * * *"
 # -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
 config: |
-  cloudquery:
-    providers:
-    - name: aws
-      version: latest
-    connection:
-      dsn: "${DSN}"
-  providers:
-  - name: aws
-    configuration:
-      # Optional, Repeated. Add an accounts block for every account you want to assume-role into and fetch data from.
-      # accounts:
-      #   - id: <UNIQUE ACCOUNT IDENTIFIER>
-      # Optional. Role ARN we want to assume when accessing this account
-      #     role_arn: < YOUR_ROLE_ARN >
-      # Optional. Named profile in config or credential file from where CQ should grab credentials
-      #     local_profile: < PROFILE_NAME >
-      # Optional. by default assumes all regions
-      # regions:
-      #   - us-east-1
-      #   - us-west-2
-      # Optional. Enable AWS SDK debug logging.
-      #   aws_debug: false
-      # The maximum number of times that a request will be retried for failures. Defaults to 10 retry attempts.
-      # max_retries: 10
-      # The maximum back off delay between attempts. The backoff delays exponentially with a jitter based on the number of attempts. Defaults to 30 seconds.
-      # max_backoff: 30
-    resources:
-    # list of resources to fetch
-    - "*"
+  kind: source
+  spec:
+    name: aws
+    path: cloudquery/aws
+    version: "v2.5.1" # latest version of aws plugin
+    tables: ["*"]
+    destinations: ["postgresql"]
+  ---
+  kind: destination
+  spec:
+    name: postgresql
+    path: cloudquery/postgresql
+    version: "v1.3.0" # latest version of postgresql plugin
+    spec:
+      connection_string: ${CQ_DSN}
 
 # Optional. Additional volumes to mount in the pod.
 volumes:
@@ -109,7 +95,7 @@ promtail:
   enabled: false
   config:
     clients:
-    - url: http://loki-gateway/loki/api/v1/push
+      - url: http://loki-gateway/loki/api/v1/push
 
 # Optional. Admin Deployment annotations.
 deploymentAnnotations: {}
