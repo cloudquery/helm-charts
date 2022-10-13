@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cloudquery
-description: The open-source cloud asset inventory powered by SQL.
+description: Open source high performance data integration platform designed for security and infrastructure teams.
 home: https://cloudquery.io
 type: application
 kubeVersion: "^1.8.0-0"
@@ -17,13 +17,13 @@ maintainers:
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.3.3
+version: 1.0.0
 
 # -- This is the version number of the application being deployed.This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.0"
+appVersion: "1.1"
 
 # https://artifacthub.io/docs/topics/repositories/
 annotations:

@@ -1,8 +1,8 @@
 # cloudquery
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.32](https://img.shields.io/badge/AppVersion-0.32-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1](https://img.shields.io/badge/AppVersion-1.1-informational?style=flat-square)
 
-The open-source cloud asset inventory powered by SQL.
+Open source high performance data integration platform designed for security and infrastructure teams.
 
 **Homepage:** <https://cloudquery.io>
 
@@ -42,6 +42,7 @@ Kubernetes: `^1.8.0-0`
 | promtail.config.clients[0].url | string | `"http://loki-gateway/loki/api/v1/push"` |  |
 | promtail.enabled | bool | `false` |  |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
+| secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
 | securityContext.enabled | bool | `true` |  |
 | securityContext.fsGroup | int | `1001` |  |
 | serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
