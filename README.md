@@ -1,21 +1,23 @@
 # CloudQuery Helm Deployment
 
-
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/cloudquery)](https://artifacthub.io/packages/search?repo=cloudquery)
 
-The open-source cloud asset inventory powered by SQL.
+CloudQuery is an [open-source](https://github.com/cloudquery/cloudquery),
+high-performance data integration platform for security and infrastructure teams.
 
-CloudQuery extracts, transforms, and loads your cloud assets into [normalized](https://hub.cloudquery.io) PostgreSQL tables. CloudQuery enables you to assess, audit, and monitor the configurations of your cloud assets.
+CloudQuery extracts, transforms, and loads configuration from cloud APIs to
+variety of supported destinations such as databases, data lakes, or streaming platforms
+for further analysis.
 
-# CloudQuery Helm Charts
+## CloudQuery Helm Charts
 
 This repository contains Helm v3 chart that deploys CloudQuery to a Kubernetes cluster.
 
-Documentation and tutorial can be found here [./charts/cloudquery](./charts/cloudquery).
+Documentation can be found here [./charts/cloudquery](./charts/cloudquery).
 
-### Other Links
+## Other Links
 
-- Homepage: https://cloudquery.io
+- Homepage: https://www.cloudquery.io
+- Documentation: https://www.cloudquery.io/docs
+- Plugins: https://www.cloudquery.io/docs/plugins/sources
 - Releases: https://github.com/cloudquery/cloudquery/releases
-- Documentation: https://docs.cloudquery.io
-- Hub (Provider and schema docs): https://hub.cloudquery.io/

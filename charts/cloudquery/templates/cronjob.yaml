@@ -32,7 +32,7 @@ spec:
                   {{- end}}
               image: "{{ include "cloudquery.image" . }}"
               imagePullPolicy: Always
-              args: ["fetch", "--config", "/app/config/cloudquery.yml", "--enable-console-log", "--encode-json"]
+              args: ["sync", "/app/config/cloudquery.yml", "--log-console"]
               resources:
               {{- toYaml .Values.resources | nindent 16 }}
               volumeMounts:
