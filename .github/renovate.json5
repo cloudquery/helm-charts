@@ -22,7 +22,7 @@
       ],
       depNameTemplate: "cloudquery/cloudquery",
       datasourceTemplate: "github-releases",
-      extractVersionTemplate: "^plugins-source-aws-v(?<version>.+)$",
+      extractVersionTemplate: "^plugins-source-aws-(?<version>.+)$",
     },
     {
       fileMatch: ["^charts/cloudquery/values.yaml$"],
@@ -31,7 +31,7 @@
       ],
       depNameTemplate: "cloudquery/cloudquery",
       datasourceTemplate: "github-releases",
-      extractVersionTemplate: "^plugins-destination-postgresql-v(?<version>.+)$",
+      extractVersionTemplate: "^plugins-destination-postgresql-(?<version>.+)$",
     },
   ],
   packageRules: [
