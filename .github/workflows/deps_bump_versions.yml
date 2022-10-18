@@ -1,6 +1,8 @@
 name: Bumps versions and docs for dependencies updates
 
-on: pull_request_target
+on:
+  pull_request_target:
+    types: [opened, reopened]
 
 jobs:
   bump:
