@@ -5,7 +5,7 @@ on: pull_request_target
 jobs:
   bump:
     runs-on: ubuntu-latest
-    if: github.event.issue.user.login == 'cq-bot' && startsWith(github.event.pull_request.title, 'fix(deps)')
+    if: github.event.pull_request.user.login == 'cq-bot' && startsWith(github.event.pull_request.title, 'fix(deps)')
     steps:
       - uses: actions/github-script@v6
         env:
