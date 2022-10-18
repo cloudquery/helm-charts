@@ -11,6 +11,7 @@ jobs:
         env:
           SHA: ${{ github.event.pull_request.head.sha }}
         with:
+          github-token: ${{ secrets.GH_CQ_BOT }}
           script: |
             const { issue: { number: issue_number }, repo: { owner, repo } } = context;
             const { SHA: sha } = process.env;
