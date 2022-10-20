@@ -9,30 +9,6 @@
       versioningTemplate: "loose",
       extractVersionTemplate: "^cli-v(?<version>.+)\\.\\d$",
     },
-    {
-      fileMatch: ["^.github/workflows/.+.ya?ml$", "^.github/renovate.json5$"],
-      matchStrings: ["jnorwood\\/helm-docs\\:(?<currentValue>.*\\d)"],
-      depNameTemplate: "jnorwood/helm-docs",
-      datasourceTemplate: "docker",
-    },
-    {
-      fileMatch: ["^charts/cloudquery/values.yaml$"],
-      matchStrings: [
-        'version: "(?<currentValue>.*)" # latest version of aws plugin',
-      ],
-      depNameTemplate: "cloudquery/cloudquery",
-      datasourceTemplate: "github-releases",
-      extractVersionTemplate: "^plugins-source-aws-(?<version>.+)$",
-    },
-    {
-      fileMatch: ["^charts/cloudquery/values.yaml$"],
-      matchStrings: [
-        'version: "(?<currentValue>.*)" # latest version of postgresql plugin',
-      ],
-      depNameTemplate: "cloudquery/cloudquery",
-      datasourceTemplate: "github-releases",
-      extractVersionTemplate: "^plugins-destination-postgresql-(?<version>.+)$",
-    },
   ],
   packageRules: [
     {
@@ -51,11 +27,6 @@
         ],
         executionMode: "update",
       },
-    },
-    {
-      schedule: ["at any time"],
-      matchPackageNames: ["cloudquery/cloudquery"],
-      commitMessagePrefix: "fix(deps): ",
     },
   ],
 }
