@@ -29,8 +29,7 @@ Kubernetes: `^1.8.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
-| containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| containerSecurityContext.capabilities.drop[0] | string | `"all"` |  |
+| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]}}` | Container security context |
 | cronJobAdditionalArgs | list | `[]` |  |
 | cronJobPodAnnotations | object | `{}` |  |
 | deploymentAnnotations | object | `{}` |  |
@@ -46,7 +45,7 @@ Kubernetes: `^1.8.0-0`
 | promtail.enabled | bool | `false` |  |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
-| securityContext.fsGroup | int | `1001` |  |
+| securityContext | object | `{"fsGroup":1001}` | Pod security context |
 | serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
 | serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |

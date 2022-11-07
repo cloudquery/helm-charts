@@ -9,9 +9,11 @@ image:
   tag:
   pullPolicy: IfNotPresent
 
+# -- Pod security context
 securityContext:
   fsGroup: 1001
 
+# -- Container security context
 containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
