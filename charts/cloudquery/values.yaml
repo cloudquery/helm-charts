@@ -9,13 +9,16 @@ image:
   tag:
   pullPolicy: IfNotPresent
 
+# -- Pod security context
 securityContext:
-  enabled: true
   fsGroup: 1001
 
+# -- Container security context
 containerSecurityContext:
-  enabled: true
-  runAsUser: 1001
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - all
 
 # -- Pod Service Account
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
@@ -97,5 +100,15 @@ promtail:
     clients:
       - url: http://loki-gateway/loki/api/v1/push
 
+# Optional. Additional labels to be applied to all resources.
+labels: {}
+
 # Optional. Admin Deployment annotations.
 deploymentAnnotations: {}
+
+# Optional. CronJob Pod annotations.
+cronJobPodAnnotations: {}
+
+# Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format)
+# More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery
+cronJobAdditionalArgs: []

@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 1.0.37](https://img.shields.io/badge/Version-1.0.37-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5](https://img.shields.io/badge/AppVersion-1.5-informational?style=flat-square)
+![Version: 1.0.38](https://img.shields.io/badge/Version-1.0.38-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5](https://img.shields.io/badge/AppVersion-1.5-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -29,8 +29,9 @@ Kubernetes: `^1.8.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
-| containerSecurityContext.enabled | bool | `true` |  |
-| containerSecurityContext.runAsUser | int | `1001` |  |
+| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]}}` | Container security context |
+| cronJobAdditionalArgs | list | `[]` |  |
+| cronJobPodAnnotations | object | `{}` |  |
 | deploymentAnnotations | object | `{}` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
 | fullnameOverride | string | `""` |  |
@@ -38,13 +39,13 @@ Kubernetes: `^1.8.0-0`
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
+| labels | object | `{}` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | promtail.config.clients[0].url | string | `"http://loki-gateway/loki/api/v1/push"` |  |
 | promtail.enabled | bool | `false` |  |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
-| securityContext.enabled | bool | `true` |  |
-| securityContext.fsGroup | int | `1001` |  |
+| securityContext | object | `{"fsGroup":1001}` | Pod security context |
 | serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
 | serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |

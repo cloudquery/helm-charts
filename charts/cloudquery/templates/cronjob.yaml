@@ -8,15 +8,26 @@ spec:
   schedule: "{{ .Values.schedule }}"
   concurrencyPolicy: Forbid
   jobTemplate:
+    metadata:
+      labels:
+        {{- include "cloudquery.labels" . | nindent 8 }}
     spec:
       backoffLimit: 0
       template:
         metadata:
           labels:
-          {{- include "cloudquery.selectorLabels" . | nindent 12 }}
+          {{- include "cloudquery.labels" . | nindent 12 }}
+          {{- if .Values.cronJobPodAnnotations }}
+          annotations:
+          {{- toYaml .Values.cronJobPodAnnotations | nindent 12 }}
+          {{- end}}
         spec:
           {{- if .Values.serviceAccount.enabled }}
           serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
+          {{- end }}
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           {{- end }}
           containers:
             - name: cloudquery
@@ -32,7 +43,13 @@ spec:
                   {{- end}}
               image: "{{ include "cloudquery.image" . }}"
               imagePullPolicy: Always
-              args: ["sync", "/app/config/cloudquery.yml", "--log-console"]
+              args:
+              - "sync"
+              - "/app/config/cloudquery.yml"
+              - "--log-console"
+              {{- range .Values.cronJobAdditionalArgs }}
+              - {{ . | quote }}
+              {{- end }}
               resources:
               {{- toYaml .Values.resources | nindent 16 }}
               volumeMounts:
@@ -41,6 +58,11 @@ spec:
               {{- end }}
               - name: config
                 mountPath: /app/config
+                readOnly: true
+              {{- if .Values.securityContext }}
+              securityContext:
+                {{- toYaml .Values.containerSecurityContext | nindent 16 }}
+              {{- end }}
           volumes:
           {{- if .Values.volumes }}
           {{- toYaml .Values.volumes | nindent 10 }}
