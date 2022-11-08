@@ -28,5 +28,9 @@
         executionMode: "update",
       },
     },
+    {
+      matchPackagePatterns: ["cloudquery/cloudquery"],
+      commitMessagePrefix: "fix(deps): ",
+    },
   ],
 }
