@@ -63,6 +63,8 @@ secretRef:
 # -- Schedule fetch time Every 6 hours.
 # More information at: https://crontab.guru/#0_0_*_*_*
 schedule: "0 */6 * * *"
+cronJobLimit: 3
+cronJobFailedJobsLimit: 1
 
 # -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
