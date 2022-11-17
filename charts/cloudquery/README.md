@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 5.0.0](https://img.shields.io/badge/Version-5.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0](https://img.shields.io/badge/AppVersion-2.0-informational?style=flat-square)
+![Version: 5.1.0](https://img.shields.io/badge/Version-5.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0](https://img.shields.io/badge/AppVersion-2.0-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -31,6 +31,8 @@ Kubernetes: `^1.8.0-0`
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]}}` | Container security context |
 | cronJobAdditionalArgs | list | `[]` |  |
+| cronJobFailedJobsLimit | int | `1` | Number of failed cronjobs to retain. |
+| cronJobLimit | int | `3` | Number of successful cronjobs to retain. |
 | cronJobPodAnnotations | object | `{}` |  |
 | deploymentAnnotations | object | `{}` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
