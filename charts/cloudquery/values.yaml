@@ -63,9 +63,9 @@ secretRef:
 # -- Schedule fetch time Every 6 hours.
 # More information at: https://crontab.guru/#0_0_*_*_*
 schedule: "0 */6 * * *"
-# -- int Number of successful cronjobs to retain.
+# -- (int) Number of successful cronjobs to retain.
 cronJobLimit: 3
-# -- int Number of failed cronjobs to retain.
+# -- (int) Number of failed cronjobs to retain.
 cronJobFailedJobsLimit: 1
 
 # -- CloudQuery cloudquery.yml content

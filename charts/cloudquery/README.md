@@ -31,8 +31,8 @@ Kubernetes: `^1.8.0-0`
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]}}` | Container security context |
 | cronJobAdditionalArgs | list | `[]` |  |
-| cronJobFailedJobsLimit | int | `1` | int Number of failed cronjobs to retain. |
-| cronJobLimit | int | `3` | int Number of successful cronjobs to retain. |
+| cronJobFailedJobsLimit | int | `1` | Number of failed cronjobs to retain. |
+| cronJobLimit | int | `3` | Number of successful cronjobs to retain. |
 | cronJobPodAnnotations | object | `{}` |  |
 | deploymentAnnotations | object | `{}` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
