@@ -6,8 +6,8 @@ metadata:
   {{- include "cloudquery.labels" . | nindent 4 }}
 spec:
   schedule: "{{ .Values.schedule }}"
-  successfulJobsHistoryLimit: "{{ .Values.cronJobLimit }}"
-  failedJobsHistoryLimit: "{{ .Values.cronJobFailedJobsLimit }}"
+  successfulJobsHistoryLimit: {{ .Values.cronJobLimit }}
+  failedJobsHistoryLimit: {{ .Values.cronJobFailedJobsLimit }}
   concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
