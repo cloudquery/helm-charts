@@ -75,7 +75,7 @@ config: |
   spec:
     name: aws
     path: cloudquery/aws
-    version: "v7.3.2" # latest version of aws plugin
+    version: "v7.4.0" # latest version of aws plugin
     tables: ["*"]
     destinations: ["postgresql"]
   ---
@@ -83,7 +83,7 @@ config: |
   spec:
     name: postgresql
     path: cloudquery/postgresql
-    version: "v1.8.0" # latest version of postgresql plugin
+    version: "v1.9.0" # latest version of postgresql plugin
     spec:
       connection_string: ${CQ_DSN}
 
