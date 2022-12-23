@@ -83,7 +83,7 @@ config: |
   spec:
     name: postgresql
     path: cloudquery/postgresql
-    version: "v1.9.0" # latest version of postgresql plugin
+    version: "v1.10.0" # latest version of postgresql plugin
     spec:
       connection_string: ${CQ_DSN}
 
