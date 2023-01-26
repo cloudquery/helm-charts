@@ -13,7 +13,7 @@
   packageRules: [
     {
       matchManagers: ["helm-values", "helmv3"],
-      matchPackageNames: ["cloudquery/cloudquery"],
+      matchSourceUrls: ["https://github.com/cloudquery/cloudquery"],
       postUpgradeTasks: {
         commands: [
           // Bump patch version of chart when updating the CloudQuery CLI version
@@ -29,7 +29,7 @@
       },
     },
     {
-      matchPackagePatterns: ["cloudquery/cloudquery"],
+      matchSourceUrls: ["https://github.com/cloudquery/cloudquery"],
       commitMessagePrefix: "fix(deps): ",
     },
   ],
