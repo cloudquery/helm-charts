@@ -104,6 +104,8 @@ volumeMounts:
 #       memory: 1024Mi
 #       cpu: 1000m
 
+# Optional. Adds the nodeSelector to the admin pod and cronjob.
+nodeSelector: {}
 
 promtail:
   enabled: false
