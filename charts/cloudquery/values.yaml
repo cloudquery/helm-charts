@@ -94,9 +94,16 @@ volumes:
 volumeMounts:
 
 # resources:
-#   requests:
-#     memory: 1024Mi
-#     cpu: 1000m
+#   admin:
+#     requests:
+#       memory: 1024Mi
+#       cpu: 1000m
+#   
+#   cronJob:
+#     requests:
+#       memory: 1024Mi
+#       cpu: 1000m
+
 
 promtail:
   enabled: false
