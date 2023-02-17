@@ -43,8 +43,11 @@ Kubernetes: `^1.8.0-0`
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | labels | object | `{}` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
+| nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |
 | promtail.config.clients[0].url | string | `"http://loki-gateway/loki/api/v1/push"` |  |
 | promtail.enabled | bool | `false` |  |
+| resources.admin | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for admin pod. |
+| resources.cronJob | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for cronJob. |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
 | securityContext | object | `{"fsGroup":1001}` | Pod security context |
