@@ -101,8 +101,8 @@ resources:
       memory: 1024Mi
       cpu: 1000m
 
-  # -- Optional. Resource requests/ limit for cronJob.  
-  cronJob: 
+  # -- Optional. Resource requests/ limit for cronJob.
+  cronJob:
     requests:
       memory: 1024Mi
       cpu: 1000m
