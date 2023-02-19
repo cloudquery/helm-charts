@@ -43,7 +43,7 @@ spec:
           # we want users to be able to exec into this pod and be able to debug and investigate cloudquery binary, envs and runtime
           args: ["-c", "echo admin container is running. run 'kubectl exec -it deploy/cloudquery-admin -- /bin/sh' to debug; while true; do sleep 10000; done"]
           resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          {{- toYaml .Values.resources.admin | nindent 12 }}
           volumeMounts:
           {{- if .Values.volumeMounts }}
           {{- toYaml .Values.volumeMounts | nindent 10 }}
@@ -54,6 +54,10 @@ spec:
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
       volumes:
       {{- if .Values.volumes }}
       {{- toYaml .Values.volumes | nindent 6 }}

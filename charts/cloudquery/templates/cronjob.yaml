@@ -53,7 +53,7 @@ spec:
               - {{ . | quote }}
               {{- end }}
               resources:
-              {{- toYaml .Values.resources | nindent 16 }}
+              {{- toYaml .Values.resources.cronJob | nindent 16 }}
               volumeMounts:
               {{- if .Values.volumeMounts }}
               {{- toYaml .Values.volumeMounts | nindent 14 }}
@@ -65,6 +65,10 @@ spec:
               securityContext:
                 {{- toYaml .Values.containerSecurityContext | nindent 16 }}
               {{- end }}
+          {{- if .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml .Values.nodeSelector | nindent 12 }}
+          {{- end }}
           volumes:
           {{- if .Values.volumes }}
           {{- toYaml .Values.volumes | nindent 10 }}

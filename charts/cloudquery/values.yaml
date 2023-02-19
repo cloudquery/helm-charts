@@ -93,10 +93,22 @@ volumes:
 # Optional. Additional volumes to mount in the pod.
 volumeMounts:
 
-# resources:
-#   requests:
-#     memory: 1024Mi
-#     cpu: 1000m
+
+resources:
+  # -- Optional. Resource requests/ limit for admin pod.
+  admin:
+    requests:
+      memory: 1024Mi
+      cpu: 1000m
+
+  # -- Optional. Resource requests/ limit for cronJob.
+  cronJob:
+    requests:
+      memory: 1024Mi
+      cpu: 1000m
+
+# -- Optional. Adds the nodeSelector to the admin pod and cronjob.
+nodeSelector: {}
 
 promtail:
   enabled: false
