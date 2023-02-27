@@ -86,7 +86,7 @@ config: |
   spec:
     name: aws
     path: cloudquery/aws
-    version: "v14.0.0" # latest version of aws plugin
+    version: "v15.2.0" # latest version of aws plugin
     tables: ["*"]
     destinations: ["postgresql"]
   ---
@@ -94,7 +94,7 @@ config: |
   spec:
     name: postgresql
     path: cloudquery/postgresql
-    version: "v2.0.10" # latest version of postgresql plugin
+    version: "v2.1.3" # latest version of postgresql plugin
     spec:
       connection_string: ${CQ_DSN}
 
@@ -104,10 +104,22 @@ volumes:
 # Optional. Additional volumes to mount in the pod.
 volumeMounts:
 
-# resources:
-#   requests:
-#     memory: 1024Mi
-#     cpu: 1000m
+
+resources:
+  # -- Optional. Resource requests/ limit for admin pod.
+  admin:
+    requests:
+      memory: 1024Mi
+      cpu: 1000m
+
+  # -- Optional. Resource requests/ limit for cronJob.
+  cronJob:
+    requests:
+      memory: 1024Mi
+      cpu: 1000m
+
+# -- Optional. Adds the nodeSelector to the admin pod and cronjob.
+nodeSelector: {}
 
 # -- Promtail sub-chart configuration
 # @default -- See [values.yaml](./values.yaml)
