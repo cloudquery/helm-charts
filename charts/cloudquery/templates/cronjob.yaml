@@ -19,7 +19,9 @@ spec:
         metadata:
           labels:
           {{- include "cloudquery.labels" . | nindent 12 }}
+          {{- if .Values.cronJobPodLabels }}
           {{- toYaml .Values.cronJobPodLabels | nindent 12 }}
+          {{- end }}
           {{- if .Values.cronJobPodAnnotations }}
           annotations:
           {{- toYaml .Values.cronJobPodAnnotations | nindent 12 }}
