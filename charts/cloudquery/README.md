@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 14.0.4](https://img.shields.io/badge/Version-14.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3](https://img.shields.io/badge/AppVersion-2.3-informational?style=flat-square)
+![Version: 14.1.0](https://img.shields.io/badge/Version-14.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3](https://img.shields.io/badge/AppVersion-2.3-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -28,12 +28,14 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| admin.enabled | bool | `true` | Enable admin container useful for debugging into cloudquery |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
-| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]}}` | Container security context |
+| containerSecurityContext | object | See [values.yaml](./values.yaml) | Container security context |
 | cronJobAdditionalArgs | list | `[]` |  |
 | cronJobFailedJobsLimit | int | `1` | Number of failed cronjobs to retain. |
 | cronJobLimit | int | `3` | Number of successful cronjobs to retain. |
 | cronJobPodAnnotations | object | `{}` |  |
+| cronJobPodLabels | object | `{}` |  |
 | deploymentAnnotations | object | `{}` |  |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
 | fullnameOverride | string | `""` |  |
@@ -44,18 +46,18 @@ Kubernetes: `^1.8.0-0`
 | labels | object | `{}` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |
-| promtail.config.clients[0].url | string | `"http://loki-gateway/loki/api/v1/push"` |  |
-| promtail.enabled | bool | `false` |  |
+| promtail | object | See [values.yaml](./values.yaml) | Promtail sub-chart configuration |
 | resources.admin | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for admin pod. |
 | resources.cronJob | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for cronJob. |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
 | securityContext | object | `{"fsGroup":1001}` | Pod security context |
-| serviceAccount | object | `{"annotations":{},"autoMount":false,"enabled":false,"name":""}` | Pod Service Account ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/ |
 | serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
 | serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |
 | serviceAccount.enabled | bool | `false` | Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set) |
+| serviceAccount.labels | object | `{}` | Additional custom label for the ServiceAccount |
 | serviceAccount.name | string | `""` | Name of an already existing service account. Setting this value disables the automatic service account creation |
+| tplConfig | bool | `false` | Pass the configuration directives and envRenderSecret through Helm's templating engine. # ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function |
 | volumeMounts | string | `nil` |  |
 | volumes | string | `nil` |  |
 

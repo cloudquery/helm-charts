@@ -19,10 +19,13 @@ spec:
         metadata:
           labels:
           {{- include "cloudquery.labels" . | nindent 12 }}
+          {{- if .Values.cronJobPodLabels }}
+          {{- toYaml .Values.cronJobPodLabels | nindent 12 }}
+          {{- end }}
           {{- if .Values.cronJobPodAnnotations }}
           annotations:
           {{- toYaml .Values.cronJobPodAnnotations | nindent 12 }}
-          {{- end}}
+          {{- end }}
         spec:
           {{- if .Values.serviceAccount.enabled }}
           serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
@@ -41,7 +44,7 @@ spec:
                   {{- if .Values.secretRef}}
                   name: {{ .Values.secretRef }}
                   {{- else}}
-                  name: {{ include "cloudquery.fullname" . }}-secret                
+                  name: {{ include "cloudquery.fullname" . }}-secret
                   {{- end}}
               image: "{{ include "cloudquery.image" . }}"
               imagePullPolicy: Always

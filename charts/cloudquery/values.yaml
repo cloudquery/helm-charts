@@ -14,13 +14,13 @@ securityContext:
   fsGroup: 1001
 
 # -- Container security context
+# @default -- See [values.yaml](./values.yaml)
 containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
       - all
 
-# -- Pod Service Account
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 serviceAccount:
   # -- Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set)
@@ -33,6 +33,13 @@ serviceAccount:
   # to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
   # eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE
   annotations: {}
+  # -- Additional custom label for the ServiceAccount
+  labels: {}
+
+admin:
+  # -- Enable admin container
+  # useful for debugging into cloudquery
+  enabled: true
 
 # -- Sensible environment variables that will be rendered as new secret object
 # This can be useful for auth tokens, etc
@@ -54,6 +61,10 @@ envRenderSecret: {}
 # AZURE_CLIENT_SECRET: ""
 
 # For any other plugins visit https://cloudquery.io/docs/plugins/sources
+
+# -- Pass the configuration directives and envRenderSecret through Helm's templating engine.
+## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
+tplConfig: false
 
 # -- Reference to an external secret that contains sensible environment variables
 # This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it.
@@ -110,6 +121,8 @@ resources:
 # -- Optional. Adds the nodeSelector to the admin pod and cronjob.
 nodeSelector: {}
 
+# -- Promtail sub-chart configuration
+# @default -- See [values.yaml](./values.yaml)
 promtail:
   enabled: false
   config:
@@ -124,6 +137,9 @@ deploymentAnnotations: {}
 
 # Optional. CronJob Pod annotations.
 cronJobPodAnnotations: {}
+
+# Optional. CronJob Pod labels.
+cronJobPodLabels: {}
 
 # Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format)
 # More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery

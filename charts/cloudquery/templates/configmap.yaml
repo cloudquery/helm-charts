@@ -6,4 +6,8 @@ metadata:
   {{- include "cloudquery.labels" . | nindent 4 }}
 data:
   cloudquery.yml: |-
+  {{- if .Values.tplConfig }}
+  {{- tpl .Values.config $ | nindent 4 }}
+  {{- else }}
   {{- .Values.config | nindent 4 }}
+  {{- end }}
