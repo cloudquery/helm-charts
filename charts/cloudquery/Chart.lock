@@ -1,6 +1,6 @@
 dependencies:
 - name: promtail
   repository: https://grafana.github.io/helm-charts
-  version: 6.8.2
-digest: sha256:0d20710d2da81ed19fe3bad0fb2f00245743fd83889bae458f0662a6c4f9d339
-generated: "2023-02-01T00:38:18.446624025Z"
+  version: 6.9.0
+digest: sha256:1f47744018607cf8c70402ad922ecccf16bb0fa2aa75f490818542414313a83a
+generated: "2023-03-01T00:47:15.716854946Z"
