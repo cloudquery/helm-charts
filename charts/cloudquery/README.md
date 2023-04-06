@@ -43,6 +43,7 @@ Kubernetes: `^1.8.0-0`
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
+| job.enabled | bool | `false` | Create a job that runs once upon installation. |
 | labels | object | `{}` |  |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |

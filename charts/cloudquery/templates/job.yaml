@@ -1,0 +1,78 @@
+{{- if and .Values.job.enabled .Release.IsInstall }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cloudquery.fullname" . }}
+  labels:
+  {{- include "cloudquery.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+      {{- include "cloudquery.labels" . | nindent 12 }}
+      {{- if .Values.cronJobPodLabels }}
+      {{- toYaml .Values.cronJobPodLabels | nindent 12 }}
+      {{- end }}
+      {{- if .Values.cronJobPodAnnotations }}
+      annotations:
+      {{- toYaml .Values.cronJobPodAnnotations | nindent 12 }}
+      {{- end }}
+    spec:
+      {{- if .Values.serviceAccount.enabled }}
+      serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
+      {{- end }}
+      {{- if .Values.securityContext }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 12 }}
+      {{- end }}
+      containers:
+        - name: cloudquery
+          env:
+          - name: CQ_INSTALL_SRC
+            value: "{{ .Values.cqInstallSrc | default "HELM" }}"
+          envFrom:
+          - secretRef:
+              {{- if .Values.secretRef}}
+              name: {{ .Values.secretRef }}
+              {{- else}}
+              name: {{ include "cloudquery.fullname" . }}-secret
+              {{- end}}
+          image: "{{ include "cloudquery.image" . }}"
+          imagePullPolicy: Always
+          args:
+          - "sync"
+          - "/app/config/cloudquery.yml"
+          - "--log-console"
+          {{- range .Values.cronJobAdditionalArgs }}
+          - {{ . | quote }}
+          {{- end }}
+          resources:
+          {{- toYaml .Values.resources.cronJob | nindent 16 }}
+          volumeMounts:
+          {{- if .Values.volumeMounts }}
+          {{- toYaml .Values.volumeMounts | nindent 14 }}
+          {{- end }}
+          - name: config
+            mountPath: /app/config
+            readOnly: true
+          {{- if .Values.securityContext }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 16 }}
+          {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 12 }}
+      {{- end }}
+      volumes:
+      {{- if .Values.volumes }}
+      {{- toYaml .Values.volumes | nindent 10 }}
+      {{- end }}
+      - name: config
+        configMap:
+          name: {{ include "cloudquery.fullname" . }}-config
+          items:
+          - key: cloudquery.yml
+            path: cloudquery.yml
+      restartPolicy: Never
+{{- end }}
