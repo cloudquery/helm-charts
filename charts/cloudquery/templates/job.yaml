@@ -51,7 +51,7 @@ spec:
           {{- toYaml .Values.resources.cronJob | nindent 16 }}
           volumeMounts:
           {{- if .Values.volumeMounts }}
-          {{- toYaml .Values.volumeMounts | nindent 14 }}
+          {{- toYaml .Values.volumeMounts | nindent 10 }}
           {{- end }}
           - name: config
             mountPath: /app/config
@@ -66,7 +66,7 @@ spec:
       {{- end }}
       volumes:
       {{- if .Values.volumes }}
-      {{- toYaml .Values.volumes | nindent 10 }}
+      {{- toYaml .Values.volumes | nindent 6 }}
       {{- end }}
       - name: config
         configMap:
