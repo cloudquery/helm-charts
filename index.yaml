@@ -11,6 +11,40 @@ entries:
           email: yp@cloudquery.io
     apiVersion: v2
     appVersion: "3.5"
+    created: "2023-06-15T18:32:47.838711942Z"
+    dependencies:
+    - condition: promtail.enabled
+      name: promtail
+      repository: https://grafana.github.io/helm-charts
+      version: 6.11.2
+    description: Open source high performance data integration platform designed for
+      security and infrastructure teams.
+    digest: 71293cb4eadbc6eb4a6e6f213cb4a04de2dc5ab4bdc9eb25f41ee48f61a39652
+    home: https://cloudquery.io
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: cloudquery
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-20.0.7/cloudquery-20.0.7.tgz
+    version: 20.0.7
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: "3.5"
     created: "2023-06-13T12:38:08.439280028Z"
     dependencies:
     - condition: promtail.enabled
@@ -6868,4 +6902,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
     version: 0.1.2
-generated: "2023-06-13T12:38:08.440106684Z"
+generated: "2023-06-15T18:32:47.839537951Z"
