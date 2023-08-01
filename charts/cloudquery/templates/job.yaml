@@ -19,7 +19,7 @@ spec:
       {{- toYaml .Values.cronJobPodAnnotations | nindent 12 }}
       {{- end }}
     spec:
-      {{- if .Values.serviceAccount.enabled }}
+      {{- if ne (include "cloudquery.serviceAccountName" .) "default" }}
       serviceAccountName: {{ include "cloudquery.serviceAccountName" . }}
       {{- end }}
       {{- if .Values.securityContext }}
