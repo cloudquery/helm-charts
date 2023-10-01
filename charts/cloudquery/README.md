@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 26.0.23](https://img.shields.io/badge/Version-26.0.23-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.21](https://img.shields.io/badge/AppVersion-3.21-informational?style=flat-square)
+![Version: 26.0.24](https://img.shields.io/badge/Version-26.0.24-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.21](https://img.shields.io/badge/AppVersion-3.21-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
