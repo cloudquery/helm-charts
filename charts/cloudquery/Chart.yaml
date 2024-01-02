@@ -23,7 +23,7 @@ version: 27.0.9
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "3.29"
+appVersion: "4.3"
 
 # https://artifacthub.io/docs/topics/repositories/
 annotations:
