@@ -91,7 +91,7 @@ config: |
     name: aws
     path: cloudquery/aws
     version: "v23.3.1" # latest version of aws plugin
-    tables: ["*"]
+    tables: ["aws_ec2_instances"]
     destinations: ["postgresql"]
   ---
   kind: destination
