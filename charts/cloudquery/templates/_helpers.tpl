@@ -50,10 +50,10 @@ Common annotations
 */}}
 {{- define "cloudquery.annotations" -}}
 {{- if .Values.annotations }}
-  annotations:
-    {{- range $key, $value := .Values.annotations }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+{{ indent 2 "annotations:" }}
+{{- range $key, $value := .Values.annotations }}
+{{ indent 4 $key }}: {{ $value | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 
