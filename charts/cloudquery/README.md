@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 31.0.2](https://img.shields.io/badge/Version-31.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.1](https://img.shields.io/badge/AppVersion-5.1-informational?style=flat-square)
+![Version: 31.1.0](https://img.shields.io/badge/Version-31.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.1](https://img.shields.io/badge/AppVersion-5.1-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -29,14 +29,15 @@ Kubernetes: `^1.8.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | admin.enabled | bool | `true` | Enable admin container useful for debugging into cloudquery |
+| annotations | object | `{}` | Optional. Additional annotations to be applied to all resources. |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext | object | See [values.yaml](./values.yaml) | Container security context |
-| cronJobAdditionalArgs | list | `[]` |  |
+| cronJobAdditionalArgs | list | `[]` | Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format) More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery |
 | cronJobFailedJobsLimit | int | `1` | Number of failed cronjobs to retain. |
 | cronJobLimit | int | `3` | Number of successful cronjobs to retain. |
-| cronJobPodAnnotations | object | `{}` |  |
-| cronJobPodLabels | object | `{}` |  |
-| deploymentAnnotations | object | `{}` |  |
+| cronJobPodAnnotations | object | `{}` | Optional. CronJob Pod annotations. |
+| cronJobPodLabels | object | `{}` | Optional. CronJob Pod labels. |
+| deploymentAnnotations | object | `{}` | Optional. Admin Deployment annotations. |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -44,7 +45,7 @@ Kubernetes: `^1.8.0-0`
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | job.enabled | bool | `false` | Create a job that runs once upon installation. |
-| labels | object | `{}` |  |
+| labels | object | `{}` | Optional. Additional labels to be applied to all resources. |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |
 | promtail | object | See [values.yaml](./values.yaml) | Promtail sub-chart configuration |

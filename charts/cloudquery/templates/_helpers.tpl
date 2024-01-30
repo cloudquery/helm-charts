@@ -46,6 +46,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Common annotations
+*/}}
+{{- define "cloudquery.annotations" -}}
+{{- if .Values.annotations }}
+{{ indent 2 "annotations:" }}
+{{- range $key, $value := .Values.annotations }}
+{{ indent 4 $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "cloudquery.selectorLabels" -}}
