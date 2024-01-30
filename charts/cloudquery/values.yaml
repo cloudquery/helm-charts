@@ -133,18 +133,21 @@ promtail:
     clients:
       - url: http://loki-gateway/loki/api/v1/push
 
-# Optional. Additional labels to be applied to all resources.
+# -- Optional. Additional labels to be applied to all resources.
 labels: {}
 
-# Optional. Admin Deployment annotations.
+# -- Optional. Additional annotations to be applied to all resources.
+annotations: {}
+
+# -- Optional. Admin Deployment annotations.
 deploymentAnnotations: {}
 
-# Optional. CronJob Pod annotations.
+# -- Optional. CronJob Pod annotations.
 cronJobPodAnnotations: {}
 
-# Optional. CronJob Pod labels.
+# -- Optional. CronJob Pod labels.
 cronJobPodLabels: {}
 
-# Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format)
+# -- Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format)
 # More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery
 cronJobAdditionalArgs: []

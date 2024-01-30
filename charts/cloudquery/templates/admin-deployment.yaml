@@ -5,6 +5,7 @@ metadata:
   name: {{ include "cloudquery.fullname" . }}-admin
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
+  {{- include "cloudquery.annotations" . }}
 spec:
   replicas: 1
   selector:

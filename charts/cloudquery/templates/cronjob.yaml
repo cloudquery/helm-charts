@@ -4,6 +4,7 @@ metadata:
   name: {{ include "cloudquery.fullname" . }}-cron
   labels:
   {{- include "cloudquery.labels" . | nindent 4 }}
+  {{- include "cloudquery.annotations" . }}
 spec:
   schedule: "{{ .Values.schedule }}"
   successfulJobsHistoryLimit: {{ .Values.cronJobLimit }}
