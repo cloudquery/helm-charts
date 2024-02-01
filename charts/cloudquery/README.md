@@ -22,7 +22,7 @@ Kubernetes: `^1.8.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://grafana.github.io/helm-charts | promtail | 6.15.3 |
+| https://grafana.github.io/helm-charts | promtail | 6.15.5 |
 
 ## Values
 
