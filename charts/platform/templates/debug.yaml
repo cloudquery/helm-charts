@@ -1,0 +1,30 @@
+{{- if .Values.debug.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-debug
+  labels:
+    app: busybox-debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-debug
+  template:
+    metadata:
+      labels:
+        app: busybox-debug
+    spec:
+      containers:
+        - name: busybox
+          image: busybox:latest
+          command: ["sleep", "3600"]
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+          securityContext:
+            allowPrivilegeEscalation: true
+          stdin: true
+          tty: true
+{{- end }}

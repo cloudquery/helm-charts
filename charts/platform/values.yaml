@@ -1,0 +1,90 @@
+platform:
+  # -- The number of replicas to deploy
+  replicaCount: 1
+
+  image:
+    # -- The image repository to pull from
+    repository: us-east1-docker.pkg.dev/cq-cloud-prod/platform/full
+    # -- The image version to pull
+    tag: v0.8.0
+    pullPolicy: IfNotPresent
+
+  # -- Override the default name
+  nameOverride: ""
+  # -- Override the full name
+  fullNameOverride: ""
+
+  serviceAccount:
+    create: false
+    automount: true
+    annotations: {}
+    name: ""
+
+  # -- Addition pod annotations
+  podAnnotations: {}
+
+  # -- Addition pod labels
+  podLabels: {}
+
+  # -- Specify the pod-level security context
+  podSecurityContext: {}
+
+  # -- Specify the container-level security context
+  containerSecurityContext: {}
+
+  # -- Specify the ports the container exposes
+  service:
+    uiType: ClusterIP
+    uiPort: 3000
+    apiType: ClusterIP
+    apiPort: 4444
+    storageType: ClusterIP
+    storagePort: 4445
+
+  # -- Deployment resources
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+  livenessProbe:
+    periodSeconds: 60
+    httpGet:
+      path: /
+      port: api
+  readinessProbe:
+    periodSeconds: 30
+    httpGet:
+      path: /
+      port: api
+
+  # -- Additional volumes on the output Deployment definition.
+  volumes: []
+
+  # -- Additional volumeMounts on the output Deployment definition.
+  volumeMounts: []
+
+  externalDependencies:
+    # -- Required: The DSN for the Postgres database
+    postgresql_dsn: ""
+
+    # -- Required: The DSN for the ClickHouse database
+    clickhouse_dsn: ""
+
+# -- Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: false
+
+debug:
+  # -- Optional. Enable debug mode.
+  enabled: false
