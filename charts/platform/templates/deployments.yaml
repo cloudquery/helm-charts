@@ -54,6 +54,13 @@ spec:
           env:
             - name: HOSTNAME
               value: 0.0.0.0
+            {{- if .Values.platform.activationKey }}
+            - name: CQAPI_LOCAL_ACTIVATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: activationKey
+            {{- end }}
             - name: CQAPI_DB_DSN
               valueFrom:
                 secretKeyRef:

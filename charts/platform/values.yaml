@@ -72,6 +72,9 @@ platform:
   # -- Additional volumeMounts on the output Deployment definition.
   volumeMounts: []
 
+  # -- Activation key for the self-hosted platform
+  activationKey: ""
+
   externalDependencies:
     # -- Required: The DSN for the Postgres database
     postgresql_dsn: ""

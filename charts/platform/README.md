@@ -10,7 +10,8 @@ First create a `secrets.yaml` file with the following content:
 
 ```console
 cat <<EOF > secrets.yml
-∙ platform:
+platform:
+  activationKey: "<activation_key>"
   externalDependencies:
     postgresql_dsn: "<postgres_dsn>"
     clickhouse_dsn: "<clickhouse_dsn>"
@@ -35,6 +36,7 @@ $ helm install platform -n cloudquery --create-namespace cloudquery/platform --v
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | debug.enabled | bool | `false` | Optional. Enable debug mode. |
+| platform.activationKey | string | `""` | Activation key for the self-hosted platform |
 | platform.containerSecurityContext | object | `{}` | Specify the container-level security context |
 | platform.externalDependencies.clickhouse_dsn | string | `""` | Required: The DSN for the ClickHouse database |
 | platform.externalDependencies.postgresql_dsn | string | `""` | Required: The DSN for the Postgres database |
