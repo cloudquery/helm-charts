@@ -1,0 +1,4 @@
+platform:
+  externalDependencies:
+    postgresql_dsn: "postgres://postgres:pass@host.docker.internal:5432/postgres?sslmode=disable"
+    clickhouse_dsn: "clickhouse://user:pass@host.docker.internal:9000/assets"
