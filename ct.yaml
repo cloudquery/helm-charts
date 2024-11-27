@@ -5,5 +5,6 @@ chart-dirs:
   - charts
 chart-repos:
   - cloudquery=https://cloudquery.github.io/helm-charts/
+  - bitnami=https://charts.bitnami.com/bitnami/
   - grafana=https://grafana.github.io/helm-charts/
 helm-extra-args: --timeout 600s
