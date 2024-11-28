@@ -11,7 +11,6 @@ spec:
   {{- if .Values.cronJobSuspend }}
   startingDeadlineSeconds: 5
   {{- end }}
-  startingDeadlineSeconds: {{ if .Values.suspend }}
   successfulJobsHistoryLimit: {{ .Values.cronJobLimit }}
   failedJobsHistoryLimit: {{ .Values.cronJobFailedJobsLimit }}
   concurrencyPolicy: Forbid
