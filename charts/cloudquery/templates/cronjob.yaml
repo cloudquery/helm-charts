@@ -7,6 +7,11 @@ metadata:
   {{- include "cloudquery.annotations" . }}
 spec:
   schedule: "{{ .Values.schedule }}"
+  suspend: {{ .Values.cronJobSuspend }}
+  {{- if .Values.cronJobSuspend }}
+  startingDeadlineSeconds: 5
+  {{- end }}
+  startingDeadlineSeconds: {{ if .Values.suspend }}
   successfulJobsHistoryLimit: {{ .Values.cronJobLimit }}
   failedJobsHistoryLimit: {{ .Values.cronJobFailedJobsLimit }}
   concurrencyPolicy: Forbid
