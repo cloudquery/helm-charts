@@ -153,4 +153,4 @@ cronJobPodLabels: {}
 cronJobAdditionalArgs: []
 
 # -- Optional. Disable the execution of the Cronjob
-cronJobSuspend: false 
+cronJobSuspend: false
