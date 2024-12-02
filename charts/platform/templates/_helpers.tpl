@@ -65,5 +65,5 @@ Create the name of the service account to use
 Return the image to use depending on the AppVersion and image tag defined
 */}}
 {{- define "platform.image" -}}
-{{ .Values.platform.image.repository }}:{{ .Values.platform.image.tag | default .Chart.AppVersion }}
+{{ .Values.platform.image.repository }}:{{ if .Values.platform.image.tag }}{{ .Values.platform.image.tag }}{{ else }}v{{ .Chart.AppVersion }}{{ end }}
 {{- end }}
