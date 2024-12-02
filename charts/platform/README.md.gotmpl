@@ -1,0 +1,31 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+First create a `secrets.yaml` file with the following content:
+
+```console
+cat <<EOF > secrets.yml
+platform:
+  activationKey: "<activation_key>"
+  externalDependencies:
+    postgresql_dsn: "<postgres_dsn>"
+    clickhouse_dsn: "<clickhouse_dsn>"
+EOF
+```
+
+To install the chart with the release name `platform`:
+
+```console
+$ helm repo add cloudquery https://cloudquery.github.io/helm-charts/
+$ helm install platform -n cloudquery --create-namespace cloudquery/{{ template "chart.name" . }} --values ./secrets.yml
+```
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

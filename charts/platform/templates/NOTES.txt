@@ -1,0 +1,8 @@
+The CloudQuery Platform UI can be accessed via port {{ .Values.platform.service.uiPort }} and the API server via port {{ .Values.platform.service.apiPort }}.
+
+1. Setup port forwarding to access the UI and API servers by doing the following:
+
+   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "platform.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 3000 4444
+
+2. Visit the UI on http://localhost:3000 using username `admin@localhost` and initial password of `pass`

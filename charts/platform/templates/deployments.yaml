@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "platform.fullName" . }}
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.platform.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "platform.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.platform.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "platform.labels" . | nindent 8 }}
+        {{- with .Values.platform.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.platform.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "platform.serviceAccount" . }}
+      securityContext:
+        {{- toYaml .Values.platform.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: {{ .Chart.Name }}-init
+          image: "{{ include "platform.image" . }}"
+          command: [ "/backend/localadmin", "init" ]
+          env:
+            - name: CQAPI_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: postgresqlDSN
+            - name: CQAPI_LOCAL_JWT_PRIVATE_KEY_FILE
+              value: /etc/jwt/jwt-private-key.pem
+          volumeMounts:
+            - name: jwt-private-key
+              mountPath: /etc/jwt/jwt-private-key.pem
+              subPath: jwtPrivateKey
+              readOnly: true
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.platform.containerSecurityContext | nindent 12 }}
+          image: "{{ include "platform.image" . }}"
+          imagePullPolicy: {{ .Values.platform.image.pullPolicy }}
+          env:
+            - name: HOSTNAME
+              value: 0.0.0.0
+            {{- if .Values.platform.activationKey }}
+            - name: CQAPI_LOCAL_ACTIVATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: activationKey
+            {{- end }}
+            - name: CQAPI_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: postgresqlDSN
+            - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: clickhouseDSN
+            - name: CQAPI_LOCAL_JWT_PRIVATE_KEY_FILE
+              value: /etc/jwt/jwt-private-key.pem
+            - name: CQAPI_REDIS_ADDR
+              value: redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379
+          ports:
+            - name: ui
+              containerPort: {{ .Values.platform.service.uiPort }}
+              protocol: TCP
+            - name: api
+              containerPort: {{ .Values.platform.service.apiPort }}
+              protocol: TCP
+            - name: storage
+              containerPort: {{ .Values.platform.service.storagePort }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.platform.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.platform.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.platform.resources | nindent 12 }}
+          volumeMounts:
+          {{- with .Values.platform.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+            - name: jwt-private-key
+              mountPath: /etc/jwt/jwt-private-key.pem
+              subPath: jwtPrivateKey
+              readOnly: true
+      volumes:
+      {{- with .Values.platform.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+        - name: jwt-private-key
+          secret:
+            secretName: {{ include "platform.fullName" . }}-secrets
+      {{- with .Values.platform.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.platform.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.platform.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
