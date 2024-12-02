@@ -74,7 +74,7 @@ spec:
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY_FILE
               value: /etc/jwt/jwt-private-key.pem
             - name: CQAPI_REDIS_ADDR
-              value: redis://platform-redis-master:6379
+              value: redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379
           ports:
             - name: ui
               containerPort: {{ .Values.platform.service.uiPort }}
