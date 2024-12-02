@@ -151,3 +151,6 @@ cronJobPodLabels: {}
 # -- Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format)
 # More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery
 cronJobAdditionalArgs: []
+
+# -- Optional. Disable the execution of the Cronjob
+cronJobSuspend: false
