@@ -7,6 +7,22 @@ on: pull_request
 jobs:
   lint-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: pass
+      clickhouse:
+        image:  clickhouse/clickhouse-server
+        ports:
+          - 9000:9000
+        env:
+          CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+          CLICKHOUSE_DB: assets
+          CLICKHOUSE_USER: user
+          CLICKHOUSE_PASSWORD: pass
     steps:
       - name: Checkout
         uses: actions/checkout@v4
