@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.platform.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the image to use depending on the AppVersion and image tag defined
+*/}}
+{{- define "platform.image" -}}
+{{ .Values.platform.image.repository }}:{{ .Values.platform.image.tag | default .Chart.AppVersion }}
+{{- end }}

@@ -9,6 +9,14 @@
       versioningTemplate: "loose",
       extractVersionTemplate: "^cli-v(?<version>.+)\\.\\d$",
     },
+    {
+      fileMatch: ["^charts/platform/Chart.yaml$"],
+      matchStrings: ['version: "(?<currentValue>.*)"'],
+      depNameTemplate: "cloudquery/cloud",
+      datasourceTemplate: "github-releases",
+      versioningTemplate: "loose",
+      extractVersionTemplate: "^v(?<version>.+)$",
+    },
   ],
   packageRules: [
     {
@@ -29,7 +37,24 @@
       },
     },
     {
-      matchSourceUrls: ["https://github.com/cloudquery/cloudquery"],
+      matchManagers: ["helm-values", "helmv3"],
+      matchSourceUrls: ["https://github.com/cloudquery/cloud"],
+      postUpgradeTasks: {
+        commands: [
+          // Bump patch version of chart when updating the CloudQuery CLI version
+          "sed -i \"s/^version.*/version: $(grep '^version' charts/platform/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/platform/Chart.yaml",
+          // Bump chart and cloudquery versions in README.md
+          'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
+        ],
+        fileFilters: [
+          "charts/platform/Chart.yaml",
+          "charts/platform/README.md",
+        ],
+        executionMode: "update",
+      },
+    },
+    {
+      matchSourceUrls: ["https://github.com/cloudquery/cloudquery", "https://github.com/cloudquery/cloud"],
       commitMessagePrefix: "fix(deps): ",
     },
   ],

@@ -5,8 +5,8 @@ platform:
   image:
     # -- The image repository to pull from
     repository: us-east1-docker.pkg.dev/cq-cloud-prod/platform/full
-    # -- The image version to pull
-    tag: v0.8.0
+    # -- (string) Overrides the image tag whose default is the chart appVersion
+    tag:
     pullPolicy: IfNotPresent
 
   # -- Override the default name

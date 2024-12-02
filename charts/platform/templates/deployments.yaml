@@ -30,7 +30,7 @@ spec:
         {{- toYaml .Values.platform.podSecurityContext | nindent 8 }}
       initContainers:
         - name: {{ .Chart.Name }}-init
-          image: "{{ .Values.platform.image.repository }}:{{ .Values.platform.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "platform.image" . }}"
           command: [ "/backend/localadmin", "init" ]
           env:
             - name: CQAPI_DB_DSN
@@ -49,7 +49,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.platform.containerSecurityContext | nindent 12 }}
-          image: "{{ .Values.platform.image.repository }}:{{ .Values.platform.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.platform.image.pullPolicy }}
           env:
             - name: HOSTNAME

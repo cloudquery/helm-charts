@@ -43,7 +43,7 @@ $ helm install platform -n cloudquery --create-namespace cloudquery/platform --v
 | platform.fullNameOverride | string | `""` | Override the full name |
 | platform.image.pullPolicy | string | `"IfNotPresent"` |  |
 | platform.image.repository | string | `"us-east1-docker.pkg.dev/cq-cloud-prod/platform/full"` | The image repository to pull from |
-| platform.image.tag | string | `"v0.8.0"` | The image version to pull |
+| platform.image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | platform.livenessProbe.httpGet.path | string | `"/"` |  |
 | platform.livenessProbe.httpGet.port | string | `"api"` |  |
 | platform.livenessProbe.periodSeconds | int | `60` |  |
