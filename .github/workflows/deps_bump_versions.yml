@@ -2,6 +2,8 @@ name: Bumps versions and docs for dependencies updates
 
 on:
   pull_request_target:
+    paths-ignore:
+      - 'charts/platform/**'
     types: [opened, reopened]
 
 jobs:
