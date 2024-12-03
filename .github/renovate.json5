@@ -11,7 +11,7 @@
     },
     {
       fileMatch: ["^charts/platform/Chart.yaml$"],
-      matchStrings: ['version: "(?<currentValue>.*)"'],
+      matchStrings: ['appVersion: "(?<currentValue>.*)"'],
       depNameTemplate: "cloudquery/cloud",
       datasourceTemplate: "github-releases",
       versioningTemplate: "loose",
