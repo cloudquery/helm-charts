@@ -18,5 +18,6 @@
     }
   },
   "tag-separator": "-",
+  "pull-request-title-pattern": "chore${scope}: Release${component} v${version}",
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
 }
