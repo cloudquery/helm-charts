@@ -1,4 +1,4 @@
-The CloudQuery Platform UI can be accessed via port {{ .Values.service.uiPort }} and the API server via port {{ .Values.service.apiPort }}.
+The CloudQuery Platform UI can be accessed via port {{ .Values.service.proxyPort }} and the API server via port {{ .Values.service.apiPort }}.
 
 1. Setup port forwarding to access the UI and API servers by doing the following:
 

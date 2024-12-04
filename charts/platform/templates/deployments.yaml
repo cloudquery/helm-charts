@@ -76,6 +76,9 @@ spec:
             - name: CQAPI_REDIS_ADDR
               value: redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379
           ports:
+            - name: proxy
+              containerPort: {{ .Values.service.proxyPort }}
+              protocol: TCP
             - name: ui
               containerPort: {{ .Values.service.uiPort }}
               protocol: TCP
