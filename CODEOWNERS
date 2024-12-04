@@ -1,1 +1,3 @@
-*       @cloudquery/cloudquery-framework 
+*       @cloudquery/cloudquery-framework
+
+/charts/platform @cloudquery/cloudquery-backend
