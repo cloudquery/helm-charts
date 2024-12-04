@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "platform.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.platform.service.apiType }}
+  type: {{ .Values.service.apiType }}
   ports:
-    - port: {{ .Values.platform.service.uiPort }}
+    - port: {{ .Values.service.uiPort }}
       targetPort: ui
       protocol: TCP
       name: ui

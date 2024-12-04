@@ -9,11 +9,10 @@ First create a `secrets.yaml` file with the following content:
 
 ```console
 cat <<EOF > secrets.yml
-platform:
-  activationKey: "<activation_key>"
-  externalDependencies:
-    postgresql_dsn: "<postgres_dsn>"
-    clickhouse_dsn: "<clickhouse_dsn>"
+activationKey: "<activation_key>"
+externalDependencies:
+  postgresql_dsn: "<postgres_dsn>"
+  clickhouse_dsn: "<clickhouse_dsn>"
 EOF
 ```
 
