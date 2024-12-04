@@ -3,9 +3,53 @@
 
 {{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
-## Installing the Chart
+## Quickstart
 
-First create a `secrets.yaml` file with the following content:
+The following shows how to install the chart in a local [kind](https://kind.sigs.k8s.io/) cluster, configured to expose ports 80 and 443 on the host machine for ingress.
+
+First create a `kind.config` file with the following content:
+
+```console
+cat <<EOF > kind.config
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
+EOF
+```
+
+Create the kind cluster:
+
+```console
+kind create cluster --config kind.config
+```
+
+Install the NGINX Ingress Controller:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+```
+
+Wait for the ingress controller to be ready:
+
+```console
+kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
+```
+
+Create a `secrets.yaml` file with the following content, replacing `<activation_key>`, `<postgres_dsn>`, and `<clickhouse_dsn>` with the appropriate values:
 
 ```console
 cat <<EOF > secrets.yml
@@ -16,12 +60,34 @@ externalDependencies:
 EOF
 ```
 
+Create an `ingress.yaml` file with the following content:
+
+```console
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: local.cloudquery.io
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+```
+
 To install the chart with the release name `platform`:
 
 ```console
 $ helm repo add cloudquery https://cloudquery.github.io/helm-charts/
-$ helm install platform -n cloudquery --create-namespace cloudquery/{{ template "chart.name" . }} --values ./secrets.yml
+$ helm install platform -n cloudquery --create-namespace cloudquery/{{ template "chart.name" . }} --values ./secrets.yml --values ./ingress.yml
 ```
+
+To access the cloudquery platform, add the following line to your `/etc/hosts` file:
+
+```console
+127.0.0.1 local.cloudquery.io
+```
+
+The cloudquery platform should now be available at [http://local.cloudquery.io](http://local.cloudquery.io).
 
 {{ template "chart.requirementsSection" . }}
 

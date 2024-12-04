@@ -83,6 +83,23 @@ externalDependencies:
   # -- Required: The DSN for the ClickHouse database
   clickhouse_dsn: ""
 
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  # -- Optional. Enable ingress.
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: local.cloudquery.io
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: local-cloudquery-io-tls
+  #    hosts:
+  #      - local.cloudquery.io
+
 # -- Redis configuration
 redis:
   enabled: true
