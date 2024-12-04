@@ -10338,6 +10338,26 @@ entries:
     version: 0.1.2
   platform:
   - apiVersion: v2
+    appVersion: 0.14.2
+    created: "2024-12-04T20:55:09.825880784Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~20.2.1
+    description: Helm chart for installing the CloudQuery self-hosted platform
+    digest: 7305a505d3fff391a587640eca134659aaf5160cc8e7e9aede9ed4e57f0d530f
+    home: www.cloudquery.io
+    icon: https://cloudquery.io/assets/img/logo.png
+    maintainers:
+    - email: info@cloudquery.io
+      name: mnorbury
+    name: platform
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/platform-0.1.2/platform-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 0.14.0
     created: "2024-12-04T11:11:49.758339941Z"
     dependencies:
@@ -10377,4 +10397,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/platform-0.1.0/platform-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-04T11:15:55.449112569Z"
+generated: "2024-12-04T20:55:09.826391621Z"
