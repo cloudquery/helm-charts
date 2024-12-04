@@ -44,7 +44,12 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.1
 
-      - name: Run chart-testing (lint)
+      - name: Run chart-testing (lint PR)
+        if: ${{ !startsWith(github.head_ref || '', 'release-please-') }}
+        run: make lint-pr
+
+      - name: Run chart-testing (lint release)
+        if: ${{ startsWith(github.head_ref || '', 'release-please-') }}
         run: make lint
 
       - name: Run chart-testing (test)
