@@ -40,6 +40,7 @@ jobs:
         run: |
           helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
           helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run chart-releaser
         if: ${{ steps.release.outputs.releases_created }}
