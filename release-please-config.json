@@ -16,6 +16,7 @@
       "component": "cloudquery"
     }
   },
+  "separate-pull-requests": true,
   "tag-separator": "-",
   "include-v-in-tag": false,
   "pull-request-title-pattern": "chore${scope}: Release${component} v${version}",
