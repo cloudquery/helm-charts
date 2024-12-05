@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "platform.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.platform.service.apiType }}
+  type: {{ .Values.service.proxyType }}
   ports:
-    - port: {{ .Values.platform.service.uiPort }}
-      targetPort: ui
+    - port: {{ .Values.service.proxyPort }}
+      targetPort: proxy
       protocol: TCP
-      name: ui
+      name: proxy
   selector:
     {{- include "platform.selectorLabels" . | nindent 4 }}

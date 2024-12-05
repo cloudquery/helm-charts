@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "platform.name" -}}
-{{- default .Chart.Name .Values.platform.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -11,10 +11,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "platform.fullName" -}}
-{{- if .Values.platform.fullNameOverride }}
-{{- .Values.platform.fullNameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.fullNameOverride }}
+{{- .Values.fullNameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.platform.nameOverride }}
+{{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -54,10 +54,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "platform.serviceAccount" -}}
-{{- if .Values.platform.serviceAccount.create }}
-{{- default (include "platform.fullName" .) .Values.platform.serviceAccount.name }}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "platform.fullName" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.platform.serviceAccount.name }}
+{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
@@ -65,5 +65,5 @@ Create the name of the service account to use
 Return the image to use depending on the AppVersion and image tag defined
 */}}
 {{- define "platform.image" -}}
-{{ .Values.platform.image.repository }}:{{ if .Values.platform.image.tag }}{{ .Values.platform.image.tag }}{{ else }}v{{ .Chart.AppVersion }}{{ end }}
+{{ .Values.image.repository }}:{{ if .Values.image.tag }}{{ .Values.image.tag }}{{ else }}v{{ .Chart.AppVersion }}{{ end }}
 {{- end }}
