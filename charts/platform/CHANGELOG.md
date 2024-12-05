@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/cloudquery/helm-charts/compare/platform-0.1.2...platform-0.2.0) (2024-12-05)
+
+
+### Features
+
+* Adding platform ingress ([#476](https://github.com/cloudquery/helm-charts/issues/476)) ([73c8061](https://github.com/cloudquery/helm-charts/commit/73c80617ad2603475f552f7def5ef6ac2db0f8b3))
+
 ## [0.1.2](https://github.com/cloudquery/helm-charts/compare/platform-v0.1.1...platform-0.1.2) (2024-12-04)
 
 
