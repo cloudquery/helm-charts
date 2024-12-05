@@ -54,3 +54,40 @@ jobs:
           skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Get PR data
+        uses: actions/github-script@v7
+        if: startsWith(github.event.head_commit.message, 'chore(main): Release')
+        id: get_pr_data
+        with:
+          script: |
+            return (
+              await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                commit_sha: context.sha,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              })
+            ).data[0];
+
+      - name: Update PR labels
+        uses: actions/github-script@v7
+        if: startsWith(github.event.head_commit.message, 'chore(main): Release')
+        with:
+          script: |
+            const prNumber = ${{ fromJson(steps.get_pr_data.outputs.result).number }};
+
+            // Remove the pending label
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              name: 'autorelease: pending'
+            });
+
+            // Add the tagged label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              labels: ['autorelease: tagged']
+            });
