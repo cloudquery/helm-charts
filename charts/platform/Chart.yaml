@@ -4,7 +4,7 @@ description: Helm chart for installing the CloudQuery self-hosted platform
 home: www.cloudquery.io
 icon: https://cloudquery.io/assets/img/logo.png
 type: application
-version: 0.2.0
+version: 0.2.1
 maintainers:
   - name: mnorbury
     email: info@cloudquery.io
