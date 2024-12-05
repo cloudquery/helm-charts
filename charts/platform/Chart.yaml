@@ -8,7 +8,7 @@ version: 0.2.1
 maintainers:
   - name: mnorbury
     email: info@cloudquery.io
-appVersion: 0.15.1
+appVersion: 0.15.2
 dependencies:
   - name: redis
     version: ~20.2.1
