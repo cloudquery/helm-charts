@@ -74,7 +74,7 @@ jobs:
         if: startsWith(github.event.head_commit.message, 'chore(main): Release')
         with:
           script: |
-            const prNumber = ${{ steps.get_pr_data.outputs.result.number }};
+            const prNumber = ${{ fromJson(steps.get_pr_data.outputs.result).number }};
 
             // Remove the pending label
             await github.rest.issues.removeLabel({
