@@ -103,6 +103,10 @@ ingress:
 # -- Redis configuration
 redis:
   enabled: true
+  architecture: standalone
+  master:
+    persistence:
+      enabled: false
   auth:
     enabled: false
 
