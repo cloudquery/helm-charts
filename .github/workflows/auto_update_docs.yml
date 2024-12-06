@@ -18,6 +18,16 @@ jobs:
         run: |
           docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0
 
+      - name: Get component from branch name
+        uses: actions/github-script@v7
+        id: component
+        with:
+          result-encoding: string
+          script: |
+            const latPartOfBranch = context.ref.split('-').pop();
+            return latPartOfBranch;
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          file_pattern: charts/${{ steps.component.outputs.result }}/README.md
           commit_message: "chore: Update docs"
