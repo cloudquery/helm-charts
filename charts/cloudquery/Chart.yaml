@@ -1,31 +1,21 @@
 apiVersion: v2
 name: cloudquery
-description: Open source high performance data integration platform designed for security and infrastructure teams.
+description: >-
+  Open source high performance data integration platform designed for security
+  and infrastructure teams.
 home: https://cloudquery.io
 type: application
-kubeVersion: "^1.8.0-0"
+kubeVersion: ^1.8.0-0
 icon: https://avatars.githubusercontent.com/u/74616112
 keywords:
   - cloudquery
 sources:
   - https://github.com/cloudquery/helm-charts/tree/main/charts/cloudquery
-
 maintainers:
   - name: yevgenypats
     email: yp@cloudquery.io
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 35.1.0
-
-# -- This is the version number of the application being deployed.This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-# It is recommended to use it with quotes.
+version: 36.0.0
 appVersion: 6.12.6
-
-# https://artifacthub.io/docs/topics/repositories/
 annotations:
   artifacthub.io/license: MPL-2.0
   artifacthub.io/links: |
@@ -34,7 +24,6 @@ annotations:
   artifacthub.io/maintainers: |
     - name: yevgenypats
       email: yp@cloudquery.io
-
 dependencies:
   - name: promtail
     version: 6.16.6
