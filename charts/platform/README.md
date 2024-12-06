@@ -2,9 +2,24 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.1](https://img.shields.io/badge/AppVersion-0.15.1-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.4](https://img.shields.io/badge/AppVersion-0.15.4-informational?style=flat-square)
 
 ## Quickstart
+
+For all instlations, you will need to have a valid activation key, and the DSNs for the Postgres and Clickhouse databases.
+
+Create a `secrets.yaml` file with the following content, replacing `<activation_key>`, `<postgres_dsn>`, and `<clickhouse_dsn>` with the appropriate values:
+
+```console
+cat <<EOF > secrets.yml
+activationKey: "<activation_key>"
+externalDependencies:
+  postgresql_dsn: "<postgres_dsn>"
+  clickhouse_dsn: "<clickhouse_dsn>"
+EOF
+```
+
+### Kind Cluster
 
 The following shows how to install the chart in a local [kind](https://kind.sigs.k8s.io/) cluster, configured to expose ports 80 and 443 on the host machine for ingress.
 
@@ -50,17 +65,6 @@ Wait for the ingress controller to be ready:
 kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=120s
 ```
 
-Create a `secrets.yaml` file with the following content, replacing `<activation_key>`, `<postgres_dsn>`, and `<clickhouse_dsn>` with the appropriate values:
-
-```console
-cat <<EOF > secrets.yml
-activationKey: "<activation_key>"
-externalDependencies:
-  postgresql_dsn: "<postgres_dsn>"
-  clickhouse_dsn: "<clickhouse_dsn>"
-EOF
-```
-
 Create an `ingress.yaml` file with the following content:
 
 ```console
@@ -89,6 +93,96 @@ To access the cloudquery platform, add the following line to your `/etc/hosts` f
 ```
 
 The cloudquery platform should now be available at [http://local.cloudquery.io](http://local.cloudquery.io).
+
+### GKE Cluster
+
+The following shows how to install the chart in a Google Kubernetes Engine (GKE) cluster.
+
+First create a GKE cluster:
+
+```console
+gcloud container clusters create-auto <cluster-name> --region <region>
+gcloud container clusters get-credentials <cluster-name> --region <region>
+```
+
+Create an `ingress.yaml` file with the following content:
+
+```console
+ingress:
+  enabled: true
+  hosts:
+    - host: local.cloudquery.io
+      paths:
+        - path: /
+          pathType: Prefix
+```
+
+To install the chart with the release name `platform`:
+
+```console
+$ helm repo add cloudquery https://cloudquery.github.io/helm-charts/
+$ helm install platform -n cloudquery --create-namespace cloudquery/platform --values ./secrets.yml --values ./ingress.yml
+```
+
+### AWS EKS Cluster
+
+The following shows how to install the chart in an Amazon Elastic Kubernetes Service (EKS) cluster using the [eksctl](https://eksctl.io/) CLI.
+
+First create an EKS cluster:
+
+```console
+eksctl create cluster --name <cluster-name> --region <region> --enable-auto-mode
+```
+
+Create a namespace for the cloudquery platform:
+
+```console
+kubectl create ns cloudquery
+```
+
+Create an ingress class for the ALB ingress controller:
+
+```console
+cat <<EOF > ingress-class.yaml
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  labels:
+    app.kubernetes.io/name: LoadBalancerController
+  name: alb
+spec:
+  controller: eks.amazonaws.com/alb
+EOF
+```
+
+Apply the ingress class:
+
+```console
+kubectl apply -f ingress-class.yaml -n cloudquery
+```
+
+Create an `ingress.yaml` file with the following content:
+
+```console
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: local.cloudquery.io
+      paths:
+        - path: /
+          pathType: Prefix
+```
+
+To install the chart with the release name `platform`:
+
+```console
+$ helm repo add cloudquery https://cloudquery.github.io/helm-charts/
+$ helm install platform -n cloudquery --create-namespace cloudquery/platform --values ./secrets.yml --values ./ingress.yml
+```
 
 ## Requirements
 
@@ -126,7 +220,7 @@ The cloudquery platform should now be available at [http://local.cloudquery.io](
 | readinessProbe.httpGet.path | string | `"/"` |  |
 | readinessProbe.httpGet.port | string | `"api"` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
-| redis | object | `{"auth":{"enabled":false},"enabled":true}` | Redis configuration |
+| redis | object | `{"architecture":"standalone","auth":{"enabled":false},"enabled":true,"master":{"persistence":{"enabled":false}}}` | Redis configuration |
 | replicaCount | int | `1` | The number of replicas to deploy |
 | resources | object | `{}` | Deployment resources |
 | service | object | `{"apiPort":4444,"apiType":"ClusterIP","proxyPort":3000,"proxyType":"ClusterIP","storagePort":4445,"storageType":"ClusterIP","uiPort":3001,"uiType":"ClusterIP"}` | Specify the ports the container exposes |
