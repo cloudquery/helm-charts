@@ -24,8 +24,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const latPartOfBranch = context.ref.split('-').pop();
-            return latPartOfBranch;
+            const lastPartOfBranch = context.ref.split('-').pop();
+            return lastPartOfBranch;
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
