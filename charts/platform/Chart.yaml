@@ -16,7 +16,7 @@ maintainers:
 
 version: 0.2.2
 
-appVersion: 0.16.0
+appVersion: 0.17.0
 
 annotations:
   artifacthub.io/license: MPL-2.0
