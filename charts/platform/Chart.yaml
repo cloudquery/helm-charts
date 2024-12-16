@@ -3,21 +3,17 @@ name: platform
 description: Helm chart for installing the CloudQuery self-hosted platform
 home: https://cloudquery.io
 type: application
-kubeVersion: "^1.8.0-0"
+kubeVersion: ^1.8.0-0
 icon: https://avatars.githubusercontent.com/u/74616112
 keywords:
   - cloudquery
 sources:
   - https://github.com/cloudquery/helm-charts/tree/main/charts/platform
-
 maintainers:
   - name: yevgenypats
     email: yp@cloudquery.io
-
-version: 0.2.2
-
-appVersion: 0.19.0
-
+version: 0.2.3
+appVersion: 0.22.0
 annotations:
   artifacthub.io/license: MPL-2.0
   artifacthub.io/links: |
@@ -26,7 +22,6 @@ annotations:
   artifacthub.io/maintainers: |
     - name: yevgenypats
       email: yp@cloudquery.io
-
 dependencies:
   - name: redis
     version: ~20.2.1
