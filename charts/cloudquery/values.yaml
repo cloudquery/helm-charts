@@ -90,7 +90,7 @@ config: |
   spec:
     name: aws
     path: cloudquery/aws
-    version: "v29.0.0" # latest version of aws plugin
+    version: "v30.0.0" # latest version of aws plugin
     tables: ["aws_ec2_instances"]
     destinations: ["postgresql"]
   ---
