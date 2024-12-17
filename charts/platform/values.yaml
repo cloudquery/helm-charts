@@ -76,6 +76,9 @@ volumeMounts: []
 # -- Activation key for the self-hosted platform
 activationKey: ""
 
+# -- JWT private key for the self-hosted platform - if not provided, a new key will be generated
+jwtPrivateKey: ""
+
 externalDependencies:
   # -- Required: The DSN for the Postgres database
   postgresql_dsn: ""

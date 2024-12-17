@@ -28,27 +28,6 @@ spec:
       serviceAccountName: {{ include "platform.serviceAccount" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      initContainers:
-        - name: {{ .Chart.Name }}-init
-          image: "{{ include "platform.image" . }}"
-          command: [ "/backend/localadmin", "init" ]
-          env:
-            - name: CQAPI_DB_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: postgresqlDSN
-            - name: CQAPI_LOCAL_AES_KEY_FILE
-              value: /shared/encrypted_aes_key.bin
-            - name: CQAPI_LOCAL_JWT_PRIVATE_KEY_FILE
-              value: /etc/jwt/jwt-private-key.pem
-          volumeMounts:
-            - name: jwt-private-key
-              mountPath: /etc/jwt/jwt-private-key.pem
-              subPath: jwtPrivateKey
-              readOnly: true
-            - name: shared-data
-              mountPath: /shared
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -56,8 +35,6 @@ spec:
           image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: CQAPI_LOCAL_AES_KEY_FILE
-              value: /shared/encrypted_aes_key.bin
             {{- if .Values.activationKey }}
             - name: CQAPI_LOCAL_ACTIVATION_KEY
               valueFrom:
@@ -75,8 +52,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: clickhouseDSN
-            - name: CQAPI_LOCAL_JWT_PRIVATE_KEY_FILE
-              value: /etc/jwt/jwt-private-key.pem
+            - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ include "platform.fullName" . }}-secrets
+                    key: jwtPrivateKey
             - name: CQAPI_REDIS_ADDR
               value: redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379
           ports:
@@ -102,21 +82,10 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-            - name: jwt-private-key
-              mountPath: /etc/jwt/jwt-private-key.pem
-              subPath: jwtPrivateKey
-              readOnly: true
-            - name: shared-data
-              mountPath: /shared
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        - name: jwt-private-key
-          secret:
-            secretName: {{ include "platform.fullName" . }}-secrets
-        - name: shared-data
-          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
