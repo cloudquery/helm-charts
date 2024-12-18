@@ -103,16 +103,6 @@ ingress:
   #    hosts:
   #      - local.cloudquery.io
 
-# -- Redis configuration
-redis:
-  enabled: true
-  architecture: standalone
-  master:
-    persistence:
-      enabled: false
-  auth:
-    enabled: false
-
 debug:
   # -- Optional. Enable debug mode.
   enabled: false

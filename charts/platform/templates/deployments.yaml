@@ -57,8 +57,6 @@ spec:
                   secretKeyRef:
                     name: {{ include "platform.fullName" . }}-secrets
                     key: jwtPrivateKey
-            - name: CQAPI_REDIS_ADDR
-              value: redis://{{ .Release.Name }}-redis-master.{{ .Release.Namespace }}.svc.cluster.local:6379
           ports:
             - name: proxy
               containerPort: {{ .Values.service.proxyPort }}

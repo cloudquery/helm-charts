@@ -188,10 +188,6 @@ $ helm install platform -n cloudquery --create-namespace cloudquery/platform --v
 
 Kubernetes: `^1.8.0-0`
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | ~20.2.1 |
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -223,7 +219,6 @@ Kubernetes: `^1.8.0-0`
 | readinessProbe.httpGet.path | string | `"/"` |  |
 | readinessProbe.httpGet.port | string | `"api"` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
-| redis | object | `{"architecture":"standalone","auth":{"enabled":false},"enabled":true,"master":{"persistence":{"enabled":false}}}` | Redis configuration |
 | replicaCount | int | `1` | The number of replicas to deploy |
 | resources | object | `{}` | Deployment resources |
 | service | object | `{"apiPort":4444,"apiType":"ClusterIP","proxyPort":3000,"proxyType":"ClusterIP","storagePort":4445,"storageType":"ClusterIP","uiPort":3001,"uiType":"ClusterIP"}` | Specify the ports the container exposes |

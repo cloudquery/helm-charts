@@ -22,8 +22,3 @@ annotations:
   artifacthub.io/maintainers: |
     - name: yevgenypats
       email: yp@cloudquery.io
-dependencies:
-  - name: redis
-    version: ~20.2.1
-    repository: https://charts.bitnami.com/bitnami
-    condition: redis.enabled
