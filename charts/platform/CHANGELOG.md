@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/cloudquery/helm-charts/compare/platform-0.3.1...platform-0.4.0) (2024-12-18)
+
+
+### Features
+
+* Remove redis from Chart ([#525](https://github.com/cloudquery/helm-charts/issues/525)) ([0af38e6](https://github.com/cloudquery/helm-charts/commit/0af38e6043686c2670476a24ba4c7917319eef25))
+
 ## [0.3.1](https://github.com/cloudquery/helm-charts/compare/platform-0.3.0...platform-0.3.1) (2024-12-18)
 
 
