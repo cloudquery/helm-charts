@@ -103,6 +103,19 @@ ingress:
   #    hosts:
   #      - local.cloudquery.io
 
+# -- External Secrets configuration
+external-secrets:
+  # -- Optional. Enable external secrets - if enabled, the postgresqlDSN will be fetched from AWS Secrets Manager
+  enabled: true
+  installCRDs: false
+  # -- Required: The AWS region where the secrets are stored
+  region: us-east-1
+  # -- Required: The AWS secret key for the Postgres DSN
+  postgresSecretKey: DatabaseConnectionStringSec-3gbSV5rIuBeF
+  # -- Required: The AWS role ARN to assume when fetching the secrets
+  externalSecretsRoleARN: arn:aws:iam::615713231484:role/mnorbury-external-secrets-role
+  annotations: {}
+
 debug:
   # -- Optional. Enable debug mode.
   enabled: false

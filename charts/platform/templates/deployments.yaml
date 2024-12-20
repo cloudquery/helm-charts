@@ -42,11 +42,19 @@ spec:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: activationKey
             {{- end }}
+            {{- if not (index .Values "external-secrets" "enabled") }}
             - name: CQAPI_DB_DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: postgresqlDSN
+            {{- else }}
+            - name: CQAPI_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-connection-string
+                  key: postgres_connection_string
+            {{- end }}
             - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
