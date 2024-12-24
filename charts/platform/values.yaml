@@ -79,6 +79,17 @@ activationKey: ""
 # -- JWT private key for the self-hosted platform - if not provided, a new key will be generated
 jwtPrivateKey: ""
 
+# -- External secrets configuration
+externalSecrets:
+  # -- Optional. Enable external secrets.
+  enabled: false
+  # -- Required: The AWS region where the secrets are stored
+  region: ""
+  # -- Required: The AWS secret key for the Postgres DSN
+  cloudquerySecretsKey: ""
+  # -- Required: The AWS role ARN to assume when fetching the secrets
+  externalSecretsRoleARN: ""
+
 externalDependencies:
   # -- Required: The DSN for the Postgres database
   postgresql_dsn: ""
@@ -86,13 +97,18 @@ externalDependencies:
   # -- Required: The DSN for the ClickHouse database
   clickhouse_dsn: ""
 
+letsEncrypt:
+  # -- Optional. Enable Let's Encrypt.
+  enabled: false
+  # -- Required: The email address to use for Let's Encrypt
+  email: ""
+
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   # -- Optional. Enable ingress.
   enabled: false
-  className: ""
+  className: "nginx"
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
   hosts:
     - host: local.cloudquery.io
       paths:
@@ -102,19 +118,6 @@ ingress:
   #  - secretName: local-cloudquery-io-tls
   #    hosts:
   #      - local.cloudquery.io
-
-# -- External Secrets configuration
-external-secrets:
-  # -- Optional. Enable external secrets - if enabled, the postgresqlDSN will be fetched from AWS Secrets Manager
-  enabled: true
-  installCRDs: false
-  # -- Required: The AWS region where the secrets are stored
-  region: us-east-1
-  # -- Required: The AWS secret key for the Postgres DSN
-  postgresSecretKey: DatabaseConnectionStringSec-3gbSV5rIuBeF
-  # -- Required: The AWS role ARN to assume when fetching the secrets
-  externalSecretsRoleARN: arn:aws:iam::615713231484:role/mnorbury-external-secrets-role
-  annotations: {}
 
 debug:
   # -- Optional. Enable debug mode.

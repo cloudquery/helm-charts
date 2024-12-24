@@ -22,8 +22,3 @@ annotations:
   artifacthub.io/maintainers: |
     - name: yevgenypats
       email: yp@cloudquery.io
-dependencies:
-  - name: external-secrets
-    version: ~0.11.0
-    repository: https://charts.external-secrets.io
-    condition: external-secrets.enabled
