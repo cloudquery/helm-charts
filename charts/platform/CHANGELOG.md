@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/cloudquery/helm-charts/compare/platform-0.4.0...platform-0.5.0) (2025-01-03)
+
+
+### Features
+
+* Allow deployment to EKS ([#528](https://github.com/cloudquery/helm-charts/issues/528)) ([59d1a35](https://github.com/cloudquery/helm-charts/commit/59d1a354ed57fa518a0d7a70c8130180fec26ea0))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.28.1 ([#527](https://github.com/cloudquery/helm-charts/issues/527)) ([d6bc844](https://github.com/cloudquery/helm-charts/commit/d6bc84485d71d9794804ce0383be2369e65c8437))
+* Use a shared volume for the `CQAPI_LOCAL_AES_KEY_FILE` ([#529](https://github.com/cloudquery/helm-charts/issues/529)) ([e743add](https://github.com/cloudquery/helm-charts/commit/e743addd5d6ef181d107ae84ab30f3361730c9fb))
+
 ## [0.4.0](https://github.com/cloudquery/helm-charts/compare/platform-0.3.1...platform-0.4.0) (2024-12-18)
 
 
