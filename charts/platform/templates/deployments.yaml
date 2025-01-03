@@ -52,6 +52,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: clickhouseDSN
+            - name: CQAPI_LOCAL_AES_KEY_FILE
+              value: "/shared/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                   secretKeyRef:
@@ -80,10 +82,14 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          - name: shared
+            mountPath: /shared
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      - name: shared
+        emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
