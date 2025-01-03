@@ -52,18 +52,18 @@ spec:
                   name: {{ include "platform.fullName" . }}-external-secrets
                   key: clickhouseDSN
             {{- else }}
-            {{- if .Values.activationKey }}
             - name: CQAPI_DB_DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: postgresqlDSN
-            {{- end }}
+            {{- if .Values.activationKey }}
             - name: CQAPI_LOCAL_ACTIVATION_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: activationKey
+            {{- end }}
             - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
