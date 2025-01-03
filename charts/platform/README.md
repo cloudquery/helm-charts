@@ -197,18 +197,25 @@ Kubernetes: `^1.8.0-0`
 | debug.enabled | bool | `false` | Optional. Enable debug mode. |
 | externalDependencies.clickhouse_dsn | string | `""` | Required: The DSN for the ClickHouse database |
 | externalDependencies.postgresql_dsn | string | `""` | Required: The DSN for the Postgres database |
+| externalSecrets | object | `{"cloudquerySecretsKey":"","enabled":false,"externalSecretsRoleARN":"","region":""}` | External secrets configuration |
+| externalSecrets.cloudquerySecretsKey | string | `""` | Required: The AWS secret key for the Postgres DSN |
+| externalSecrets.enabled | bool | `false` | Optional. Enable external secrets. |
+| externalSecrets.externalSecretsRoleARN | string | `""` | Required: The AWS role ARN to assume when fetching the secrets |
+| externalSecrets.region | string | `""` | Required: The AWS region where the secrets are stored |
 | fullNameOverride | string | `""` | Override the full name |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-east1-docker.pkg.dev/cq-cloud-prod/platform/full"` | The image repository to pull from |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
+| ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `false` | Optional. Enable ingress. |
 | ingress.hosts[0].host | string | `"local.cloudquery.io"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | jwtPrivateKey | string | `""` | JWT private key for the self-hosted platform - if not provided, a new key will be generated |
+| letsEncrypt.email | string | `""` | Required: The email address to use for Let's Encrypt |
+| letsEncrypt.enabled | bool | `false` | Optional. Enable Let's Encrypt. |
 | livenessProbe.httpGet.path | string | `"/"` |  |
 | livenessProbe.httpGet.port | string | `"api"` |  |
 | livenessProbe.periodSeconds | int | `60` |  |

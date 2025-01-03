@@ -35,6 +35,28 @@ spec:
           image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {{- if index .Values "externalSecrets" "enabled" }}
+            - name: CQAPI_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-external-secrets
+                  key: postgresqlDSN
+            - name: CQAPI_LOCAL_ACTIVATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-external-secrets
+                  key: activationKey
+            - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-external-secrets
+                  key: clickhouseDSN
+            {{- else }}
+            - name: CQAPI_DB_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: postgresqlDSN
             {{- if .Values.activationKey }}
             - name: CQAPI_LOCAL_ACTIVATION_KEY
               valueFrom:
@@ -42,23 +64,19 @@ spec:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: activationKey
             {{- end }}
-            - name: CQAPI_DB_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: postgresqlDSN
             - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.fullName" . }}-secrets
                   key: clickhouseDSN
+            {{- end }}
             - name: CQAPI_LOCAL_AES_KEY_FILE
               value: "/shared/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
-                  secretKeyRef:
-                    name: {{ include "platform.fullName" . }}-secrets
-                    key: jwtPrivateKey
+                secretKeyRef:
+                  name: {{ include "platform.fullName" . }}-secrets
+                  key: jwtPrivateKey
           ports:
             - name: proxy
               containerPort: {{ .Values.service.proxyPort }}
