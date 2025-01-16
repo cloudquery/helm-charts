@@ -16,7 +16,7 @@ The CloudQuery Platform UI can be accessed via the following ingress endpoints:
 
 {{ range $host := .Values.ingress.hosts }}
   {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ default "localhost" $host.host }}{{ .path }}
   {{- end }}
 {{- end }}
 
