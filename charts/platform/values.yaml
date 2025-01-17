@@ -106,7 +106,7 @@ letsEncrypt:
 
 # -- OTEL Collector configuration
 otelCollector:
-  # -- Optional. Enable the OTEL Collector.
+  # -- Optional. Enable the OTEL Collector.
   enabled: true
   image:
     repository: otel/opentelemetry-collector-contrib
