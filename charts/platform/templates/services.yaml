@@ -13,3 +13,24 @@ spec:
       name: proxy
   selector:
     {{- include "platform.selectorLabels" . | nindent 4 }}
+---
+{{- if .Values.otelCollector.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "platform.fullName" . }}-otel-collector
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.otelCollector.service.type }}
+  ports:
+    {{- range .Values.otelCollector.service.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  selector:
+    {{- include "platform.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: otel-collector
+{{- end }}

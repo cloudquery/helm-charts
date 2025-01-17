@@ -43,7 +43,8 @@ service:
   storagePort: 4445
 
 # -- Deployment resources
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -102,6 +103,110 @@ letsEncrypt:
   enabled: false
   # -- Required: The email address to use for Let's Encrypt
   email: ""
+
+# -- OTEL Collector configuration
+otelCollector:
+  # -- Optional. Enable the OTEL Collector.
+  enabled: true
+  image:
+    repository: otel/opentelemetry-collector-contrib
+    tag: "0.113.0"
+    pullPolicy: IfNotPresent
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 1
+    #   memory: 2Gi
+    # requests:
+    #   cpu: 200m
+    #   memory: 400Mi
+
+  config:
+    receivers:
+      otlp:
+        protocols:
+          http:
+            endpoint: :4318
+    processors:
+      transform:
+        #    error_mode: ignore
+        trace_statements:
+          - context: spanevent
+            conditions:
+              - (name == "sync.finish.stats" and attributes["sync.resources"] == 0 and attributes["sync.errors"] == 0 and attributes["sync.panics"] == 0)
+            statements:
+              - set(span.attributes["cq.delete"], 1)
+      #      - context: span
+      #        statements:
+      #          - delete_key(attributes, "sync.client.id")
+
+      filter:
+        #    error_mode: ignore
+        traces:
+          span:
+            - attributes["cq.delete"] == 1
+        logs:
+          log_record:
+            - 'IsMatch(body, "table resolver finished with error|table sync finished|table resolver finished with panic") == false'
+
+      batch:
+        send_batch_size: 100000
+        timeout: 5s
+
+    exporters:
+      nop:
+      clickhouse:
+        endpoint: ${env:CLICKHOUSE_DSN}
+        # database: ${env:CLICKHOUSE_DATABASE}
+        create_schema: true
+        ttl: 0
+        timeout: 10s
+        sending_queue:
+          queue_size: 100
+        retry_on_failure:
+          enabled: true
+          initial_interval: 5s
+          max_interval: 30s
+          max_elapsed_time: 300s
+
+    extensions:
+      zpages:
+        endpoint: 0.0.0.0:55679
+      health_check:
+        endpoint: 0.0.0.0:13133
+
+    service:
+      extensions: [health_check, zpages]
+      pipelines:
+        logs:
+          receivers: [otlp]
+          processors: [filter, batch]
+          exporters: [clickhouse]
+        traces:
+          receivers: [otlp]
+          processors: [transform, filter, batch]
+          exporters: [clickhouse]
+        metrics:
+          receivers: [otlp]
+          processors:
+          exporters: [nop]
+
+  service:
+    type: ClusterIP
+    ports:
+      - name: otlp-grpc
+        port: 4317
+        protocol: TCP
+        targetPort: 4317
+      - name: otlp-http
+        port: 4318
+        protocol: TCP
+        targetPort: 4318
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
