@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: busybox-debug
+  name: netshoot-debug
   labels:
-    app: busybox-debug
+    app: netshoot-debug
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: busybox-debug
+      app: netshoot-debug
   template:
     metadata:
       labels:
-        app: busybox-debug
+        app: netshoot-debug
     spec:
       containers:
-        - name: busybox
-          image: busybox:latest
+        - name: netshoot
+          image: nicolaka/netshoot:latest
           command: ["sleep", "3600"]
           resources:
             limits:

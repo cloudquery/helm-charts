@@ -43,7 +43,8 @@ service:
   storagePort: 4445
 
 # -- Deployment resources
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -102,6 +103,40 @@ letsEncrypt:
   enabled: false
   # -- Required: The email address to use for Let's Encrypt
   email: ""
+
+# -- OTEL Collector configuration
+otelCollector:
+  # -- Optional. Enable the OTEL Collector.
+  enabled: true
+  image:
+    repository: otel/opentelemetry-collector-contrib
+    tag: "0.113.0"
+    pullPolicy: IfNotPresent
+
+  resources:
+    {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 1
+    #   memory: 2Gi
+    # requests:
+    #   cpu: 200m
+    #   memory: 400Mi
+
+  service:
+    type: ClusterIP
+    ports:
+      - name: otlp-grpc
+        port: 4317
+        protocol: TCP
+        targetPort: 4317
+      - name: otlp-http
+        port: 4318
+        protocol: TCP
+        targetPort: 4318
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
