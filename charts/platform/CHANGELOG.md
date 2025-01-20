@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.0](https://github.com/cloudquery/helm-charts/compare/platform-0.5.2...platform-0.6.0) (2025-01-20)
+
+
+### Features
+
+* Adding OTEL collector to Helm Chart ([#549](https://github.com/cloudquery/helm-charts/issues/549)) ([0b5660c](https://github.com/cloudquery/helm-charts/commit/0b5660cc7772466f476c5c66382f84ac739478fa))
+
+
+### Bug Fixes
+
+* Add CLICKHOUSE_DATABASE back to config ([#554](https://github.com/cloudquery/helm-charts/issues/554)) ([93a89ab](https://github.com/cloudquery/helm-charts/commit/93a89abe54180eacf05cd629bcdb5f1ea830929d))
+* **deps:** Update dependency cloudquery/cloud to v0.39.0 ([#548](https://github.com/cloudquery/helm-charts/issues/548)) ([5b65cce](https://github.com/cloudquery/helm-charts/commit/5b65cce624107465ffbf5b1b90400ba3083f6a1c))
+* **deps:** Update dependency cloudquery/cloud to v0.39.1 ([#551](https://github.com/cloudquery/helm-charts/issues/551)) ([931c776](https://github.com/cloudquery/helm-charts/commit/931c776ad0d76263afc207507060cf45da16f678))
+
 ## [0.5.2](https://github.com/cloudquery/helm-charts/compare/platform-0.5.1...platform-0.5.2) (2025-01-16)
 
 
