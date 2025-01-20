@@ -38,7 +38,6 @@ spec:
                   name: {{ include "platform.fullName" . }}-secrets
                   {{- end }}
                   key: clickhouseDSN
-          env:
             - name: CLICKHOUSE_DATABASE
               value: "assets" # TODO: Make this configurable
           ports:
