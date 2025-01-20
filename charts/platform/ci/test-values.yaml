@@ -2,3 +2,5 @@ externalDependencies:
   # 172.17.0.1 is the default gateway for the docker0 bridge network
   postgresql_dsn: "postgres://postgres:pass@172.17.0.1:5432/postgres?sslmode=disable"
   clickhouse_dsn: "clickhouse://user:pass@172.17.0.1:9000/assets"
+otelCollector:
+  database: "assets"

@@ -113,6 +113,9 @@ otelCollector:
     tag: "0.113.0"
     pullPolicy: IfNotPresent
 
+  # -- Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN)
+  database: "default"
+
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
