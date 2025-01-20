@@ -39,7 +39,7 @@ spec:
                   {{- end }}
                   key: clickhouseDSN
             - name: CLICKHOUSE_DATABASE
-              value: "assets" # TODO: Make this configurable
+              value: {{ .Values.otelCollector.database }}
           ports:
             {{- range .Values.otelCollector.service.ports }}
             - name: {{ .name }}
