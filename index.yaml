@@ -10414,6 +10414,34 @@ entries:
         - name: yevgenypats
           email: yp@cloudquery.io
     apiVersion: v2
+    appVersion: 0.39.1
+    created: "2025-01-20T15:49:46.034842303Z"
+    description: Helm chart for installing the CloudQuery self-hosted platform
+    digest: a8686572fc2b7942729dd38e719758bd50a5782c3209216d557e2f951b1587cd
+    home: https://cloudquery.io
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: platform
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/platform
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/platform-0.6.0/platform-0.6.0.tgz
+    version: 0.6.0
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
     appVersion: 0.38.0
     created: "2025-01-16T14:01:04.934740677Z"
     description: Helm chart for installing the CloudQuery self-hosted platform
@@ -10736,4 +10764,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/platform-0.1.0/platform-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-16T14:01:04.935189953Z"
+generated: "2025-01-20T15:49:46.035580541Z"
