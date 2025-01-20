@@ -33,7 +33,7 @@ exporters:
   nop:
   clickhouse:
     endpoint: ${env:CLICKHOUSE_DSN}
-    # database: ${env:CLICKHOUSE_DATABASE}
+    database: ${env:CLICKHOUSE_DATABASE}
     create_schema: true
     ttl: 0
     timeout: 10s
