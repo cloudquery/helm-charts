@@ -38,6 +38,9 @@ spec:
                   name: {{ include "platform.fullName" . }}-secrets
                   {{- end }}
                   key: clickhouseDSN
+          env:
+            - name: CLICKHOUSE_DATABASE
+              value: "assets"
           ports:
             {{- range .Values.otelCollector.service.ports }}
             - name: {{ .name }}
