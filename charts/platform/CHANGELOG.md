@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.2](https://github.com/cloudquery/helm-charts/compare/platform-0.6.1...platform-0.6.2) (2025-01-20)
+
+
+### Bug Fixes
+
+* Cleanup extra env variable ([#558](https://github.com/cloudquery/helm-charts/issues/558)) ([2bcd728](https://github.com/cloudquery/helm-charts/commit/2bcd728b4da5851730ff477541238f61dbb329b8))
+* **deps:** Update dependency cloudquery/cloud to v0.40.0 ([#556](https://github.com/cloudquery/helm-charts/issues/556)) ([12446b7](https://github.com/cloudquery/helm-charts/commit/12446b7359f59d543372b91934ef6193c65e2606))
+* **deps:** Update dependency cloudquery/cloud to v0.41.0 ([#560](https://github.com/cloudquery/helm-charts/issues/560)) ([737edcb](https://github.com/cloudquery/helm-charts/commit/737edcbe32ae15f6016480402ef3d26dbfb40343))
+* Make otel DB configurable ([#559](https://github.com/cloudquery/helm-charts/issues/559)) ([5d6398a](https://github.com/cloudquery/helm-charts/commit/5d6398a5118193666a9984b9f9dcd294c5c263e9))
+
 ## [0.6.1](https://github.com/cloudquery/helm-charts/compare/platform-0.6.0...platform-0.6.1) (2025-01-20)
 
 
