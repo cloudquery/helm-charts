@@ -42,6 +42,10 @@ service:
   storageType: ClusterIP
   storagePort: 4445
 
+# -- Specify the scheduler configuration
+scheduler:
+  address: scheduler-cloudquery-operator:3001
+
 # -- Deployment resources
 resources:
   {}
