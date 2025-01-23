@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.0](https://github.com/cloudquery/helm-charts/compare/platform-0.6.2...platform-0.7.0) (2025-01-23)
+
+
+### Features
+
+* Add initial support for the scheduler ([#564](https://github.com/cloudquery/helm-charts/issues/564)) ([ea6c1aa](https://github.com/cloudquery/helm-charts/commit/ea6c1aa2199abff18d910c3ddc85f1240212774b))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.42.0 ([#561](https://github.com/cloudquery/helm-charts/issues/561)) ([2b7f95d](https://github.com/cloudquery/helm-charts/commit/2b7f95d73e5e35147c339025ff33023189c0b524))
+* **deps:** Update dependency cloudquery/cloud to v0.43.0 ([#563](https://github.com/cloudquery/helm-charts/issues/563)) ([d132d9d](https://github.com/cloudquery/helm-charts/commit/d132d9d7dbc28b4d4bde9e86428833965d480089))
+* **deps:** Update dependency cloudquery/cloud to v0.44.0 ([#565](https://github.com/cloudquery/helm-charts/issues/565)) ([9734f47](https://github.com/cloudquery/helm-charts/commit/9734f475fc38d04412b88d4f3a902b945d6ce8ba))
+* **deps:** Update dependency cloudquery/cloud to v0.45.0 ([#566](https://github.com/cloudquery/helm-charts/issues/566)) ([e7604a1](https://github.com/cloudquery/helm-charts/commit/e7604a1be511f8ddb408e8234cf0fb734ed243d3))
+
 ## [0.6.2](https://github.com/cloudquery/helm-charts/compare/platform-0.6.1...platform-0.6.2) (2025-01-20)
 
 
