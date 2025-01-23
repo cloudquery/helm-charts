@@ -79,9 +79,7 @@ spec:
                   key: jwtPrivateKey
             # todo: figure out if we want this to go through the proxy / update once resolver is fixed
             - name: CQAPI_STORAGE_LOCAL_RELEASE_BASE_URL
-              value: "http://{{ include "platform.fullName" . }}-storage.{{ .Release.Namespace }}:{{ .Values.service.storagePort }}/development/files"
-            - name: CQAPI_STORAGE_LOCAL_BASE_URL
-              value: "http://{{ include "platform.fullName" . }}-storage.{{ .Release.Namespace }}:{{ .Values.service.storagePort }}"
+              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.proxyPort }}/storage/development/files"
             {{- if .Values.scheduler.address }}
             - name: CQAPI_MANAGEDSYNC_BACKEND_URL
               value: "{{ .Values.scheduler.address }}"

@@ -14,22 +14,6 @@ spec:
   selector:
     {{- include "platform.selectorLabels" . | nindent 4 }}
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "platform.fullName" . }}-storage
-  labels:
-    {{- include "platform.labels" . | nindent 4 }}
-spec:
-  type: {{ .Values.service.storageType }}
-  ports:
-    - port: {{ .Values.service.storagePort }}
-      targetPort: storage
-      protocol: TCP
-      name: storage
-  selector:
-    {{- include "platform.selectorLabels" . | nindent 4 }}
----
 {{- if .Values.otelCollector.enabled }}
 apiVersion: v1
 kind: Service
