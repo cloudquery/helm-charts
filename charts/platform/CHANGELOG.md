@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.1](https://github.com/cloudquery/helm-charts/compare/platform-0.7.0...platform-0.7.1) (2025-01-28)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.45.1 ([#568](https://github.com/cloudquery/helm-charts/issues/568)) ([68307a6](https://github.com/cloudquery/helm-charts/commit/68307a6a5745653396be3f0e90718ba94eeae653))
+* **deps:** Update dependency cloudquery/cloud to v0.46.0 ([#570](https://github.com/cloudquery/helm-charts/issues/570)) ([412761a](https://github.com/cloudquery/helm-charts/commit/412761acf0c0a3649a826facafcb6f5211f3e07a))
+* **deps:** Update dependency cloudquery/cloud to v0.47.0 ([#571](https://github.com/cloudquery/helm-charts/issues/571)) ([9638ad1](https://github.com/cloudquery/helm-charts/commit/9638ad1ab1e72ae58802638bd62ccd3da643bf82))
+* **deps:** Update dependency cloudquery/cloud to v0.47.1 ([#572](https://github.com/cloudquery/helm-charts/issues/572)) ([6dfa2ef](https://github.com/cloudquery/helm-charts/commit/6dfa2ef69fe89de9d6513d88da5569eb84e21d08))
+* **deps:** Update dependency cloudquery/cloud to v0.47.2 ([#573](https://github.com/cloudquery/helm-charts/issues/573)) ([63ffc5d](https://github.com/cloudquery/helm-charts/commit/63ffc5d975916a196dde0fe67751c3e266dbb62f))
+* **deps:** Update dependency cloudquery/cloud to v0.48.0 ([#574](https://github.com/cloudquery/helm-charts/issues/574)) ([6b8853e](https://github.com/cloudquery/helm-charts/commit/6b8853e5ebece573a680b6b0563938e7cf25ac8e))
+* **deps:** Update dependency cloudquery/cloud to v0.49.0 ([#575](https://github.com/cloudquery/helm-charts/issues/575)) ([10c7182](https://github.com/cloudquery/helm-charts/commit/10c7182c1d9a6c521eac0b480c587c506376734b))
+* **deps:** Update dependency cloudquery/cloud to v0.49.1 ([#576](https://github.com/cloudquery/helm-charts/issues/576)) ([7934b48](https://github.com/cloudquery/helm-charts/commit/7934b48b0267059457b1aea39a067985dda28259))
+
 ## [0.7.0](https://github.com/cloudquery/helm-charts/compare/platform-0.6.2...platform-0.7.0) (2025-01-23)
 
 
