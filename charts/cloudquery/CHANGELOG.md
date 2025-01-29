@@ -1,5 +1,21 @@
 # Changelog
 
+## [38.0.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-37.0.0...cloudquery-38.0.0) (2025-01-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update dependency source-aws to v32
+
+### Features
+
+* Add initial support for the scheduler ([#564](https://github.com/cloudquery/helm-charts/issues/564)) ([ea6c1aa](https://github.com/cloudquery/helm-charts/commit/ea6c1aa2199abff18d910c3ddc85f1240212774b))
+
+
+### Bug Fixes
+
+* Update dependency source-aws to v32 ([063b669](https://github.com/cloudquery/helm-charts/commit/063b669c8544943d3aa60d44c0df1111b33f9bc7))
+
 ## [37.0.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-36.0.0...cloudquery-37.0.0) (2025-01-09)
 
 
