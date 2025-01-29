@@ -67,3 +67,25 @@ Return the image to use depending on the AppVersion and image tag defined
 {{- define "platform.image" -}}
 {{ .Values.image.repository }}:{{ if .Values.image.tag }}{{ .Values.image.tag }}{{ else }}v{{ .Chart.AppVersion }}{{ end }}
 {{- end }}
+
+{{/*
+Get the appropriate secret reference name based on whether external secrets is enabled
+*/}}
+{{- define "platform.secretRef" -}}
+{{- if index .Values "externalSecrets" "enabled" -}}
+{{- include "platform.fullName" . }}-external-secrets
+{{- else -}}
+{{- .Values.platformSecrets.secretRef -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Get the appropriate secret reference name based on whether external secrets is enabled
+*/}}
+{{- define "platform.jwtPrivateKeyRef" -}}
+{{- if index .Values "platformSecrets" "jwtPrivateKeyRef" -}}
+{{- .Values.platformSecrets.jwtPrivateKeyRef -}}
+{{- else -}}
+{{- include "platform.fullName" . }}-jwt-private-key
+{{- end -}}
+{{- end -}}

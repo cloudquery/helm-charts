@@ -74,11 +74,13 @@ volumes: []
 # -- Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 
-# -- Activation key for the self-hosted platform
-activationKey: ""
+# -- Platform secrets configuration
+platformSecrets:
+  # -- Required: The secret reference to use for the user-supplied platform secrets
+  secretRef: "cq-platform-secrets"
 
-# -- JWT private key for the self-hosted platform - if not provided, a new key will be generated
-jwtPrivateKey: ""
+  # -- JWT private key reference for the self-hosted platform - if not provided, a new key will be generated
+  jwtPrivateKeyRef: ""
 
 # -- External secrets configuration
 externalSecrets:
@@ -90,13 +92,6 @@ externalSecrets:
   cloudquerySecretsKey: ""
   # -- Required: The AWS role ARN to assume when fetching the secrets
   externalSecretsRoleARN: ""
-
-externalDependencies:
-  # -- Required: The DSN for the Postgres database
-  postgresql_dsn: ""
-
-  # -- Required: The DSN for the ClickHouse database
-  clickhouse_dsn: ""
 
 letsEncrypt:
   # -- Optional. Enable Let's Encrypt.

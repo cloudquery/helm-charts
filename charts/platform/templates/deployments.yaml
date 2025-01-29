@@ -38,47 +38,27 @@ spec:
           image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- if index .Values "externalSecrets" "enabled" }}
             - name: CQAPI_DB_DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: postgresqlDSN
             - name: CQAPI_LOCAL_ACTIVATION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: activationKey
             - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
-            {{- else }}
-            - name: CQAPI_DB_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: postgresqlDSN
-            {{- if .Values.activationKey }}
-            - name: CQAPI_LOCAL_ACTIVATION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: activationKey
-            {{- end }}
-            - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: clickhouseDSN
-            {{- end }}
             - name: CQAPI_LOCAL_AES_KEY_FILE
               value: "/shared/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
+                  name: {{ include "platform.jwtPrivateKeyRef" . }}
                   key: jwtPrivateKey
             # todo: figure out if we want this to go through the proxy / update once resolver is fixed
             - name: CQAPI_STORAGE_LOCAL_RELEASE_BASE_URL
