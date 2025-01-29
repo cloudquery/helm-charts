@@ -33,14 +33,10 @@ containerSecurityContext: {}
 
 # -- Specify the ports the container exposes
 service:
-  proxyType: ClusterIP
-  proxyPort: 3000
-  uiType: ClusterIP
-  uiPort: 3001
-  apiType: ClusterIP
-  apiPort: 4444
-  storageType: ClusterIP
-  storagePort: 4445
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+  annotations: {}
 
 # -- Specify the scheduler configuration
 scheduler:
