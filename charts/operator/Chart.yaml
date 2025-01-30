@@ -1,7 +1,13 @@
 apiVersion: v2
 name: operator
 description: A Helm chart for the operator that manages syncs on the CloudQuery platform
-
+icon: https://avatars.githubusercontent.com/u/74616112
+keywords: [cloudquery]
+sources:
+  - https://github.com/cloudquery/helm-charts/tree/main/charts/operator
+maintainers:
+  - name: yevgenypats
+    email: yp@cloudquery.io
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -22,3 +28,12 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "v0.50.0"
+
+annotations:
+  artifacthub.io/license: MPL-2.0
+  artifacthub.io/links: |
+    - name: cloudquery
+      url: https://github.com/cloudquery/cloudquery
+  artifacthub.io/maintainers: |
+    - name: yevgenypats
+      email: yp@cloudquery.io
