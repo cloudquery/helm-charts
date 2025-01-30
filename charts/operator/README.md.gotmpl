@@ -1,0 +1,55 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Quickstart
+
+The operator is a platform component that schedules syncs on a Kubernetes cluster.
+
+### Default Configuration
+
+The chart doesn't require any configuration parameters, so the easiest way to get started is by running the following commands:
+
+```console
+helm repo add cloudquery https://cloudquery.github.io/helm-charts/
+helm upgrade scheduler --atomic --install -n cloudquery cloudquery/operator
+```
+
+This command ensures the operator is installed or updated to the latest version.
+If something goes wrong during the deployment, it will automatically roll back any changes made to the cluster.
+
+> [!IMPORTANT]
+> While the operator can be deployed either before or after the platform, it's essential to deploy the operator before setting up integrations or running syncs.
+> The operator must be connected to the platform for these actions to work.
+
+Upon successful deployment, the command will output a message with configuration details to connect the platform installation to the scheduler.
+
+If you're using the default configuration for both the platform and the operator, the platform pods will automatically connect to the scheduler, and you can safely ignore the message.
+
+### Non-default configurations
+
+However, if you're using a non-default configuration (e.g., you've deployed the components to different namespaces or changed the helm release name), 
+you'll need to use the config from a success message provided by helm to ensure the platform is connected to the scheduler.
+
+The message will include a configuration snippet like the one below:
+
+```yaml
+# Add the following snippet to your Helm configuration YAML during platform installation or upgrade
+# to ensure the platform can communicate with the operator:
+scheduler:
+  address: scheduler-operator.cloudquery:3001
+```
+
+Create a file named `scheduler.yaml` and paste the snippet into it.
+Then, to install or update the platform using this configuration, supply the file to the Helm command as follows:
+
+```console
+helm upgrade --install --atomic platform -n cloudquery --create-namespace cloudquery/platform --values <platform-configs> --values ./scheduler.yaml
+```
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

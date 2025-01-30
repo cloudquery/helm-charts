@@ -1,0 +1,106 @@
+# -- Override the default name
+nameOverride: ""
+# -- Override the full name
+fullnameOverride: ""
+
+# -- Configures the replica count for the deployment.
+# For out-of-cluster deployments in the dev environment, set this to zero and ignore all the sections related to the Deployment.
+# See https://kubernetes.io/docs/concepts/workloads/controllers/deployment/.
+replicaCount: 1
+
+# -- Configures the container image for the operator Deployment.
+# See https://kubernetes.io/docs/concepts/containers/images/.
+image:
+  # -- Configures repository and registry to use when pulling a scheduler image
+  repository: us-east1-docker.pkg.dev/cq-cloud-prod/platform/scheduler
+  # -- Image tag to use. If empty, will use the chart's 'appVersion'
+  tag: ""
+  # -- IfNotPresent, Always, Never
+  pullPolicy: IfNotPresent
+  # -- This sets secrets for repositories that require auth.
+  # See https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/.
+  pullSecrets: []
+
+# -- Configures environment variables for the operator Deployment
+environment:
+  # -- The namespace to use for leader election. If not provided, will be the release namespace.
+  SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE: ""
+  # -- The namespace to use to spawn syncs. If not provided, will be the release namespace.
+  SCHEDULER_K8S_SYNC_NAMESPACE: ""
+
+# -- This section builds out the service account.
+# See https://kubernetes.io/docs/concepts/security/service-accounts/.
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Automatically mount a service account's token in the operator pod
+  automount: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Configures additional labels on the operator Deployment.
+# See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/.
+podAnnotations: {}
+
+# -- Configures additional labels on the operator Deployment.
+# See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/.
+podLabels: {}
+
+# -- Configures the security context of the operator Deployment.
+# See https://kubernetes.io/docs/tasks/configure-pod-container/security-context/.
+securityContext:
+  capabilities:
+    drop: [ALL]
+
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+
+  runAsGroup: 1000
+  runAsUser: 1000
+  runAsNonRoot: true
+
+# -- Configures resource profile for the operator deployment.
+# See https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/.
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# -- Create a Kubernetes Service that allows gRPC connectivity to the Operator API.
+# Needed for the CloudQuery platform deployments since the platform will use this to communicate with the scheduler.
+# See https://kubernetes.io/docs/concepts/services-networking/service/.
+service:
+  enabled: true
+  type: ClusterIP
+  port: 3001
+  targetPort: grpc
+  annotations: {}
+
+# -- Configures the probes for the operator deployment.
+# See https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/.
+livenessProbe:
+  tcpSocket:
+    port: grpc
+  initialDelaySeconds: 15
+  periodSeconds: 10
+readinessProbe:
+  tcpSocket:
+    port: grpc
+  initialDelaySeconds: 15
+  periodSeconds: 10
+
+# -- Configures node selectors for the operator deployment
+# See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector.
+nodeSelector: {}
+# -- Configures node affinity for the operator deployment
+# See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity.
+affinity: {}
+# -- Configures node tolerations for the operator deployment
+# See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/.
+tolerations: []
