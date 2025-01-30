@@ -192,11 +192,8 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activationKey | string | `""` | Activation key for the self-hosted platform |
 | containerSecurityContext | object | `{}` | Specify the container-level security context |
 | debug.enabled | bool | `false` | Optional. Enable debug mode. |
-| externalDependencies.clickhouse_dsn | string | `""` | Required: The DSN for the ClickHouse database |
-| externalDependencies.postgresql_dsn | string | `""` | Required: The DSN for the Postgres database |
 | externalSecrets | object | `{"cloudquerySecretsKey":"","enabled":false,"externalSecretsRoleARN":"","region":""}` | External secrets configuration |
 | externalSecrets.cloudquerySecretsKey | string | `""` | Required: The AWS secret key for the Postgres DSN |
 | externalSecrets.enabled | bool | `false` | Optional. Enable external secrets. |
@@ -213,7 +210,6 @@ Kubernetes: `^1.8.0-0`
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| jwtPrivateKey | string | `""` | JWT private key for the self-hosted platform - if not provided, a new key will be generated |
 | letsEncrypt.email | string | `""` | Required: The email address to use for Let's Encrypt |
 | letsEncrypt.enabled | bool | `false` | Optional. Enable Let's Encrypt. |
 | livenessProbe.httpGet.path | string | `"/"` |  |
@@ -223,6 +219,9 @@ Kubernetes: `^1.8.0-0`
 | otelCollector | object | `{"database":"default","enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"otel/opentelemetry-collector-contrib","tag":"0.113.0"},"resources":{},"service":{"ports":[{"name":"otlp-grpc","port":4317,"protocol":"TCP","targetPort":4317},{"name":"otlp-http","port":4318,"protocol":"TCP","targetPort":4318}],"type":"ClusterIP"}}` | OTEL Collector configuration |
 | otelCollector.database | string | `"default"` | Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN) |
 | otelCollector.enabled | bool | `true` | Optional. Enable the OTEL Collector. |
+| platformSecrets | object | `{"jwtPrivateKeyRef":"","secretRef":"cq-platform-secrets"}` | Platform secrets configuration |
+| platformSecrets.jwtPrivateKeyRef | string | `""` | JWT private key reference for the self-hosted platform - if not provided, a new key will be generated |
+| platformSecrets.secretRef | string | `"cq-platform-secrets"` | Required: The secret reference to use for the user-supplied platform secrets |
 | podAnnotations | object | `{}` | Addition pod annotations |
 | podLabels | object | `{}` | Addition pod labels |
 | podSecurityContext | object | `{}` | Specify the pod-level security context |
@@ -232,7 +231,7 @@ Kubernetes: `^1.8.0-0`
 | replicaCount | int | `1` | The number of replicas to deploy |
 | resources | object | `{}` | Deployment resources |
 | scheduler | object | `{"address":"scheduler-cloudquery-operator:3001"}` | Specify the scheduler configuration |
-| service | object | `{"apiPort":4444,"apiType":"ClusterIP","proxyPort":3000,"proxyType":"ClusterIP","storagePort":4445,"storageType":"ClusterIP","uiPort":3001,"uiType":"ClusterIP"}` | Specify the ports the container exposes |
+| service | object | `{"annotations":{},"port":3000,"targetPort":3000,"type":"ClusterIP"}` | Specify the ports the container exposes |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `false` |  |

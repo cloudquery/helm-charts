@@ -1,6 +1,6 @@
 # Pod Access
 
-The CloudQuery Platform UI can be accessed directly via the pod on port {{ .Values.service.proxyPort }}.
+The CloudQuery Platform UI can be accessed directly via the pod on port {{ .Values.service.targetPort }}.
 
 1. Setup port forwarding to access the UI by doing the following:
 
