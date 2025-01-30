@@ -5,9 +5,9 @@ set -o nounset
 set -o pipefail
 
 readonly CT_VERSION=v3.6.0
-readonly KIND_VERSION=v0.14.0
+readonly KIND_VERSION=v0.26.0
 readonly CLUSTER_NAME=chart-testing
-readonly K8S_VERSION=v1.24.2
+readonly K8S_VERSION=v1.32.0
 
 run_ct_container() {
     echo 'Running or reusing ct container...'
