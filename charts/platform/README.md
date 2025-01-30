@@ -236,6 +236,7 @@ Kubernetes: `^1.8.0-0`
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `false` |  |
 | serviceAccount.name | string | `""` |  |
+| testingSecret | object | `{"activationKey":"","clickhouseDSN":"","enabled":false,"postgresqlDSN":""}` | Testing secret configuration - only used during CI/CD |
 | volumeMounts | list | `[]` | Additional volumeMounts on the output Deployment definition. |
 | volumes | list | `[]` | Additional volumes on the output Deployment definition. |
 

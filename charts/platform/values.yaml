@@ -155,3 +155,10 @@ ingress:
 debug:
   # -- Optional. Enable debug mode.
   enabled: false
+
+# -- Testing secret configuration - only used during CI/CD
+testingSecret:
+  enabled: false
+  activationKey: ""
+  postgresqlDSN: ""
+  clickhouseDSN: ""
