@@ -231,7 +231,7 @@ Kubernetes: `^1.8.0-0`
 | readinessProbe.periodSeconds | int | `30` |  |
 | replicaCount | int | `1` | The number of replicas to deploy |
 | resources | object | `{}` | Deployment resources |
-| scheduler | object | `{"address":"scheduler-cloudquery-operator:3001"}` | Specify the scheduler configuration |
+| scheduler | object | `{"address":"scheduler-operator:3001"}` | Specify the scheduler configuration |
 | service | object | `{"apiPort":4444,"apiType":"ClusterIP","proxyPort":3000,"proxyType":"ClusterIP","storagePort":4445,"storageType":"ClusterIP","uiPort":3001,"uiType":"ClusterIP"}` | Specify the ports the container exposes |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |

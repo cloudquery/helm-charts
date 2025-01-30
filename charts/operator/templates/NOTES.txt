@@ -1,0 +1,18 @@
+{{ .Chart.Name | title }} release `{{ .Release.Name }}/{{ .Release.Revision }}` has been installed!
+
+    .--.
+ .-(    ).    Happy CloudQuery-ing!
+(___.__)__)
+
+---
+
+# Add the following snippet to your Helm configuration YAML during platform installation or upgrade
+# to ensure the platform can communicate with the operator:
+scheduler:
+  address: {{ include "operator.fullname" . }}.{{ .Release.Namespace }}:3001
+
+---
+
+Alternatively, you can append the --set flag to your Helm command:
+
+  helm install <params> --set "scheduler.address={{ include "operator.fullname" . }}.{{ .Release.Namespace }}:3001"
