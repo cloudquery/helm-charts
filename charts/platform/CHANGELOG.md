@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/cloudquery/helm-charts/compare/platform-0.7.3...platform-0.8.0) (2025-01-30)
+
+
+### Features
+
+* Add operator helm chart ([#584](https://github.com/cloudquery/helm-charts/issues/584)) ([807b4e8](https://github.com/cloudquery/helm-charts/commit/807b4e87a59fab416b098f4f079ea9f484fe4949))
+
 ## [0.7.3](https://github.com/cloudquery/helm-charts/compare/platform-0.7.2...platform-0.7.3) (2025-01-29)
 
 
