@@ -70,9 +70,6 @@ readinessProbe:
 
 # -- Additional volumes on the output Deployment definition.
 volumes:
-  - name: nginx-config
-    configMap:
-      name: nginx-config
   - name: tmp
     emptyDir: {}
   - name: shared
@@ -80,9 +77,6 @@ volumes:
 
 # -- Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: nginx-config
-    mountPath: /etc/nginx/nginx.conf
-    subPath: nginx.conf
   - name: tmp
     mountPath: /tmp/platform
   - name: shared
