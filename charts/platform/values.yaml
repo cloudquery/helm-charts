@@ -27,7 +27,6 @@ podLabels: {}
 
 # -- Specify the pod-level security context
 podSecurityContext:
-  readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 10001
   runAsGroup: 10001
@@ -56,12 +55,12 @@ scheduler:
 
 # -- Deployment resources
 resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
   requests:
     cpu: 500m
     memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -75,27 +74,27 @@ readinessProbe:
     path: /
     port: api
 
+persistence:
+  enabled: false
+  type: "gp2" # AWS EBS storage class
+  accessModes:
+    - ReadWriteOnce
+  size: 100Gi
+  annotations: {}
+
 # -- Additional volumes on the output Deployment definition.
 volumes:
-  - name: shared
-    emptyDir: {}
   - name: logs
     emptyDir: {}
   - name: tmp
-    emptyDir: {}
-  - name: storage
     emptyDir: {}
 
 # -- Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: shared
-    mountPath: /shared
   - name: logs
     mountPath: /var/log
   - name: tmp
     mountPath: /tmp
-  - name: storage
-    mountPath: /data/storage
 
 # -- Platform secrets configuration
 platformSecrets:
@@ -156,7 +155,6 @@ otelCollector:
 
   # -- Specify the pod-level security context
   podSecurityContext:
-    readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 10001
     runAsGroup: 10001
