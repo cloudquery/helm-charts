@@ -32,11 +32,7 @@ spec:
             - name: CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
-                  {{- if index .Values "externalSecrets" "enabled" }}
-                  name: {{ include "platform.fullName" . }}-external-secrets
-                  {{- else }}
-                  name: {{ include "platform.fullName" . }}-secrets
-                  {{- end }}
+                  name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
             - name: CLICKHOUSE_DATABASE
               value: {{ .Values.otelCollector.database }}

@@ -1,6 +1,9 @@
-externalDependencies:
-  # 172.17.0.1 is the default gateway for the docker0 bridge network
-  postgresql_dsn: "postgres://postgres:pass@172.17.0.1:5432/postgres?sslmode=disable"
-  clickhouse_dsn: "clickhouse://user:pass@172.17.0.1:9000/assets"
+# CI/CD configuration - NOTE: 172.17.0.1 is the default gateway for the docker0 bridge network allowing
+# the container to access the CI/CD services running on the host machine
+testingSecret:
+  enabled: true
+  activationKey: ""
+  postgresqlDSN: "postgres://postgres:pass@172.17.0.1:5432/postgres?sslmode=disable"
+  clickhouseDSN: "clickhouse://user:pass@172.17.0.1:9000/assets"
 otelCollector:
   database: "assets"

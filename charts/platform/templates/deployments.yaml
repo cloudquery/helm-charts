@@ -4,11 +4,13 @@ metadata:
   name: {{ include "platform.fullName" . }}
   labels:
     {{- include "platform.labels" . | nindent 4 }}
+    app.kubernetes.io/component: application
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "platform.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: application
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,6 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "platform.labels" . | nindent 8 }}
+        app.kubernetes.io/component: application
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -35,69 +38,49 @@ spec:
           image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- if index .Values "externalSecrets" "enabled" }}
             - name: CQAPI_DB_DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: postgresqlDSN
             - name: CQAPI_LOCAL_ACTIVATION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: activationKey
             - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-external-secrets
+                  name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
-            {{- else }}
-            - name: CQAPI_DB_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: postgresqlDSN
-            {{- if .Values.activationKey }}
-            - name: CQAPI_LOCAL_ACTIVATION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: activationKey
-            {{- end }}
-            - name: CQAPI_WAREHOUSE_CLICKHOUSE_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
-                  key: clickhouseDSN
-            {{- end }}
             - name: CQAPI_LOCAL_AES_KEY_FILE
               value: "/shared/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.fullName" . }}-secrets
+                  name: {{ include "platform.jwtPrivateKeyRef" . }}
                   key: jwtPrivateKey
             # todo: figure out if we want this to go through the proxy / update once resolver is fixed
             - name: CQAPI_STORAGE_LOCAL_RELEASE_BASE_URL
-              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.proxyPort }}/storage/development/files"
+              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/storage/development/files"
             {{- if .Values.scheduler.address }}
             - name: CQAPI_MANAGEDSYNC_BACKEND_URL
               value: "{{ .Values.scheduler.address }}"
             - name: CQAPI_MANAGEDSYNC_PLATFORM_URL
-              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.proxyPort }}/api"
+              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/api"
             {{- end}}
           ports:
             - name: proxy
-              containerPort: {{ .Values.service.proxyPort }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
             - name: ui
-              containerPort: {{ .Values.service.uiPort }}
+              containerPort: 3001
               protocol: TCP
             - name: api
-              containerPort: {{ .Values.service.apiPort }}
+              containerPort: 4444
               protocol: TCP
             - name: storage
-              containerPort: {{ .Values.service.storagePort }}
+              containerPort: 4445
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}

@@ -46,7 +46,7 @@ spec:
               service:
                 name: {{ include "platform.fullName" $ }}
                 port:
-                  number: {{ $.Values.service.proxyPort }}
+                  number: {{ $.Values.service.targetPort }}
           {{- end }}
     {{- end }}
 {{- end }}
