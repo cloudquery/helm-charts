@@ -26,7 +26,12 @@ podAnnotations: {}
 podLabels: {}
 
 # -- Specify the pod-level security context
-podSecurityContext: {}
+podSecurityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 3001
+  runAsGroup: 3001
+  fsGroup: 3001
 
 # -- Specify the container-level security context
 containerSecurityContext: {}
@@ -44,17 +49,12 @@ scheduler:
 
 # -- Deployment resources
 resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -69,10 +69,24 @@ readinessProbe:
     port: api
 
 # -- Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: nginx-config
+    configMap:
+      name: nginx-config
+  - name: tmp
+    emptyDir: {}
+  - name: shared
+    emptyDir: {}
 
 # -- Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: nginx-config
+    mountPath: /etc/nginx/nginx.conf
+    subPath: nginx.conf
+  - name: tmp
+    mountPath: /tmp/platform
+  - name: shared
+    mountPath: /shared
 
 # -- Platform secrets configuration
 platformSecrets:
