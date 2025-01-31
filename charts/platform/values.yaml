@@ -29,12 +29,19 @@ podLabels: {}
 podSecurityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
-  runAsUser: 3001
-  runAsGroup: 3001
+  runAsUser: 10001
+  runAsGroup: 10001
   fsGroup: 3001
+  seccompProfile:
+    type: RuntimeDefault
 
 # -- Specify the container-level security context
-containerSecurityContext: {}
+containerSecurityContext:
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - all
 
 # -- Specify the ports the container exposes
 service:
@@ -50,11 +57,11 @@ scheduler:
 # -- Deployment resources
 resources:
   limits:
-    cpu: 100m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
   requests:
-    cpu: 100m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -116,17 +123,12 @@ otelCollector:
   database: "default"
 
   resources:
-    {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 1
-    #   memory: 2Gi
-    # requests:
-    #   cpu: 200m
-    #   memory: 400Mi
+    limits:
+      cpu: 0.1
+      memory: 256Mi
+    requests:
+      cpu: 0.1
+      memory: 256Mi
 
   service:
     type: ClusterIP
@@ -139,6 +141,23 @@ otelCollector:
         port: 4318
         protocol: TCP
         targetPort: 4318
+
+  # -- Specify the pod-level security context
+  podSecurityContext:
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault
+
+  # -- Specify the container-level security context
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - all
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:

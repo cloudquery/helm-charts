@@ -22,8 +22,12 @@ spec:
         {{- include "platform.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: otel-collector
     spec:
+      securityContext:
+        {{- toYaml .Values.otelCollector.podSecurityContext | nindent 8 }}
       containers:
         - name: otel-collector
+          securityContext:
+            {{- toYaml .Values.otelCollector.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.otelCollector.image.repository }}:{{ .Values.otelCollector.image.tag }}"
           imagePullPolicy: {{ .Values.otelCollector.image.pullPolicy }}
           args:
