@@ -70,15 +70,11 @@ readinessProbe:
 
 # -- Additional volumes on the output Deployment definition.
 volumes:
-  - name: tmp
-    emptyDir: {}
   - name: shared
     emptyDir: {}
 
 # -- Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: tmp
-    mountPath: /tmp/platform
   - name: shared
     mountPath: /shared
 
