@@ -1,0 +1,149 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.1
+  name: syncs.scheduling.cloudquery.io
+spec:
+  group: scheduling.cloudquery.io
+  names:
+    categories:
+    - cloudquery
+    - cq
+    kind: Sync
+    listKind: SyncList
+    plural: syncs
+    singular: sync
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: Status
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              configName:
+                description: |-
+                  ConfigName is the name of the ConfigMap that stores the CloudQuery configuration to use for the sync job.
+                  If not specified, this defaults to the name of the Sync object in the same namespace.
+                  This should at a minimum contain the `config.yaml` configuration file, but can include
+                  non-secret environment variables as well.
+                type: string
+              image:
+                description: Image is an optional container image of the CloudQuery
+                  launcher to use for the sync job.
+                type: string
+              resources:
+                description: |-
+                  Resources is an optional field to specify the resource requirements for the sync jobs.
+                  These apply to every shard of a sync job.
+                properties:
+                  claims:
+                    description: |-
+                      Claims lists the names of resources, defined in spec.resourceClaims,
+                      that are used by this container.
+
+                      This is an alpha field and requires enabling the
+                      DynamicResourceAllocation feature gate.
+
+                      This field is immutable. It can only be set for containers.
+                    items:
+                      description: ResourceClaim references one entry in PodSpec.ResourceClaims.
+                      properties:
+                        name:
+                          description: |-
+                            Name must match the name of one entry in pod.spec.resourceClaims of
+                            the Pod where this field is used. It makes that resource available
+                            inside a container.
+                          type: string
+                        request:
+                          description: |-
+                            Request is the name chosen for a request in the referenced claim.
+                            If empty, everything from the claim is made available, otherwise
+                            only the result of this request.
+                          type: string
+                      required:
+                      - name
+                      type: object
+                    type: array
+                    x-kubernetes-list-map-keys:
+                    - name
+                    x-kubernetes-list-type: map
+                  limits:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: |-
+                      Limits describes the maximum amount of compute resources allowed.
+                      More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+                    type: object
+                  requests:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: |-
+                      Requests describes the minimum amount of compute resources required.
+                      If Requests is omitted for a container, it defaults to Limits if that is explicitly specified,
+                      otherwise to an implementation-defined value. Requests cannot exceed Limits.
+                      More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+                    type: object
+                type: object
+              secretName:
+                description: |-
+                  SecretName is the name of the Secret that stores the secret environment variables to use for the sync job.
+                  If not specified, this defaults to the name of the Sync object in the same namespace.
+                  At a minimum, this should contain the `CLOUDQUERY_API_KEY` secret environment variable but any other configured
+                  one will be added to the sync environment as long as it follows the naming pattern requested by the CLI.
+                  eg. `__SOURCE_{SOURCE_NAME}__{ENVIRONMENT_VARIABLE_NAME}`, `__DESTINATION_{DESTINATION_NAME}__{ENVIRONMENT_VARIABLE_NAME}`
+                type: string
+              shards:
+                description: |-
+                  Shards is an optional field to specify the number of shards to use for the sync job.
+                  This defaults to 1 if not specified, meaning the sync process will not be sharded.
+                format: int32
+                type: integer
+            type: object
+          status:
+            description: Status defines the observed state of Sync
+            properties:
+              error:
+                type: string
+              exitCode:
+                format: int32
+                type: integer
+              status:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -40,7 +40,7 @@ service:
 
 # -- Specify the scheduler configuration
 scheduler:
-  address: scheduler-cloudquery-operator:3001
+  address: scheduler-operator:3001
 
 # -- Deployment resources
 resources:
