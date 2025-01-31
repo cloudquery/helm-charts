@@ -10438,7 +10438,63 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/cloudquery-0.1.2/cloudquery-0.1.2.tgz
     version: 0.1.2
+  operator:
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: v0.50.0
+    created: "2025-01-31T09:53:00.171051602Z"
+    description: A Helm chart for the operator that manages syncs on the CloudQuery
+      platform
+    digest: 25fdcc99e0b238a7d82675bcb99e8cbbd372ad7e6e970d355544de84f5ff4602
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: operator
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/operator
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/operator-0.1.0/operator-0.1.0.tgz
+    version: 0.1.0
   platform:
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
+    appVersion: 0.50.0
+    created: "2025-01-31T09:53:00.258825502Z"
+    description: Helm chart for installing the CloudQuery self-hosted platform
+    digest: 12053a753ce5bad808dcc96d6e5ca13fa3f58bc7929b4d1a1c788cfa885ec50d
+    home: https://cloudquery.io
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: platform
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/platform
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/platform-0.8.0/platform-0.8.0.tgz
+    version: 0.8.0
   - annotations:
       artifacthub.io/license: MPL-2.0
       artifacthub.io/links: |
@@ -10966,4 +11022,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/platform-0.1.0/platform-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-29T13:41:32.620775133Z"
+generated: "2025-01-31T09:53:00.259370943Z"
