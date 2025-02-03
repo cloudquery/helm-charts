@@ -54,7 +54,7 @@ spec:
                   name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
             - name: CQAPI_LOCAL_AES_KEY_FILE
-              value: "/shared/encrypted_aes_key.bin"
+              value: "/data/storage/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
@@ -95,6 +95,8 @@ spec:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+            - name: storage
+              mountPath: /data/storage
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
@@ -102,6 +104,13 @@ spec:
         - name: nginx-config
           configMap:
             name: {{ include "platform.fullName" . }}-nginx-conf
+        - name: storage
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "platform.fullName" . }}-pvc
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
