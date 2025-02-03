@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.51.0](https://img.shields.io/badge/AppVersion-0.51.0-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.51.1](https://img.shields.io/badge/AppVersion-0.51.1-informational?style=flat-square)
 
 ## Quickstart
 
@@ -192,7 +192,7 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":false}` | Specify the container-level security context |
+| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true}` | Specify the container-level security context |
 | debug.enabled | bool | `false` | Optional. Enable debug mode. |
 | externalSecrets | object | `{"cloudquerySecretsKey":"","enabled":false,"externalSecretsRoleARN":"","region":""}` | External secrets configuration |
 | externalSecrets.cloudquerySecretsKey | string | `""` | Required: The AWS secret key for the Postgres DSN |
@@ -216,7 +216,7 @@ Kubernetes: `^1.8.0-0`
 | livenessProbe.httpGet.port | string | `"api"` |  |
 | livenessProbe.periodSeconds | int | `60` |  |
 | nameOverride | string | `""` | Override the default name |
-| otelCollector | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true},"database":"default","enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"otel/opentelemetry-collector-contrib","tag":"0.113.0"},"podSecurityContext":{"readOnlyRootFilesystem":true,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"1000m","memory":"1Gi"}},"service":{"ports":[{"name":"otlp-grpc","port":4317,"protocol":"TCP","targetPort":4317},{"name":"otlp-http","port":4318,"protocol":"TCP","targetPort":4318}],"type":"ClusterIP"}}` | OTEL Collector configuration |
+| otelCollector | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true},"database":"default","enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"otel/opentelemetry-collector-contrib","tag":"0.118.0"},"podSecurityContext":{"readOnlyRootFilesystem":true,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}},"resources":{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"500m","memory":"512Mi"}},"service":{"ports":[{"name":"otlp-grpc","port":4317,"protocol":"TCP","targetPort":4317},{"name":"otlp-http","port":4318,"protocol":"TCP","targetPort":4318}],"type":"ClusterIP"}}` | OTEL Collector configuration |
 | otelCollector.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true}` | Specify the container-level security context |
 | otelCollector.database | string | `"default"` | Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN) |
 | otelCollector.enabled | bool | `true` | Optional. Enable the OTEL Collector. |
@@ -226,7 +226,7 @@ Kubernetes: `^1.8.0-0`
 | platformSecrets.secretRef | string | `"cq-platform-secrets"` | Required: The secret reference to use for the user-supplied platform secrets |
 | podAnnotations | object | `{}` | Addition pod annotations |
 | podLabels | object | `{}` | Addition pod labels |
-| podSecurityContext | object | `{"fsGroup":3001,"readOnlyRootFilesystem":false,"runAsGroup":3001,"runAsNonRoot":true,"runAsUser":3001,"seccompProfile":{"type":"RuntimeDefault"}}` | Specify the pod-level security context |
+| podSecurityContext | object | `{"fsGroup":3001,"readOnlyRootFilesystem":true,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}}` | Specify the pod-level security context |
 | readinessProbe.httpGet.path | string | `"/"` |  |
 | readinessProbe.httpGet.port | string | `"api"` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
@@ -239,8 +239,8 @@ Kubernetes: `^1.8.0-0`
 | serviceAccount.create | bool | `false` |  |
 | serviceAccount.name | string | `""` |  |
 | testingSecret | object | `{"activationKey":"","clickhouseDSN":"","enabled":false,"postgresqlDSN":""}` | Testing secret configuration - only used during CI/CD |
-| volumeMounts | list | `[{"mountPath":"/shared","name":"shared"},{"mountPath":"/tmp/platform","name":"platform-tmp"},{"mountPath":"/data/storage","name":"storage"}]` | Additional volumeMounts on the output Deployment definition. |
-| volumes | list | `[{"emptyDir":{},"name":"shared"},{"emptyDir":{},"name":"platform-tmp"},{"emptyDir":{},"name":"storage"}]` | Additional volumes on the output Deployment definition. |
+| volumeMounts | list | `[{"mountPath":"/shared","name":"shared"},{"mountPath":"/var/log","name":"logs"},{"mountPath":"/tmp","name":"tmp"},{"mountPath":"/data/storage","name":"storage"}]` | Additional volumeMounts on the output Deployment definition. |
+| volumes | list | `[{"emptyDir":{},"name":"shared"},{"emptyDir":{},"name":"logs"},{"emptyDir":{},"name":"tmp"},{"emptyDir":{},"name":"storage"}]` | Additional volumes on the output Deployment definition. |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

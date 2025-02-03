@@ -6,9 +6,9 @@ data:
   nginx.conf: |
     worker_processes auto;
 
-    pid /tmp/platform/nginx.pid;
+    pid /tmp/nginx.pid;
 
-    error_log /tmp/platform/nginx.error_log info;
+    error_log /var/log/nginx.error_log info;
 
     events {
         worker_connections 2000;
@@ -19,11 +19,11 @@ data:
     http {
         resolver 127.0.0.11 ipv6=off;
 
-        client_body_temp_path /tmp/platform/client_body;
-        proxy_temp_path /tmp/platform/proxy;
-        fastcgi_temp_path /tmp/platform/fastcgi;
-        uwsgi_temp_path /tmp/platform/uwsgi;
-        scgi_temp_path /tmp/platform/scgi;
+        client_body_temp_path /var/log/client_body;
+        proxy_temp_path /var/log/proxy;
+        fastcgi_temp_path /var/log/fastcgi;
+        uwsgi_temp_path /var/log/uwsgi;
+        scgi_temp_path /var/log/scgi;
 
         # Increased buffer sizes
         client_header_buffer_size 64k;
@@ -76,7 +76,7 @@ data:
 
         server {
             listen 3000;
-            access_log /tmp/platform/nginx.access_log main;
+            access_log /var/log/nginx.access_log main;
 
             # Frontend proxy
             location / {

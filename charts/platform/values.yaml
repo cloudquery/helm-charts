@@ -27,17 +27,17 @@ podLabels: {}
 
 # -- Specify the pod-level security context
 podSecurityContext:
-  readOnlyRootFilesystem: false
+  readOnlyRootFilesystem: true
   runAsNonRoot: true
-  runAsUser: 3001
-  runAsGroup: 3001
+  runAsUser: 10001
+  runAsGroup: 10001
   fsGroup: 3001
   seccompProfile:
     type: RuntimeDefault
 
 # -- Specify the container-level security context
 containerSecurityContext:
-  readOnlyRootFilesystem: false
+  readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   capabilities:
     drop:
@@ -79,7 +79,9 @@ readinessProbe:
 volumes:
   - name: shared
     emptyDir: {}
-  - name: platform-tmp
+  - name: logs
+    emptyDir: {}
+  - name: tmp
     emptyDir: {}
   - name: storage
     emptyDir: {}
@@ -88,8 +90,10 @@ volumes:
 volumeMounts:
   - name: shared
     mountPath: /shared
-  - name: platform-tmp
-    mountPath: /tmp/platform
+  - name: logs
+    mountPath: /var/log
+  - name: tmp
+    mountPath: /tmp
   - name: storage
     mountPath: /data/storage
 
