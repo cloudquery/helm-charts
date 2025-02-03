@@ -76,7 +76,7 @@ readinessProbe:
 
 persistence:
   enabled: false
-  type: "gp2" # AWS EBS storage class
+  type: "gp2"
   accessModes:
     - ReadWriteOnce
   size: 100Gi
