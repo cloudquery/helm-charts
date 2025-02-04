@@ -84,15 +84,11 @@ persistence:
 
 # -- Additional volumes on the output Deployment definition.
 volumes:
-  - name: logs
-    emptyDir: {}
   - name: tmp
     emptyDir: {}
 
 # -- Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: logs
-    mountPath: /var/log
   - name: tmp
     mountPath: /tmp
 
