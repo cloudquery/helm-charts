@@ -92,18 +92,12 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
             - name: storage
               mountPath: /data/storage
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        - name: nginx-config
-          configMap:
-            name: {{ include "platform.fullName" . }}-nginx-conf
         - name: storage
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
