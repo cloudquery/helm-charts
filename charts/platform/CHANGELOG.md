@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/cloudquery/helm-charts/compare/platform-0.9.0...platform-0.9.1) (2025-02-05)
+
+
+### Bug Fixes
+
+* Remove nginx configuration and add env variables ([#597](https://github.com/cloudquery/helm-charts/issues/597)) ([302bf6c](https://github.com/cloudquery/helm-charts/commit/302bf6c225e2925a0b24a1a7da726f9c57b2ba8b))
+
 ## [0.9.0](https://github.com/cloudquery/helm-charts/compare/platform-0.8.0...platform-0.9.0) (2025-02-04)
 
 
