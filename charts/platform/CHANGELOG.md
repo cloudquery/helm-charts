@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.9.0](https://github.com/cloudquery/helm-charts/compare/platform-0.8.0...platform-0.9.0) (2025-02-04)
+
+
+### Features
+
+* Adding persistent volume ([#592](https://github.com/cloudquery/helm-charts/issues/592)) ([b56d962](https://github.com/cloudquery/helm-charts/commit/b56d96226ac7234dbf178a0c7963ad73739a693c))
+* Support NLB deployment via Helm ([#583](https://github.com/cloudquery/helm-charts/issues/583)) ([e20d1ae](https://github.com/cloudquery/helm-charts/commit/e20d1aec9913b5724b64e08087bee433f8d4fccb))
+
+
+### Bug Fixes
+
+* Adding security context configuration ([#587](https://github.com/cloudquery/helm-charts/issues/587)) ([2f09eb4](https://github.com/cloudquery/helm-charts/commit/2f09eb434e1c761faf5a966f076f818b49bc524b))
+* **deps:** Update dependency cloudquery/cloud to v0.51.0 ([#588](https://github.com/cloudquery/helm-charts/issues/588)) ([d5d060a](https://github.com/cloudquery/helm-charts/commit/d5d060a88d3b7597b1c6acd4f84b12501c577617))
+* **deps:** Update dependency cloudquery/cloud to v0.51.1 ([#591](https://github.com/cloudquery/helm-charts/issues/591)) ([2f09b11](https://github.com/cloudquery/helm-charts/commit/2f09b1148ab5cebe27ed2f2f41610dc787a8a615))
+* **deps:** Update dependency cloudquery/cloud to v0.52.0 ([#593](https://github.com/cloudquery/helm-charts/issues/593)) ([382aa97](https://github.com/cloudquery/helm-charts/commit/382aa97dbe79ae284c91c2d7e21298c694392dfd))
+* **deps:** Update dependency cloudquery/cloud to v0.53.0 ([#596](https://github.com/cloudquery/helm-charts/issues/596)) ([61af827](https://github.com/cloudquery/helm-charts/commit/61af827ab2cdbe819ab69d6205511a638ce3da69))
+* **deps:** Update otel/opentelemetry-collector-contrib Docker tag to v0.118.0 ([#590](https://github.com/cloudquery/helm-charts/issues/590)) ([d90da8b](https://github.com/cloudquery/helm-charts/commit/d90da8b4b47a9e8f95f765c83f3c1a1049d71f96))
+
 ## [0.8.0](https://github.com/cloudquery/helm-charts/compare/platform-0.7.3...platform-0.8.0) (2025-01-30)
 
 
