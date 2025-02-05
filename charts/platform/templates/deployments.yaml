@@ -37,6 +37,9 @@ spec:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ include "platform.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "platform.fullName" . }}-config
           env:
             - name: CQAPI_DB_DSN
               valueFrom:
@@ -53,22 +56,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
-            - name: CQAPI_LOCAL_AES_KEY_FILE
-              value: "/data/storage/encrypted_aes_key.bin"
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.jwtPrivateKeyRef" . }}
                   key: jwtPrivateKey
-            # todo: figure out if we want this to go through the proxy / update once resolver is fixed
-            - name: CQAPI_STORAGE_LOCAL_RELEASE_BASE_URL
-              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/storage/development/files"
-            {{- if .Values.scheduler.address }}
-            - name: CQAPI_MANAGEDSYNC_BACKEND_URL
-              value: "{{ .Values.scheduler.address }}"
-            - name: CQAPI_MANAGEDSYNC_PLATFORM_URL
-              value: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/api"
-            {{- end}}
           ports:
             - name: proxy
               containerPort: {{ .Values.service.targetPort }}
@@ -92,18 +84,12 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
             - name: storage
               mountPath: /data/storage
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        - name: nginx-config
-          configMap:
-            name: {{ include "platform.fullName" . }}-nginx-conf
         - name: storage
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
