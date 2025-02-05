@@ -17,6 +17,14 @@
       versioningTemplate: "loose",
       extractVersionTemplate: "^v(?<version>.+)$",
     },
+    {
+      fileMatch: ["^charts/operator/Chart.yaml$"],
+      matchStrings: ['appVersion: (?<currentValue>.*)'],
+      depNameTemplate: "cloudquery/cloud",
+      datasourceTemplate: "github-releases",
+      versioningTemplate: "loose",
+      extractVersionTemplate: "^v(?<version>.+)$",
+    }
   ],
   packageRules: [
     {
