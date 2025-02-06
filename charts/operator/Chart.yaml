@@ -11,7 +11,7 @@ maintainers:
     email: yp@cloudquery.io
 type: application
 version: 0.2.0
-appVersion: v0.50.0
+appVersion: 0.50.0
 annotations:
   artifacthub.io/license: MPL-2.0
   artifacthub.io/links: |

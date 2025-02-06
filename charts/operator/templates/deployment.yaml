@@ -34,7 +34,7 @@ spec:
           args: [kubernetes]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "%s-k8s" .Chart.AppVersion ) }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s-k8s" .Chart.AppVersion ) }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
