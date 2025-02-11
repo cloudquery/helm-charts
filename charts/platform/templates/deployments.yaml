@@ -1,3 +1,4 @@
+# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,6 +32,8 @@ spec:
       serviceAccountName: {{ include "platform.serviceAccount" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+{{ include "platform.initContainers" . | indent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -97,6 +100,13 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: init-scripts
+          configMap:
+            name: {{ include "platform.fullName" . }}-init-scripts
+            defaultMode: 0755
+        - name: platform-secrets
+          secret:
+            secretName: {{ include "platform.fullName" . }}-external-secrets
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
