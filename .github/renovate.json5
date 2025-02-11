@@ -1,86 +1,115 @@
 {
-  extends: ["github>cloudquery/.github//.github/renovate-default.json5"],
-  regexManagers: [
+  extends: [
+    'github>cloudquery/.github//.github/renovate-default.json5',
+  ],
+  customManagers: [
     {
-      fileMatch: ["^charts/cloudquery/Chart.yaml$"],
-      matchStrings: ['appVersion: (?<currentValue>.*)'],
-      depNameTemplate: "cloudquery/cloudquery",
-      datasourceTemplate: "github-releases",
-      versioningTemplate: "loose",
-      extractVersionTemplate: "^cli-v(?<version>.+)\\.\\d$",
+      customType: 'regex',
+      fileMatch: [
+        '^charts/cloudquery/Chart.yaml$',
+      ],
+      matchStrings: [
+        'appVersion: (?<currentValue>.*)',
+      ],
+      depNameTemplate: 'cloudquery/cloudquery',
+      datasourceTemplate: 'github-releases',
+      versioningTemplate: 'loose',
+      extractVersionTemplate: '^cli-v(?<version>.+)\\.\\d$',
     },
     {
-      fileMatch: ["^charts/platform/Chart.yaml$"],
-      matchStrings: ['appVersion: (?<currentValue>.*)'],
-      depNameTemplate: "cloudquery/cloud",
-      datasourceTemplate: "github-releases",
-      versioningTemplate: "loose",
-      extractVersionTemplate: "^v(?<version>.+)$",
+      customType: 'regex',
+      fileMatch: [
+        '^charts/platform/Chart.yaml$',
+      ],
+      matchStrings: [
+        'appVersion: (?<currentValue>.*)',
+      ],
+      depNameTemplate: 'cloudquery/cloud',
+      datasourceTemplate: 'github-releases',
+      versioningTemplate: 'loose',
+      extractVersionTemplate: '^v(?<version>.+)$',
     },
     {
-      fileMatch: ["^charts/operator/Chart.yaml$"],
-      matchStrings: ['appVersion: (?<currentValue>.*)'],
-      depNameTemplate: "cloudquery/cloud",
-      datasourceTemplate: "github-releases",
-      versioningTemplate: "loose",
-      extractVersionTemplate: "^v(?<version>.+)$",
-    }
+      customType: 'regex',
+      fileMatch: [
+        '^charts/operator/Chart.yaml$',
+      ],
+      matchStrings: [
+        'appVersion: (?<currentValue>.*)',
+      ],
+      depNameTemplate: 'cloudquery/cloud',
+      datasourceTemplate: 'github-releases',
+      versioningTemplate: 'loose',
+      extractVersionTemplate: '^v(?<version>.+)$',
+    },
   ],
   packageRules: [
     {
-      matchManagers: ["helm-values", "helmv3"],
-      matchSourceUrls: ["https://github.com/cloudquery/cloudquery"],
+      matchManagers: [
+        'helm-values',
+        'helmv3',
+      ],
+      matchSourceUrls: [
+        'https://github.com/cloudquery/cloudquery',
+      ],
       postUpgradeTasks: {
         commands: [
-          // Bump patch version of chart when updating the CloudQuery CLI version
           "sed -i \"s/^version.*/version: $(grep '^version' charts/cloudquery/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/cloudquery/Chart.yaml",
-          // Bump chart and cloudquery versions in README.md
           'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
         ],
         fileFilters: [
-          "charts/cloudquery/Chart.yaml",
-          "charts/cloudquery/README.md",
+          'charts/cloudquery/Chart.yaml',
+          'charts/cloudquery/README.md',
         ],
-        executionMode: "update",
+        executionMode: 'update',
       },
     },
     {
-      matchManagers: ["helm-values", "helmv3"],
-      matchSourceUrls: ["https://github.com/cloudquery/cloud"],
+      matchManagers: [
+        'helm-values',
+        'helmv3',
+      ],
+      matchSourceUrls: [
+        'https://github.com/cloudquery/cloud',
+      ],
       postUpgradeTasks: {
         commands: [
-          // Bump patch version of chart when updating the CloudQuery CLI version
           "sed -i \"s/^version.*/version: $(grep '^version' charts/platform/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/platform/Chart.yaml",
-          // Bump chart and cloudquery versions in README.md
           'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
         ],
         fileFilters: [
-          "charts/platform/Chart.yaml",
-          "charts/platform/README.md",
+          'charts/platform/Chart.yaml',
+          'charts/platform/README.md',
         ],
-        executionMode: "update",
+        executionMode: 'update',
       },
     },
     {
-      matchManagers: ["helm-values", "helmv3"],
-      matchSourceUrls: ["https://github.com/cloudquery/cloud"],
+      matchManagers: [
+        'helm-values',
+        'helmv3',
+      ],
+      matchSourceUrls: [
+        'https://github.com/cloudquery/cloud',
+      ],
       postUpgradeTasks: {
         commands: [
-          // Bump patch version of chart when updating the CloudQuery CLI version
           "sed -i \"s/^version.*/version: $(grep '^version' charts/operator/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/operator/Chart.yaml",
-          // Bump chart and cloudquery versions in README.md
           'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
         ],
         fileFilters: [
-          "charts/operator/Chart.yaml",
-          "charts/operator/README.md",
+          'charts/operator/Chart.yaml',
+          'charts/operator/README.md',
         ],
-        executionMode: "update",
+        executionMode: 'update',
       },
     },
     {
-      matchSourceUrls: ["https://github.com/cloudquery/cloudquery", "https://github.com/cloudquery/cloud"],
-      commitMessagePrefix: "fix(deps): ",
+      matchSourceUrls: [
+        'https://github.com/cloudquery/cloudquery',
+        'https://github.com/cloudquery/cloud',
+      ],
+      commitMessagePrefix: 'fix(deps): ',
     },
   ],
 }
