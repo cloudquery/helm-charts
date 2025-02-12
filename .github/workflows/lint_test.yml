@@ -15,9 +15,10 @@ jobs:
         env:
           POSTGRES_PASSWORD: pass
       clickhouse:
-        image:  clickhouse/clickhouse-server
+        image: clickhouse/clickhouse-server
         ports:
           - 9000:9000
+          - 8123:8123
         env:
           CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
           CLICKHOUSE_DB: assets

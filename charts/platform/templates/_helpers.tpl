@@ -89,3 +89,20 @@ Get the appropriate secret reference name based on whether external secrets is e
 {{- include "platform.fullName" . }}-jwt-private-key
 {{- end -}}
 {{- end -}}
+
+{{/*
+Init containers definition
+*/}}
+{{- define "platform.initContainers" -}}
+- name: init-clickhouse
+  image: curlimages/curl:8.5.0
+  command:
+    - /bin/sh
+    - /scripts/init-clickhouse.sh
+  volumeMounts:
+    - name: init-scripts
+      mountPath: /scripts
+    - name: platform-secrets
+      mountPath: /secrets
+      readOnly: true
+{{- end -}}
