@@ -4,23 +4,8 @@ receivers:
       http:
         endpoint: :4318
 processors:
-  transform:
-    #    error_mode: ignore
-    trace_statements:
-      - context: spanevent
-        conditions:
-          - (name == "sync.finish.stats" and attributes["sync.resources"] == 0 and attributes["sync.errors"] == 0 and attributes["sync.panics"] == 0)
-        statements:
-          - set(span.attributes["cq.delete"], 1)
-  #      - context: span
-  #        statements:
-  #          - delete_key(attributes, "sync.client.id")
-
   filter:
-    #    error_mode: ignore
-    traces:
-      span:
-        - attributes["cq.delete"] == 1
+#    error_mode: ignore
     logs:
       log_record:
         - 'IsMatch(body, "table resolver finished with error|table sync finished|table resolver finished with panic") == false'
@@ -60,7 +45,7 @@ service:
       exporters: [clickhouse]
     traces:
       receivers: [otlp]
-      processors: [transform, filter, batch]
+      processors: [filter, batch]
       exporters: [clickhouse]
     metrics:
       receivers: [otlp]
