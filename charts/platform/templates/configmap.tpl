@@ -40,8 +40,8 @@ parse_clickhouse_dsn() {
     export CH_USER=$(echo "$dsn" | sed -n 's|clickhouse://\([^:]*\):.*|\1|p')
     export CH_PASS=$(echo "$dsn" | sed -n 's|clickhouse://[^:]*:\([^@]*\)@.*|\1|p')
     export CH_HOST=$(echo "$dsn" | sed -n 's|.*@\([^:]*\):.*|\1|p')
-    export CH_PORT=$(echo "$dsn" | sed -n 's|.*:\([^/]*\)/.*|\1|p')
-    export CH_DB=$(echo "$dsn" | sed -n 's|.*/\(.*\)|\1|p')
+    export CH_PORT=$(echo "$dsn" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
+    export CH_DB=$(echo "$dsn" | sed -n 's|.*/\([^?]*\).*|\1|p') 
 }
 
 # Get Clickhouse DSN from secret

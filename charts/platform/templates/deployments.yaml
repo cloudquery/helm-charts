@@ -105,7 +105,7 @@ spec:
             defaultMode: 0755
         - name: platform-secrets
           secret:
-            secretName: {{ include "platform.fullName" . }}-external-secrets
+            secretName: {{ include "platform.secretRef" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
