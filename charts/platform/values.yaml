@@ -185,6 +185,57 @@ debug:
   # -- Optional. Enable debug mode.
   enabled: false
 
+# -- Init Container configuration
+# @section Init Containers
+# @descriptionStart
+# Configuration for initialization containers that run before the main application.
+# These containers handle database connectivity checks and schema initialization.
+# @descriptionEnd
+initContainers:
+  # -- Enable or disable initialization containers
+  enabled: true
+  # -- Image pull policy for init containers
+  imagePullPolicy: IfNotPresent
+
+  # -- Configuration for the curl container used to initialize ClickHouse
+  curl:
+    # -- Container image repository for curl
+    repository: curlimages/curl
+    # -- Container image tag for curl
+    tag: 8.5.0
+
+  # -- Configuration for the netcat container used for connectivity checks
+  netcat:
+    # -- Container image repository for netcat
+    repository: toolbelt/netcat
+    # -- Container image tag for netcat
+    tag: latest
+
+  # -- Security context for init containers
+  # @schemaRef SecurityContext
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 10001
+    capabilities:
+      drop:
+        - ALL
+
+  # -- Retry configuration for connectivity checks
+  retry:
+    # -- Maximum number of retry attempts for connectivity checks
+    maxAttempts: 5
+    # -- Time to wait between retry attempts (in seconds)
+    interval: 5
+
+  # -- Timeout configuration for database operations
+  timeout:
+    # -- Connection timeout for database checks (in seconds)
+    connect: 5
+    # -- Operation timeout for database operations (in seconds)
+    operation: 10
+
 # -- Testing secret configuration - only used during CI/CD
 testingSecret:
   enabled: false
