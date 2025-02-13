@@ -95,7 +95,7 @@ Init containers definition
 */}}
 {{- define "platform.initContainers" -}}
 - name: init-clickhouse
-  image: curlimages/curl:8.5.0
+  image: alpine:3.18
   command:
     - /bin/sh
     - /scripts/init-clickhouse.sh
@@ -105,4 +105,17 @@ Init containers definition
     - name: platform-secrets
       mountPath: /secrets
       readOnly: true
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  # Install required tools
+  command:
+    - /bin/sh
+    - -c
+  args:
+    - |
+      apk add --no-cache netcat-openbsd curl && /scripts/init-clickhouse.sh
 {{- end -}}
