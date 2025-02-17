@@ -144,8 +144,6 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
-        - name: tmp
-          emptyDir: {}
         {{- if .Values.initContainers.enabled }}
         - name: init-scripts
           configMap:
