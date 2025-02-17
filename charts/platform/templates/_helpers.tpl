@@ -95,18 +95,13 @@ Init containers definition
 */}}
 {{- define "platform.initContainers" -}}
 - name: init-clickhouse
-  image: alpine:3.18
+  image: cgr.dev/chainguard/wolfi-base:latest
   command:
     - /bin/sh
     - -c
   args:
     - |
-      mkdir -p /tmp/apk && \
-      apk --no-cache add -p /tmp/apk --initdb && \
-      cp -r /etc/apk/repositories /tmp/apk/etc/apk/ && \
-      apk --no-cache --root /tmp/apk add curl netcat-openbsd && \
-      export PATH="/tmp/apk/usr/bin:$PATH" && \
-      export LD_LIBRARY_PATH="/tmp/apk/usr/lib:/tmp/apk/usr/lib64:$LD_LIBRARY_PATH" && \
+      apk add --no-cache curl netcat-openbsd && \
       /scripts/init-clickhouse.sh
   volumeMounts:
     - name: init-scripts
@@ -114,11 +109,9 @@ Init containers definition
     - name: platform-secrets
       mountPath: /secrets
       readOnly: true
-    - name: tmp-apk
-      mountPath: /tmp/apk
   securityContext:
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop:
         - ALL
