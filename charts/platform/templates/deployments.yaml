@@ -59,7 +59,8 @@ spec:
           image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
           imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
           command:
-            - /bin/sh
+            - /usr/bin/env
+            - sh 
             - /scripts/init-clickhouse.sh
           env:
             - name: MAX_ATTEMPTS

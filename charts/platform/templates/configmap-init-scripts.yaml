@@ -93,7 +93,7 @@ data:
     exit 0
 
   init-clickhouse.sh: |
-    #!/bin/sh
+    #!/usr/bin/env sh
     set -e
     
     # Terminal colors
@@ -197,4 +197,5 @@ data:
     
     log_header "ClickHouse initialization complete"
     exit 0
+
 {{- end }}
