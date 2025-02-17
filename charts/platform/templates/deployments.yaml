@@ -106,6 +106,8 @@ spec:
         - name: platform-secrets
           secret:
             secretName: {{ include "platform.secretRef" . }}
+        - name: tmp-apk
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -98,24 +98,26 @@ Init containers definition
   image: alpine:3.18
   command:
     - /bin/sh
-    - /scripts/init-clickhouse.sh
+    - -c
+  args:
+    - |
+      mkdir -p /tmp/apk && \
+      apk add --no-cache --initdb -p /tmp/apk netcat-openbsd curl && \
+      export PATH="/tmp/apk/usr/bin:$PATH" && \
+      export LD_LIBRARY_PATH="/tmp/apk/usr/lib:/tmp/apk/usr/lib64:$LD_LIBRARY_PATH" && \
+      /scripts/init-clickhouse.sh
   volumeMounts:
     - name: init-scripts
       mountPath: /scripts
     - name: platform-secrets
       mountPath: /secrets
       readOnly: true
+    - name: tmp-apk
+      mountPath: /tmp/apk
   securityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
     capabilities:
       drop:
         - ALL
-  # Install required tools
-  command:
-    - /bin/sh
-    - -c
-  args:
-    - |
-      apk add --no-cache netcat-openbsd curl && /scripts/init-clickhouse.sh
 {{- end -}}
