@@ -91,28 +91,52 @@ Get the appropriate secret reference name based on whether external secrets is e
 {{- end -}}
 
 {{/*
-Init containers definition
+Init container template
 */}}
 {{- define "platform.initContainers" -}}
-- name: init-clickhouse
-  image: cgr.dev/chainguard/wolfi-base:latest
-  command:
-    - /bin/sh
-    - -c
-  args:
-    - |
-      apk add --no-cache --initdb curl netcat-openbsd && \
-      /scripts/init-clickhouse.sh
-  volumeMounts:
-    - name: init-scripts
-      mountPath: /scripts
-    - name: platform-secrets
-      mountPath: /secrets
-      readOnly: true
-  securityContext:
-    allowPrivilegeEscalation: true
-    readOnlyRootFilesystem: false
-    capabilities:
-      drop:
-        - ALL
-{{- end -}}
+{{- if .Values.initContainers.enabled }}
+initContainers:
+  - name: init-connectivity
+    image: {{ .Values.initContainers.netcat.repository }}:{{ .Values.initContainers.netcat.tag }}
+    imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+    command:
+      - /bin/sh
+      - /scripts/check-connectivity.sh
+    securityContext:
+      {{- toYaml .Values.initContainers.securityContext | nindent 6 }}
+    volumeMounts:
+      - name: init-scripts
+        mountPath: /scripts
+        readOnly: true
+      - name: platform-secrets
+        mountPath: /secrets
+        readOnly: true
+  - name: init-clickhouse
+    image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
+    imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+    command:
+      - /bin/sh
+      - /scripts/init-clickhouse.sh
+    securityContext:
+      {{- toYaml .Values.initContainers.securityContext | nindent 6 }}
+    volumeMounts:
+      - name: init-scripts
+        mountPath: /scripts
+        readOnly: true
+      - name: platform-secrets
+        mountPath: /secrets
+        readOnly: true
+{{- end }}
+{{- end }}
+
+{{/*
+Init container volumes
+*/}}
+{{- define "platform.initVolumes" -}}
+{{- if .Values.initContainers.enabled }}
+- name: init-scripts
+  configMap:
+    name: {{ include "platform.fullName" . }}-init-scripts
+    defaultMode: 0755
+{{- end }}
+{{- end }}

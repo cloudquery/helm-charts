@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "platform.labels" . | nindent 8 }}
+        {{- include "platform.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: application
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
@@ -31,10 +31,55 @@ spec:
       serviceAccountName: {{ include "platform.serviceAccount" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.initContainers.enabled }}
       initContainers:
-{{ include "platform.initContainers" . | indent 8 }}
+        - name: init-connectivity
+          image: {{ .Values.initContainers.netcat.repository }}:{{ .Values.initContainers.netcat.tag }}
+          imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+          command:
+            - /bin/sh
+            - /scripts/check-connectivity.sh
+          env:
+            - name: MAX_ATTEMPTS
+              value: {{ .Values.initContainers.retry.maxAttempts | quote }}
+            - name: RETRY_INTERVAL
+              value: {{ .Values.initContainers.retry.interval | quote }}
+            - name: CONNECT_TIMEOUT
+              value: {{ .Values.initContainers.timeout.connect | quote }}
+          securityContext:
+            {{- toYaml .Values.initContainers.securityContext | nindent 12 }}
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: platform-secrets
+              mountPath: /secrets
+              readOnly: true
+        - name: init-clickhouse
+          image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
+          imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+          command:
+            - /bin/sh
+            - /scripts/init-clickhouse.sh
+          env:
+            - name: MAX_ATTEMPTS
+              value: {{ .Values.initContainers.retry.maxAttempts | quote }}
+            - name: RETRY_INTERVAL
+              value: {{ .Values.initContainers.retry.interval | quote }}
+            - name: OPERATION_TIMEOUT
+              value: {{ .Values.initContainers.timeout.operation | quote }}
+          securityContext:
+            {{- toYaml .Values.initContainers.securityContext | nindent 12 }}
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: platform-secrets
+              mountPath: /secrets
+              readOnly: true
+      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: platform
           securityContext:
             {{- toYaml .Values.containerSecurityContext | nindent 12 }}
           image: "{{ include "platform.image" . }}"
@@ -99,6 +144,9 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: tmp
+          emptyDir: {}
+        {{- if .Values.initContainers.enabled }}
         - name: init-scripts
           configMap:
             name: {{ include "platform.fullName" . }}-init-scripts
@@ -106,15 +154,4 @@ spec:
         - name: platform-secrets
           secret:
             secretName: {{ include "platform.secretRef" . }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
