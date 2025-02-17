@@ -207,7 +207,7 @@ initContainers:
   # -- Configuration for the netcat container used for connectivity checks
   netcat:
     # -- Container image repository for netcat
-    repository: cgr.dev/chainguard/netcat
+    repository: toolbelt/netcat
     # -- Container image tag for netcat
     tag: latest
 
