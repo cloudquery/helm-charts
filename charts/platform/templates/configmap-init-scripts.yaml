@@ -90,6 +90,7 @@ data:
     done
     
     log_header "All connectivity checks passed successfully"
+    exit 0
 
   init-clickhouse.sh: |
     #!/bin/sh
@@ -195,4 +196,5 @@ data:
     fi
     
     log_header "ClickHouse initialization complete"
+    exit 0
 {{- end }}
