@@ -193,7 +193,7 @@ debug:
 # @descriptionEnd
 initContainers:
   # -- Enable or disable initialization containers
-  enabled: false
+  enabled: true
   # -- Image pull policy for init containers
   imagePullPolicy: IfNotPresent
 
