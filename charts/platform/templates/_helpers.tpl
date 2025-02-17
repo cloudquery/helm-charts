@@ -101,7 +101,9 @@ Init containers definition
     - -c
   args:
     - |
-      apk add --no-cache curl netcat-openbsd && \
+      mkdir -p /tmp/apk && \
+      apk add --no-cache --initdb -p /tmp/apk curl netcat-openbsd && \
+      export PATH="/tmp/apk/usr/bin:$PATH" && \
       /scripts/init-clickhouse.sh
   volumeMounts:
     - name: init-scripts
@@ -109,9 +111,11 @@ Init containers definition
     - name: platform-secrets
       mountPath: /secrets
       readOnly: true
+    - name: tmp-apk
+      mountPath: /tmp/apk
   securityContext:
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
     capabilities:
       drop:
         - ALL
