@@ -102,7 +102,9 @@ Init containers definition
   args:
     - |
       mkdir -p /tmp/apk && \
-      apk add --no-cache --initdb -p /tmp/apk netcat-openbsd curl && \
+      apk --no-cache add -p /tmp/apk --initdb && \
+      cp -r /etc/apk/repositories /tmp/apk/etc/apk/ && \
+      apk --no-cache --root /tmp/apk add curl netcat-openbsd && \
       export PATH="/tmp/apk/usr/bin:$PATH" && \
       export LD_LIBRARY_PATH="/tmp/apk/usr/lib:/tmp/apk/usr/lib64:$LD_LIBRARY_PATH" && \
       /scripts/init-clickhouse.sh
