@@ -31,6 +31,7 @@ spec:
       serviceAccountName: {{ include "platform.serviceAccount" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+# In deployments.yaml:
       {{- if .Values.initContainers.enabled }}
       initContainers:
         - name: init-connectivity
@@ -59,22 +60,47 @@ spec:
           image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
           imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
           command:
-            - /usr/bin/env
-            - sh 
-            - /scripts/init-clickhouse.sh
+            - curl
+          args:
+            - --fail
+            - --show-error
+            - --verbose
+            - http://$(CLICKHOUSE_HOST):8123/
+            - --data-binary
+            - "CREATE DATABASE IF NOT EXISTS $(CLICKHOUSE_DB)"
+            - --user
+            - "$(CLICKHOUSE_USER):$(CLICKHOUSE_PASS)"
+            - -H
+            - "Content-Type: text/plain"
+            - -H
+            - "Accept: text/plain"
+            - --max-time
+            - "$(OPERATION_TIMEOUT)"
           env:
-            - name: MAX_ATTEMPTS
-              value: {{ .Values.initContainers.retry.maxAttempts | quote }}
-            - name: RETRY_INTERVAL
-              value: {{ .Values.initContainers.retry.interval | quote }}
             - name: OPERATION_TIMEOUT
               value: {{ .Values.initContainers.timeout.operation | quote }}
+            - name: CLICKHOUSE_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: clickhouseDSN
+            # Using shell parameter expansion for parsing DSN
+            - name: CLICKHOUSE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: clickhouseDSN
+            - name: CLICKHOUSE_USER
+              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f1 | cut -d/ -f3 | cut -d: -f1))"
+            - name: CLICKHOUSE_PASS
+              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f1 | cut -d/ -f3 | cut -d: -f2))"
+            - name: CLICKHOUSE_HOST
+              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f2 | cut -d/ -f1 | cut -d: -f1))"
+            - name: CLICKHOUSE_DB
+              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f2 | cut -d/ -f2 | cut -d? -f1))"
           securityContext:
             {{- toYaml .Values.initContainers.securityContext | nindent 12 }}
           volumeMounts:
-            - name: init-scripts
-              mountPath: /scripts
-              readOnly: true
             - name: platform-secrets
               mountPath: /secrets
               readOnly: true
