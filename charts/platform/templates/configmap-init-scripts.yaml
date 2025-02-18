@@ -93,7 +93,7 @@ data:
     exit 0
 
   init-clickhouse.sh: |
-    #!/bin/sh
+    #!/bin/bash
     set -e
     
     # Terminal colors
@@ -139,12 +139,12 @@ data:
     if [ "$CH_PORT" = "9440" ]; then
       PROTOCOL="https"
       HTTP_PORT="8443"
-      CURL_OPTS="--silent --insecure --max-time $operation_timeout"
+      CURL_OPTS="--silent --insecure"
       log_info "Using HTTPS protocol"
     else
       PROTOCOL="http"
       HTTP_PORT="8123"
-      CURL_OPTS="--silent --max-time $operation_timeout"
+      CURL_OPTS="--silent"
       log_info "Using HTTP protocol"
     fi
 
