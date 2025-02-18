@@ -132,6 +132,9 @@ otelCollector:
   # -- Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN)
   database: "default"
 
+  podDisruptionBudget:
+    minAvailable: 1
+
   resources:
     requests:
       cpu: 500m
