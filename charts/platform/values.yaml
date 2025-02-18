@@ -25,6 +25,9 @@ podAnnotations: {}
 # -- Addition pod labels
 podLabels: {}
 
+podDisruptionBudget:
+  minAvailable: 1
+
 # -- Specify the pod-level security context
 podSecurityContext:
   runAsNonRoot: true
