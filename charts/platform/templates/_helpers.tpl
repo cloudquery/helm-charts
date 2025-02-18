@@ -117,6 +117,13 @@ initContainers:
     command:
       - /bin/sh
       - /scripts/init-clickhouse.sh
+    env:
+      - name: MAX_ATTEMPTS
+        value: {{ .Values.initContainers.retry.maxAttempts | quote }}
+      - name: RETRY_INTERVAL
+        value: {{ .Values.initContainers.retry.interval | quote }}
+      - name: OPERATION_TIMEOUT 
+        value: {{ .Values.initContainers.timeout.operation | quote }}
     securityContext:
       {{- toYaml .Values.initContainers.securityContext | nindent 6 }}
     volumeMounts:
@@ -126,6 +133,7 @@ initContainers:
       - name: platform-secrets
         mountPath: /secrets
         readOnly: true
+
 {{- end }}
 {{- end }}
 

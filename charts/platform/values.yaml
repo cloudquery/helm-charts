@@ -200,9 +200,9 @@ initContainers:
   # -- Configuration for the curl container used to initialize ClickHouse
   curl:
     # -- Container image repository for curl
-    repository: cgr.dev/chainguard/curl
+    repository: busybox
     # -- Container image tag for curl
-    tag: latest
+    tag: 1.37
 
   # -- Configuration for the netcat container used for connectivity checks
   netcat:
