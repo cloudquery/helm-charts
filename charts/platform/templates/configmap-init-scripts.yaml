@@ -139,59 +139,36 @@ data:
     if [ "$CH_PORT" = "9440" ]; then
       PROTOCOL="https"
       HTTP_PORT="8443"
+      CURL_OPTS="--silent --insecure --max-time $operation_timeout"
       log_info "Using HTTPS protocol"
     else
       PROTOCOL="http"
       HTTP_PORT="8123"
+      CURL_OPTS="--silent --max-time $operation_timeout"
       log_info "Using HTTP protocol"
     fi
     
     log_header "Checking ClickHouse database"
     attempt=1
     while [ $attempt -le $max_attempts ]; do
-      DB_EXISTS=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
-        -u "$CH_USER:$CH_PASS" \
-        --data-binary "SELECT name FROM system.databases WHERE name = '$CH_DB'")
-      
-      if [ $? -eq 0 ]; then
+      URL="$PROTOCOL://$CH_HOST:$HTTP_PORT/?query=CREATE+DATABASE+IF+NOT+EXISTS+$CH_DB"
+      log_info "Attempt $attempt: Checking ClickHouse database with URL: $URL"
+      if curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL"; then
+        log_success "Database $CH_DB verified/created"
         break
       fi
       
       if [ $attempt -eq $max_attempts ]; then
-        log_error "Failed to check database existence after $max_attempts attempts"
+        log_error "Failed to verify/create database $CH_DB after $max_attempts attempts"
         exit 1
       fi
       
-      log_info "Attempt $attempt of $max_attempts: Retrying database check in $retry_interval seconds..."
+      log_info "Attempt $attempt of $max_attempts: Retrying in $retry_interval seconds..."
       attempt=$((attempt + 1))
       sleep "$retry_interval"
     done
     
-    if [ -z "$DB_EXISTS" ]; then
-      log_info "Creating database $CH_DB..."
-      attempt=1
-      while [ $attempt -le $max_attempts ]; do
-        if curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
-          -u "$CH_USER:$CH_PASS" \
-          --data-binary "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
-          log_success "Database $CH_DB created successfully"
-          break
-        fi
-        
-        if [ $attempt -eq $max_attempts ]; then
-          log_error "Failed to create database after $max_attempts attempts"
-          exit 1
-        fi
-        
-        log_info "Attempt $attempt of $max_attempts: Retrying database creation in $retry_interval seconds..."
-        attempt=$((attempt + 1))
-        sleep "$retry_interval"
-      done
-    else
-      log_success "Database $CH_DB already exists"
-    fi
-    
-    log_header "ClickHouse initialization complete"
+    log_header "ClickHouse database check completed successfully"
     exit 0
 
 {{- end }}
