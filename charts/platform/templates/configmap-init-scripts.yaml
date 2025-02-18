@@ -149,20 +149,17 @@ data:
     fi
 
     # Create Clickhouse database if it doesn't exist
-    local check_db="SELECT name FROM system.databases WHERE name = '$ch_db'"
-    local create_db="CREATE DATABASE IF NOT EXISTS $ch_db"
+    local check_db="SELECT name FROM system.databases WHERE name = '$CH_DB'"
+    local create_db="CREATE DATABASE IF NOT EXISTS $CH_DB"
     
     log_header "Checking ClickHouse database"
     attempt=1
     while [ $attempt -le $max_attempts ]; do
       URL="$PROTOCOL://$CH_HOST:$HTTP_PORT/"
       log_info "Attempt $attempt: Checking ClickHouse database with URL: $URL"
-      if curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL"; then
-        log_success "Database $CH_DB verified/created"
-        break
-      fi
       if ! echo "$check_db" | curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL" --data-binary @- | grep -q "$CH_DB"; then
         echo "$create_db" | curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL" --data-binary @-
+        log_success "Database $CH_DB verified/created"
       fi
 
       
