@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/cloudquery/helm-charts/compare/platform-0.11.0...platform-0.11.1) (2025-02-18)
+
+
+### Bug Fixes
+
+* Update `CQAPI_ASSETVIEW_INTERVAL` ([#627](https://github.com/cloudquery/helm-charts/issues/627)) ([886c2dd](https://github.com/cloudquery/helm-charts/commit/886c2dd985f696ca3e87f7b8504e292e9188f804))
+
 ## [0.11.0](https://github.com/cloudquery/helm-charts/compare/platform-0.10.0...platform-0.11.0) (2025-02-18)
 
 
