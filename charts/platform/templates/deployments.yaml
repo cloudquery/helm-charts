@@ -60,22 +60,8 @@ spec:
           image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
           imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
           command:
-            - curl
-          args:
-            - --fail
-            - --show-error
-            - --verbose
-            - http://$(CLICKHOUSE_HOST):8123/
-            - --data-binary
-            - "CREATE DATABASE IF NOT EXISTS $(CLICKHOUSE_DB)"
-            - --user
-            - "$(CLICKHOUSE_USER):$(CLICKHOUSE_PASS)"
-            - -H
-            - "Content-Type: text/plain"
-            - -H
-            - "Accept: text/plain"
-            - --max-time
-            - "$(OPERATION_TIMEOUT)"
+            - /bin/sh
+            - /scripts/init-clickhouse.sh
           env:
             - name: OPERATION_TIMEOUT
               value: {{ .Values.initContainers.timeout.operation | quote }}
@@ -90,14 +76,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
                   key: clickhouseDSN
-            - name: CLICKHOUSE_USER
-              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f1 | cut -d/ -f3 | cut -d: -f1))"
-            - name: CLICKHOUSE_PASS
-              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f1 | cut -d/ -f3 | cut -d: -f2))"
-            - name: CLICKHOUSE_HOST
-              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f2 | cut -d/ -f1 | cut -d: -f1))"
-            - name: CLICKHOUSE_DB
-              value: "$(CLICKHOUSE_DSN://@=\n@; echo $(cut -d@ -f2 | cut -d/ -f2 | cut -d? -f1))"
           securityContext:
             {{- toYaml .Values.initContainers.securityContext | nindent 12 }}
           volumeMounts:

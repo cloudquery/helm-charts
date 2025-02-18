@@ -202,7 +202,7 @@ initContainers:
     # -- Container image repository for curl
     repository: curlimages/curl
     # -- Container image tag for curl
-    tag: latest
+    tag: 8.5.0
 
   # -- Configuration for the netcat container used for connectivity checks
   netcat:
