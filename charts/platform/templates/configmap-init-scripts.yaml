@@ -93,7 +93,7 @@ data:
     exit 0
 
   init-clickhouse.sh: |
-    #!/usr/bin/env sh
+    #!/bin/sh
     set -e
     
     # Terminal colors
