@@ -149,8 +149,8 @@ data:
     fi
 
     # Create Clickhouse database if it doesn't exist
-    local check_db="SELECT name FROM system.databases WHERE name = '$CH_DB'"
-    local create_db="CREATE DATABASE IF NOT EXISTS $CH_DB"
+    check_db="SELECT name FROM system.databases WHERE name = '$CH_DB'"
+    create_db="CREATE DATABASE IF NOT EXISTS $CH_DB"
     
     log_header "Checking ClickHouse database"
     attempt=1
