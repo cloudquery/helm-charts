@@ -200,9 +200,9 @@ initContainers:
   # -- Configuration for the curl container used to initialize ClickHouse
   curl:
     # -- Container image repository for curl
-    repository: busybox
+    repository: curlimages/curl
     # -- Container image tag for curl
-    tag: 1.37
+    tag: latest
 
   # -- Configuration for the netcat container used for connectivity checks
   netcat:
