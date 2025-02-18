@@ -79,6 +79,9 @@ spec:
           securityContext:
             {{- toYaml .Values.initContainers.securityContext | nindent 12 }}
           volumeMounts:
+            - name: init-scripts
+              mountPath: /scripts
+              readOnly: true
             - name: platform-secrets
               mountPath: /secrets
               readOnly: true
