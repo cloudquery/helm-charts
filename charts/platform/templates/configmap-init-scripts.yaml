@@ -133,18 +133,16 @@ data:
     CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
     CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
     CH_DB=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*/\([^?]*\).*|\1|p')
-    log_success "DSN parsed successfully"
+    log_success "DSN parsed successfully: USER=$CH_USER, PASS=****, HOST=$CH_HOST, PORT=$CH_PORT, DB=$CH_DB"
     
     # Determine protocol based on port
     if [ "$CH_PORT" = "9440" ]; then
       PROTOCOL="https"
       HTTP_PORT="8443"
-      CURL_OPTS="--silent --insecure --max-time $operation_timeout"
       log_info "Using HTTPS protocol"
     else
       PROTOCOL="http"
       HTTP_PORT="8123"
-      CURL_OPTS="--silent --max-time $operation_timeout"
       log_info "Using HTTP protocol"
     fi
     
@@ -152,7 +150,6 @@ data:
     attempt=1
     while [ $attempt -le $max_attempts ]; do
       DB_EXISTS=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
-        $CURL_OPTS \
         -u "$CH_USER:$CH_PASS" \
         --data-binary "SELECT name FROM system.databases WHERE name = '$CH_DB'")
       
@@ -175,7 +172,6 @@ data:
       attempt=1
       while [ $attempt -le $max_attempts ]; do
         if curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
-          $CURL_OPTS \
           -u "$CH_USER:$CH_PASS" \
           --data-binary "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
           log_success "Database $CH_DB created successfully"
