@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.11.0](https://github.com/cloudquery/helm-charts/compare/platform-0.10.0...platform-0.11.0) (2025-02-18)
+
+
+### Features
+
+* Adding pod disruption budget ([#625](https://github.com/cloudquery/helm-charts/issues/625)) ([c44e5ae](https://github.com/cloudquery/helm-charts/commit/c44e5ae0e3e13a6f52cfc9476eeff3936cd12ffe))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.64.0 ([#622](https://github.com/cloudquery/helm-charts/issues/622)) ([cb9de60](https://github.com/cloudquery/helm-charts/commit/cb9de60e00726f3ee0ad8eb9df67ee658f6b064d))
+* **deps:** Update dependency cloudquery/cloud to v0.65.0 ([#624](https://github.com/cloudquery/helm-charts/issues/624)) ([c925998](https://github.com/cloudquery/helm-charts/commit/c9259983a0982ec0457afd17f4aa62d7e22cb503))
+
 ## [0.10.0](https://github.com/cloudquery/helm-charts/compare/platform-0.9.2...platform-0.10.0) (2025-02-14)
 
 
