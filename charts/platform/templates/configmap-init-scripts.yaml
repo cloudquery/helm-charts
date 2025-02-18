@@ -147,16 +147,24 @@ data:
       CURL_OPTS="--silent --max-time $operation_timeout"
       log_info "Using HTTP protocol"
     fi
+
+    # Create Clickhouse database if it doesn't exist
+    local check_db="SELECT name FROM system.databases WHERE name = '$ch_db'"
+    local create_db="CREATE DATABASE IF NOT EXISTS $ch_db"
     
     log_header "Checking ClickHouse database"
     attempt=1
     while [ $attempt -le $max_attempts ]; do
-      URL="$PROTOCOL://$CH_HOST:$HTTP_PORT/?query=CREATE+DATABASE+IF+NOT+EXISTS+$CH_DB"
+      URL="$PROTOCOL://$CH_HOST:$HTTP_PORT/"
       log_info "Attempt $attempt: Checking ClickHouse database with URL: $URL"
       if curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL"; then
         log_success "Database $CH_DB verified/created"
         break
       fi
+      if ! echo "$check_db" | curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL" --data-binary @- | grep -q "$CH_DB"; then
+        echo "$create_db" | curl $CURL_OPTS --user "$CH_USER:$CH_PASS" "$URL" --data-binary @-
+      fi
+
       
       if [ $attempt -eq $max_attempts ]; then
         log_error "Failed to verify/create database $CH_DB after $max_attempts attempts"
