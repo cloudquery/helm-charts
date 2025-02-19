@@ -126,14 +126,21 @@ data:
     operation_timeout=${OPERATION_TIMEOUT:-10}
     
     # Parse Clickhouse DSN
-    log_header "Parsing ClickHouse DSN"
+    parse_clickhouse_dsn() {
+      log_header "Parsing ClickHouse DSN"
+      local dsn="$1"
+      # Extract components from clickhouse://user:pass@host:port/db
+      CH_USER=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://\([^:]*\):.*|\1|p')
+      CH_PASS=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://[^:]*:\([^@]*\)@.*|\1|p')
+      CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
+      CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
+      CH_DB=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*/\([^?]*\).*|\1|p')
+      log_success "DSN parsed successfully: USER=$CH_USER, PASS=****, HOST=$CH_HOST, PORT=$CH_PORT, DB=$CH_DB"
+    }
+
+    # Get Clickhouse DSN from secret
     CLICKHOUSE_DSN=$(cat /secrets/clickhouseDSN)
-    CH_USER=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://\([^:]*\):.*|\1|p')
-    CH_PASS=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://[^:]*:\([^@]*\)@.*|\1|p')
-    CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
-    CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
-    CH_DB=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*/\([^?]*\).*|\1|p')
-    log_success "DSN parsed successfully: USER=$CH_USER, PASS=****, HOST=$CH_HOST, PORT=$CH_PORT, DB=$CH_DB"
+    parse_clickhouse_dsn "$CLICKHOUSE_DSN"
     
     # Determine protocol based on port
     if [ "$CH_PORT" = "9440" ]; then
@@ -148,20 +155,39 @@ data:
       log_info "Using HTTP protocol"
     fi
 
-    # Create Clickhouse database if it doesn't exist
-    check_db="SELECT name FROM system.databases WHERE name = '$CH_DB'"
-    create_db="CREATE DATABASE IF NOT EXISTS '$CH_DB'"
-    
+    # Function to execute ClickHouse query
+    execute_query() {
+        local query="$1"
+        local result
+        result=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
+            $CURL_OPTS \
+            -u "$CH_USER:$CH_PASS" \
+            --data-binary "$query")
+        log_info "$result"
+        return $?
+    }
+
+    # Check if database exists
     log_header "Checking ClickHouse database"
     attempt=1
     while [ $attempt -le $max_attempts ]; do
-      URL="$PROTOCOL://$CH_HOST:$HTTP_PORT/"
       log_info "Attempt $attempt: Checking ClickHouse database with URL: $URL"
-      if ! echo $check_db | curl "$URL" "$CURL_OPTS" -u "$CH_USER:$CH_PASS" --data-binary @- | grep -q $CH_DB; then
-        echo "$create_db" | curl "$URL" "$CURL_OPTS" -u "$CH_USER:$CH_PASS" --data-binary @-
-        log_success "Database $CH_DB verified/created"
+      DB_EXISTS=$(execute_query "SELECT name FROM system.databases WHERE name = '$CH_DB'")
+      if [ $? -ne 0 ]; then
+          log_error "Failed to query database list"
+          exit 1
       fi
-
+      
+      if [ -z "$DB_EXISTS" ]; then
+          echo "Creating database $CH_DB..."
+          if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
+              log_error "Failed to create database $CH_DB"
+              exit 1
+          fi
+          log_success "Database $CH_DB created successfully"
+      else
+          log_success "Database $CH_DB already exists"
+      fi
       
       if [ $attempt -eq $max_attempts ]; then
         log_error "Failed to verify/create database $CH_DB after $max_attempts attempts"
