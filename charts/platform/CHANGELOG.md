@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.11.2](https://github.com/cloudquery/helm-charts/compare/platform-0.11.1...platform-0.11.2) (2025-02-19)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.68.0 ([#634](https://github.com/cloudquery/helm-charts/issues/634)) ([36b1691](https://github.com/cloudquery/helm-charts/commit/36b16913c2392f59dc85b0f260521df141afaed7))
+* Mirror all plugins by default ([#632](https://github.com/cloudquery/helm-charts/issues/632)) ([1ad7559](https://github.com/cloudquery/helm-charts/commit/1ad7559040eb31b6af6d72cec999645d1efa731f))
+* Remove AES key file ([#630](https://github.com/cloudquery/helm-charts/issues/630)) ([5406757](https://github.com/cloudquery/helm-charts/commit/5406757feb63c5c2de7ba92dd1f5fef3321dda93))
+
 ## [0.11.1](https://github.com/cloudquery/helm-charts/compare/platform-0.11.0...platform-0.11.1) (2025-02-18)
 
 
