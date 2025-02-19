@@ -169,36 +169,24 @@ data:
 
     # Check if database exists
     log_header "Checking ClickHouse database"
-    attempt=1
-    while [ $attempt -le $max_attempts ]; do
-      log_info "Attempt $attempt: Checking ClickHouse database with URL: $URL"
-      DB_EXISTS=$(execute_query "SELECT name FROM system.databases WHERE name = '$CH_DB'")
-      if [ $? -ne 0 ]; then
-          log_error "Failed to query database list"
-          exit 1
-      fi
-      
-      if [ -z "$DB_EXISTS" ]; then
-          echo "Creating database $CH_DB..."
-          if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
-              log_error "Failed to create database $CH_DB"
-              exit 1
-          fi
-          log_success "Database $CH_DB created successfully"
-      else
-          log_success "Database $CH_DB already exists"
-      fi
-      
-      if [ $attempt -eq $max_attempts ]; then
-        log_error "Failed to verify/create database $CH_DB after $max_attempts attempts"
+    log_info "Attempt $attempt: Checking ClickHouse database with URL: $PROTOCOL://$CH_HOST:$HTTP_PORT/"
+    DB_EXISTS=$(execute_query "SELECT name FROM system.databases WHERE name = '$CH_DB'")
+    if [ $? -ne 0 ]; then
+        log_error "Failed to query database list"
         exit 1
-      fi
-      
-      log_info "Attempt $attempt of $max_attempts: Retrying in $retry_interval seconds..."
-      attempt=$((attempt + 1))
-      sleep "$retry_interval"
-    done
+    fi
     
+    if [ -z "$DB_EXISTS" ]; then
+        echo "Creating database $CH_DB..."
+        if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
+            log_error "Failed to create database $CH_DB"
+            exit 1
+        fi
+        log_success "Database $CH_DB created successfully"
+    else
+        log_success "Database $CH_DB already exists"
+    fi
+      
     log_header "ClickHouse database check completed successfully"
     exit 0
 
