@@ -16,6 +16,17 @@ rules:
   - list
   - watch
 - apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+- apiGroups:
   - batch
   resources:
   - jobs
