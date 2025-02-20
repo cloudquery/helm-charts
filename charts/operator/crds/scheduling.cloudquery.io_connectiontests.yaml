@@ -61,6 +61,57 @@ spec:
                 description: Image is an optional container image of the CloudQuery
                   launcher to use for the sync job.
                 type: string
+              oidc:
+                description: OIDC provides configurations for OIDC authentication
+                  per integration.
+                properties:
+                  destinations:
+                    description: Destinations configures OIDC authentiation for each
+                      destination integration.
+                    items:
+                      properties:
+                        audience:
+                          type: string
+                        name:
+                          description: |-
+                            Name sets the integration name this configuration applies to.
+
+                            The name here must match one of the integration names provided in
+                            the ConfigMap for the sync.
+                          type: string
+                        subject:
+                          type: string
+                        target:
+                          type: string
+                      required:
+                      - audience
+                      - name
+                      - subject
+                      type: object
+                    type: array
+                  source:
+                    description: Source configures OIDC authentiaction for the source
+                      integration.
+                    properties:
+                      audience:
+                        type: string
+                      name:
+                        description: |-
+                          Name sets the integration name this configuration applies to.
+
+                          The name here must match one of the integration names provided in
+                          the ConfigMap for the sync.
+                        type: string
+                      subject:
+                        type: string
+                      target:
+                        type: string
+                    required:
+                    - audience
+                    - name
+                    - subject
+                    type: object
+                type: object
               secretName:
                 description: |-
                   SecretName is the name of the Secret that stores the secret environment variables to use for the sync job.
