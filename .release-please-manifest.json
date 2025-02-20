@@ -1,5 +1,5 @@
 {
-  "charts/platform": "0.11.3",
+  "charts/platform": "0.11.4",
   "charts/cloudquery": "38.0.0",
   "charts/operator": "0.3.0"
 }
