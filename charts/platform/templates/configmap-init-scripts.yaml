@@ -1,0 +1,193 @@
+{{- if .Values.initContainers.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "platform.fullName" . }}-init-scripts
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+data:
+  check-connectivity.sh: |
+    #!/bin/sh
+    set -e
+    
+    # Terminal colors
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+    
+    # Logging functions
+    log_header() {
+      echo -e "\n${BLUE}=== $1 ===${NC}\n"
+    }
+    
+    log_success() {
+      echo -e "${GREEN}✓ $1${NC}"
+    }
+    
+    log_error() {
+      echo -e "${RED}✗ $1${NC}"
+    }
+    
+    log_info() {
+      echo -e "${YELLOW}➜ $1${NC}"
+    }
+
+    # Get configuration from environment with defaults
+    max_attempts=${MAX_ATTEMPTS:-5}
+    retry_interval=${RETRY_INTERVAL:-5}
+    connect_timeout=${CONNECT_TIMEOUT:-5}
+
+    # Parse connection strings
+    log_header "Parsing connection strings"
+    POSTGRES_DSN=$(cat /secrets/postgresqlDSN)
+    PG_HOST=$(echo "$POSTGRES_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
+    PG_PORT=$(echo "$POSTGRES_DSN" | sed -n 's|.*:\([0-9]*\)/.*|\1|p')
+    log_success "PostgreSQL connection string parsed: $PG_HOST:$PG_PORT"
+    
+    CLICKHOUSE_DSN=$(cat /secrets/clickhouseDSN)
+    CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
+    CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
+    log_success "ClickHouse connection string parsed: $CH_HOST:$CH_PORT"
+
+    # Check PostgreSQL connectivity
+    log_header "Testing PostgreSQL connectivity"
+    attempt=1
+    while [ $attempt -le $max_attempts ]; do
+      if nc -z -w "$connect_timeout" "$PG_HOST" "$PG_PORT"; then
+        log_success "Connected to PostgreSQL at $PG_HOST:$PG_PORT"
+        break
+      fi
+      
+      if [ $attempt -eq $max_attempts ]; then
+        log_error "Failed to connect to PostgreSQL after $max_attempts attempts"
+        exit 1
+      fi
+      
+      log_info "Attempt $attempt of $max_attempts: Retrying in $retry_interval seconds..."
+      attempt=$((attempt + 1))
+      sleep "$retry_interval"
+    done
+    
+    # Check ClickHouse connectivity
+    log_header "Testing ClickHouse connectivity"
+    attempt=1
+    while [ $attempt -le $max_attempts ]; do
+      if nc -z -w "$connect_timeout" "$CH_HOST" "$CH_PORT"; then
+        log_success "Connected to ClickHouse at $CH_HOST:$CH_PORT"
+        break
+      fi
+      
+      if [ $attempt -eq $max_attempts ]; then
+        log_error "Failed to connect to ClickHouse after $max_attempts attempts"
+        exit 1
+      fi
+      
+      log_info "Attempt $attempt of $max_attempts: Retrying in $retry_interval seconds..."
+      attempt=$((attempt + 1))
+      sleep "$retry_interval"
+    done
+    
+    log_header "All connectivity checks passed successfully"
+    exit 0
+
+  init-clickhouse.sh: |
+    #!/bin/bash
+    set -e
+    
+    # Terminal colors
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+    
+    # Logging functions
+    log_header() {
+      echo -e "\n${BLUE}=== $1 ===${NC}\n"
+    }
+    
+    log_success() {
+      echo -e "${GREEN}✓ $1${NC}"
+    }
+    
+    log_error() {
+      echo -e "${RED}✗ $1${NC}"
+    }
+    
+    log_info() {
+      echo -e "${YELLOW}➜ $1${NC}"
+    }
+    
+    # Get configuration from environment with defaults
+    max_attempts=${MAX_ATTEMPTS:-5}
+    retry_interval=${RETRY_INTERVAL:-5}
+    operation_timeout=${OPERATION_TIMEOUT:-10}
+    
+    # Parse Clickhouse DSN
+    parse_clickhouse_dsn() {
+      log_header "Parsing ClickHouse DSN"
+      local dsn="$1"
+      # Extract components from clickhouse://user:pass@host:port/db
+      CH_USER=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://\([^:]*\):.*|\1|p')
+      CH_PASS=$(echo "$CLICKHOUSE_DSN" | sed -n 's|clickhouse://[^:]*:\([^@]*\)@.*|\1|p')
+      CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
+      CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
+      CH_DB=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*/\([^?]*\).*|\1|p')
+      log_success "DSN parsed successfully: USER=$CH_USER, PASS=****, HOST=$CH_HOST, PORT=$CH_PORT, DB=$CH_DB"
+    }
+
+    # Get Clickhouse DSN from secret
+    CLICKHOUSE_DSN=$(cat /secrets/clickhouseDSN)
+    parse_clickhouse_dsn "$CLICKHOUSE_DSN"
+    
+    # Determine protocol based on port
+    if [ "$CH_PORT" = "9440" ]; then
+      PROTOCOL="https"
+      HTTP_PORT="8443"
+      CURL_OPTS="--silent --insecure"
+      log_info "Using HTTPS protocol"
+    else
+      PROTOCOL="http"
+      HTTP_PORT="8123"
+      CURL_OPTS="--silent"
+      log_info "Using HTTP protocol"
+    fi
+
+    # Function to execute ClickHouse query
+    execute_query() {
+        local query="$1"
+        local result
+        result=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
+            $CURL_OPTS \
+            -u "$CH_USER:$CH_PASS" \
+            --data-binary "$query")
+        log_info "$result"
+        return $?
+    }
+
+    # Check if database exists
+    log_header "Checking ClickHouse database"
+    log_info "Attempt $attempt: Checking ClickHouse database with URL: $PROTOCOL://$CH_HOST:$HTTP_PORT/"
+    DB_EXISTS=$(execute_query "SELECT name FROM system.databases WHERE name = '$CH_DB'")
+    if [ $? -ne 0 ]; then
+        log_error "Failed to query database list"
+        exit 1
+    fi
+    
+    if [ -z "$DB_EXISTS" ]; then
+        echo "Creating database $CH_DB..."
+        if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
+            log_error "Failed to create database $CH_DB"
+            exit 1
+        fi
+        log_success "Database $CH_DB created successfully"
+    else
+        log_success "Database $CH_DB already exists"
+    fi
+      
+    log_header "ClickHouse database check completed successfully"
+    exit 0
+
+{{- end }}
