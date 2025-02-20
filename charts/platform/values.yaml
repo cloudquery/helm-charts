@@ -14,7 +14,7 @@ nameOverride: ""
 fullNameOverride: ""
 
 serviceAccount:
-  create: true
+  create: false
   automount: true
   annotations: {}
   name: ""
