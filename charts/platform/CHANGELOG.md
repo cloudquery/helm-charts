@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.11.4](https://github.com/cloudquery/helm-charts/compare/platform-0.11.3...platform-0.11.4) (2025-02-20)
+
+
+### Bug Fixes
+
+* Allow platform container to read logs from k8s API ([#635](https://github.com/cloudquery/helm-charts/issues/635)) ([450c6f3](https://github.com/cloudquery/helm-charts/commit/450c6f3a31c7db37601892f123388bdc7b700dd8))
+* **deps:** Update dependency cloudquery/cloud to v0.69.1 ([#638](https://github.com/cloudquery/helm-charts/issues/638)) ([8afe314](https://github.com/cloudquery/helm-charts/commit/8afe314a1449f57e5d92642883bfcea254efa8dc))
+* Revert RBAC changes from [#635](https://github.com/cloudquery/helm-charts/issues/635) ([#641](https://github.com/cloudquery/helm-charts/issues/641)) ([78678c2](https://github.com/cloudquery/helm-charts/commit/78678c23121405720113e7a0521f17df8d7d4bb8))
+
 ## [0.11.3](https://github.com/cloudquery/helm-charts/compare/platform-0.11.2...platform-0.11.3) (2025-02-19)
 
 
