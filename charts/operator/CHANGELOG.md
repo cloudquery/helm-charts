@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/cloudquery/helm-charts/compare/operator-0.3.0...operator-0.4.0) (2025-02-20)
+
+
+### Features
+
+* **operator:** Update CRDs to the latest version ([#643](https://github.com/cloudquery/helm-charts/issues/643)) ([f24c9f5](https://github.com/cloudquery/helm-charts/commit/f24c9f5ed16c592a35022f45f7028ea18baaded0))
+
 ## [0.3.0](https://github.com/cloudquery/helm-charts/compare/operator-0.2.2...operator-0.3.0) (2025-02-20)
 
 
