@@ -80,17 +80,6 @@ Get the appropriate secret reference name based on whether external secrets is e
 {{- end -}}
 
 {{/*
-Get the appropriate secret reference name based on whether external secrets is enabled
-*/}}
-{{- define "platform.jwtPrivateKeyRef" -}}
-{{- if index .Values "platformSecrets" "jwtPrivateKeyRef" -}}
-{{- .Values.platformSecrets.jwtPrivateKeyRef -}}
-{{- else -}}
-{{- include "platform.fullName" . }}-jwt-private-key
-{{- end -}}
-{{- end -}}
-
-{{/*
 Init container template
 */}}
 {{- define "platform.initContainers" -}}
