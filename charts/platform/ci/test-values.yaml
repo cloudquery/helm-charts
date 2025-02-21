@@ -5,34 +5,5 @@ testingSecret:
   activationKey: ""
   postgresqlDSN: "postgres://postgres:pass@172.17.0.1:5432/postgres?sslmode=disable"
   clickhouseDSN: "clickhouse://user:pass@172.17.0.1:9000/assets"
-  privateKey: |
-    -----BEGIN PRIVATE KEY-----
-    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCj/m0oRMFP4E9L
-    2i3udSp8KBFT4RDaKaGBqz3XdJFIGoaCcs1Sg06CnQXy/Ip/eb5Q6pPO6qZFifMo
-    2WEuQosMaURgFyWVShrc/cotdeEF9rAJbj3yh6wdNEA4hajozAoFor31mVJuXPqn
-    8pZ84ZEkZ1jwi7Bfe0Nb9iCQ+bqShe4bUVMhOL+lTUmY14iYEcbSB8oDGJ5Ayy5w
-    x6/jVezp0QGONrii6S2Bhjh/z1VwiVU4dYTSMrXBCNe80e9f73aKgP1JAZKlFD5N
-    PdDed0xSVTFGiMQJfjAIkCHATvbLSUYvEkUPWhZDQ2RHzW4VZ9sk6HFTZquJtjgK
-    7AYHnyb1AgMBAAECggEADTdIUbn0wDyp90lucSylD1tlRha5tnMrbllAAxiESsTE
-    eUfKLy+gyJrh61qZyLslcLzuy3qSisEaxPx7vfAj54ymM346C6Vss8mKHQ7GYyYl
-    uqTVPjHb14Cp+kQfQB+NYTXjzCKeh4Fbu+QrZ4YAHehsPPps7MzwuT0FE9nkRMGA
-    T+5jEnHuD/GPSbAxVg5u/I2GUghA6RbZAhMb8HPyEWP9Nv6VYnc+fvK4BQa6oyT4
-    IXKJ/ZyHF23IxNvBX6sgtRPHUfhuuIhaxa/Jzyu7vkIpFcyJx8hQIBEJeK8VFFpg
-    VIDufgGUzhYPxYCtRgqFBvf6lW6GAjk2jo01Sn3HMQKBgQDNlGy7+nGhe62inTYJ
-    1lrHu50W/3op7BDcbJq6+VlpHsMAc3tjl5wn+pmKpnZjHnyn9N2E83Q9F/qkuCYX
-    7xe+4nD2rstp5Nze5p/fKhiU7ouQn9ug4DEMY+qFBErsadgzhtrt3qvky7OhsLQ3
-    TJScnYV8BauXGU5QvtrNsURcnQKBgQDMNvqMNITuIkY8dKoAKZNFa3VxFzjQNywT
-    yICFKTLAwOWyDIPpUJWDDs2DhZoC1L8iTS7Lx9cuhqWjOMz8CkccJr4Q8FtNkPpC
-    lTHalfn/ZNvP0L5EnXUuSdQYG1sU81FKjNE8iLl/AzzI1wKWvyQXOCkIYZ96e6Py
-    EbH7ZkYoOQKBgE6doe9I2MduKnpzMEUWyeRzpKE01ZzOf6wrhAhYbo66isvTXa46
-    PiczuB/DhKZm9DiudT/wcdUjJGB1Y2vnrOb8ZUKQmY1HTgeXni+TQ49AofKOj0i4
-    M0mPtBFmENjTqTAbNAGfE5ENLQZ6MpCrInG581/4MyQ3MzHBqp7aWVApAoGAIi+V
-    88Ca/C5aqaYyC0Lqd3WMvHjRtvF1fH5VHXWPHHtuOEcmEfm+fakNuFW2OYEZ2gkn
-    q09x80TxF4jbr9mcm9bUfItwDWUWr+y/4sK2jg15Sqm8IEpnom8ThVGXBsPQuPUn
-    1cVhoCSPmWN8+HVY+lYZcGC/TMbD5DMYI2i0l+kCgYEAhb7Zru00nNtQgW6ry7hU
-    jM1/sPug02n9zc3w5vOUd/UdQGjgwRezBBL8+5leaqlJeI2HMA/DZSp4N80A98Wr
-    GGZkI7gDP3TBRJzGBDWvnKcQ064xf8g3q/cbbJvsCKYU/sBOmN6vQ4ubdNuPXSJZ
-    ROokjh+gz3j8VrbYWGp+51s=
-    -----END PRIVATE KEY-----
 otelCollector:
   database: "assets"
