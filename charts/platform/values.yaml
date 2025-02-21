@@ -100,9 +100,6 @@ platformSecrets:
   # -- Required: The secret reference to use for the user-supplied platform secrets
   secretRef: "cq-platform-secrets"
 
-  # -- JWT private key reference for the self-hosted platform - if not provided, a new key will be generated
-  jwtPrivateKeyRef: ""
-
 # -- External secrets configuration
 externalSecrets:
   # -- Optional. Enable external secrets.
