@@ -245,3 +245,4 @@ testingSecret:
   activationKey: ""
   postgresqlDSN: ""
   clickhouseDSN: ""
+  privateKey: ""
