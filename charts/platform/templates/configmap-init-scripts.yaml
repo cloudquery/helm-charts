@@ -136,59 +136,107 @@ data:
       CH_HOST=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
       CH_PORT=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*:\([^/?]*\)/.*|\1|p')
       CH_DB=$(echo "$CLICKHOUSE_DSN" | sed -n 's|.*/\([^?]*\).*|\1|p')
+      
+      # Validate all components were extracted
+      if [[ -z "$CH_USER" || -z "$CH_PASS" || -z "$CH_HOST" || -z "$CH_PORT" || -z "$CH_DB" ]]; then
+        log_error "Failed to parse DSN components"
+        exit 1
+      fi
+      
       log_success "DSN parsed successfully: USER=$CH_USER, PASS=****, HOST=$CH_HOST, PORT=$CH_PORT, DB=$CH_DB"
     }
-
+    
+    # Function to execute ClickHouse query with proper error handling
+    execute_query() {
+        local query="$1"
+        local response
+        local http_code
+        
+        # Use process substitution to capture both stdout and the HTTP code
+        # This avoids needing to write to a temporary file
+        exec 3>&1
+        response=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
+            $CURL_OPTS \
+            -w "\n%{http_code}" \
+            -u "$CH_USER:$CH_PASS" \
+            --max-time "$operation_timeout" \
+            --data-binary "$query" | tee >(cat >&3))
+        
+        # Extract HTTP code from the last line
+        http_code=$(echo "$response" | tail -n1)
+        # Get the response body (everything except the last line)
+        result=$(echo "$response" | sed '$d')
+    
+        if [ "$http_code" != "200" ]; then
+            log_error "Query failed with HTTP code $http_code"
+            log_error "Error output: $result"
+            return 1
+        fi
+    
+        echo "$result"
+        return 0
+    }
+    
     # Get Clickhouse DSN from secret
+    if [ ! -f /secrets/clickhouseDSN ]; then
+        log_error "ClickHouse DSN secret file not found"
+        exit 1
+    fi
+    
     CLICKHOUSE_DSN=$(cat /secrets/clickhouseDSN)
     parse_clickhouse_dsn "$CLICKHOUSE_DSN"
     
     # Determine protocol based on port
     if [ "$CH_PORT" = "9440" ]; then
-      PROTOCOL="https"
-      HTTP_PORT="8443"
-      CURL_OPTS="--silent --insecure"
-      log_info "Using HTTPS protocol"
+        PROTOCOL="https"
+        HTTP_PORT="8443"
+        CURL_OPTS="--silent --insecure"
+        log_info "Using HTTPS protocol"
     else
-      PROTOCOL="http"
-      HTTP_PORT="8123"
-      CURL_OPTS="--silent"
-      log_info "Using HTTP protocol"
+        PROTOCOL="http"
+        HTTP_PORT="8123"
+        CURL_OPTS="--silent"
+        log_info "Using HTTP protocol"
     fi
-
-    # Function to execute ClickHouse query
-    execute_query() {
-        local query="$1"
-        local result
-        result=$(curl "$PROTOCOL://$CH_HOST:$HTTP_PORT/" \
-            $CURL_OPTS \
-            -u "$CH_USER:$CH_PASS" \
-            --data-binary "$query")
-        log_info "$result"
-        return $?
-    }
-
-    # Check if database exists
+    
+    # Wait for ClickHouse to be ready
+    log_header "Waiting for ClickHouse to be ready"
+    for attempt in $(seq 1 $max_attempts); do
+        log_info "Attempt $attempt of $max_attempts: Checking ClickHouse connectivity"
+        if curl -s "$PROTOCOL://$CH_HOST:$HTTP_PORT/ping" $CURL_OPTS -u "$CH_USER:$CH_PASS" | grep -q "Ok."; then
+            log_success "ClickHouse is ready"
+            break
+        fi
+        if [ $attempt -eq $max_attempts ]; then
+            log_error "ClickHouse failed to become ready"
+            exit 1
+        fi
+        log_info "Waiting $retry_interval seconds before next attempt..."
+        sleep $retry_interval
+    done
+    
+    # Check if database exists using a format that returns tab-separated values
     log_header "Checking ClickHouse database"
-    log_info "Attempt $attempt: Checking ClickHouse database with URL: $PROTOCOL://$CH_HOST:$HTTP_PORT/"
-    DB_EXISTS=$(execute_query "SELECT name FROM system.databases WHERE name = '$CH_DB'")
+    DB_CHECK_QUERY="SELECT name FROM system.databases WHERE name = '$CH_DB'"
+    DB_EXISTS=$(execute_query "$DB_CHECK_QUERY")
+    
     if [ $? -ne 0 ]; then
-        log_error "Failed to query database list"
+        log_error "Failed to check database existence"
         exit 1
     fi
     
     if [ -z "$DB_EXISTS" ]; then
-        echo "Creating database $CH_DB..."
+        log_info "Creating database $CH_DB..."
         if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
             log_error "Failed to create database $CH_DB"
             exit 1
         fi
         log_success "Database $CH_DB created successfully"
     else
-        log_success "Database $CH_DB already exists"
+        log_success "Database $CH_DB already exists (found: $DB_EXISTS)"
     fi
-      
-    log_header "ClickHouse database check completed successfully"
+    
+    log_header "ClickHouse initialization completed successfully"
     exit 0
 
 {{- end }}
