@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.11.4](https://img.shields.io/badge/Version-0.11.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.69.1](https://img.shields.io/badge/AppVersion-0.69.1-informational?style=flat-square)
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.72.0](https://img.shields.io/badge/AppVersion-0.72.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -34,6 +34,22 @@ Kubernetes: `^1.8.0-0`
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| initContainers | object | `{"curl":{"repository":"curlimages/curl","tag":"8.5.0"},"enabled":true,"imagePullPolicy":"IfNotPresent","netcat":{"repository":"toolbelt/netcat","tag":"latest"},"retry":{"interval":5,"maxAttempts":5},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":10001},"timeout":{"connect":5,"operation":10}}` | Init Container configuration @section Init Containers @descriptionStart Configuration for initialization containers that run before the main application. These containers handle database connectivity checks and schema initialization. @descriptionEnd |
+| initContainers.curl | object | `{"repository":"curlimages/curl","tag":"8.5.0"}` | Configuration for the curl container used to initialize ClickHouse |
+| initContainers.curl.repository | string | `"curlimages/curl"` | Container image repository for curl |
+| initContainers.curl.tag | string | `"8.5.0"` | Container image tag for curl |
+| initContainers.enabled | bool | `true` | Enable or disable initialization containers |
+| initContainers.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy for init containers |
+| initContainers.netcat | object | `{"repository":"toolbelt/netcat","tag":"latest"}` | Configuration for the netcat container used for connectivity checks |
+| initContainers.netcat.repository | string | `"toolbelt/netcat"` | Container image repository for netcat |
+| initContainers.netcat.tag | string | `"latest"` | Container image tag for netcat |
+| initContainers.retry | object | `{"interval":5,"maxAttempts":5}` | Retry configuration for connectivity checks |
+| initContainers.retry.interval | int | `5` | Time to wait between retry attempts (in seconds) |
+| initContainers.retry.maxAttempts | int | `5` | Maximum number of retry attempts for connectivity checks |
+| initContainers.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":10001}` | Security context for init containers @schemaRef SecurityContext |
+| initContainers.timeout | object | `{"connect":5,"operation":10}` | Timeout configuration for database operations |
+| initContainers.timeout.connect | int | `5` | Connection timeout for database checks (in seconds) |
+| initContainers.timeout.operation | int | `10` | Operation timeout for database operations (in seconds) |
 | letsEncrypt.email | string | `""` | Required: The email address to use for Let's Encrypt |
 | letsEncrypt.enabled | bool | `false` | Optional. Enable Let's Encrypt. |
 | livenessProbe.httpGet.path | string | `"/"` |  |
@@ -50,8 +66,7 @@ Kubernetes: `^1.8.0-0`
 | persistence.enabled | bool | `false` |  |
 | persistence.size | string | `"100Gi"` |  |
 | persistence.type | string | `"gp2"` |  |
-| platformSecrets | object | `{"jwtPrivateKeyRef":"","secretRef":"cq-platform-secrets"}` | Platform secrets configuration |
-| platformSecrets.jwtPrivateKeyRef | string | `""` | JWT private key reference for the self-hosted platform - if not provided, a new key will be generated |
+| platformSecrets | object | `{"secretRef":"cq-platform-secrets"}` | Platform secrets configuration |
 | platformSecrets.secretRef | string | `"cq-platform-secrets"` | Required: The secret reference to use for the user-supplied platform secrets |
 | podAnnotations | object | `{}` | Addition pod annotations |
 | podDisruptionBudget.minAvailable | int | `1` |  |
