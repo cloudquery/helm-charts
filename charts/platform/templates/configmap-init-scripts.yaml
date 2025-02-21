@@ -42,8 +42,9 @@ data:
     # Parse connection strings
     log_header "Parsing connection strings"
     POSTGRES_DSN=$(cat /secrets/postgresqlDSN)
-    PG_HOST=$(echo "$POSTGRES_DSN" | sed -n 's|.*@\([^:]*\):.*|\1|p')
+    PG_HOST=$(echo "$POSTGRES_DSN" | sed -n 's|.*@\([^:/]*\)[:/].*|\1|p')
     PG_PORT=$(echo "$POSTGRES_DSN" | sed -n 's|.*:\([0-9]*\)/.*|\1|p')
+    PG_PORT=${PG_PORT:-5432}
     log_success "PostgreSQL connection string parsed: $PG_HOST:$PG_PORT"
     
     CLICKHOUSE_DSN=$(cat /secrets/clickhouseDSN)
