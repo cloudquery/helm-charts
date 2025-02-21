@@ -114,8 +114,8 @@ spec:
             - name: CQAPI_LOCAL_JWT_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "platform.jwtPrivateKeyRef" . }}
-                  key: jwtPrivateKey
+                  name: {{ include "platform.secretRef" . }}
+                  key: privateKey
           ports:
             - name: proxy
               containerPort: {{ .Values.service.targetPort }}
