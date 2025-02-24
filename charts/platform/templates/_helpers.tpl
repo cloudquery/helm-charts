@@ -80,29 +80,60 @@ Get the appropriate secret reference name based on whether external secrets is e
 {{- end -}}
 
 {{/*
-Get the appropriate secret reference name based on whether external secrets is enabled
-*/}}
-{{- define "platform.jwtPrivateKeyRef" -}}
-{{- if index .Values "platformSecrets" "jwtPrivateKeyRef" -}}
-{{- .Values.platformSecrets.jwtPrivateKeyRef -}}
-{{- else -}}
-{{- include "platform.fullName" . }}-jwt-private-key
-{{- end -}}
-{{- end -}}
-
-{{/*
-Init containers definition
+Init container template
 */}}
 {{- define "platform.initContainers" -}}
-- name: init-clickhouse
-  image: curlimages/curl:8.5.0
-  command:
-    - /bin/sh
-    - /scripts/init-clickhouse.sh
-  volumeMounts:
-    - name: init-scripts
-      mountPath: /scripts
-    - name: platform-secrets
-      mountPath: /secrets
-      readOnly: true
-{{- end -}}
+{{- if .Values.initContainers.enabled }}
+initContainers:
+  - name: init-connectivity
+    image: {{ .Values.initContainers.netcat.repository }}:{{ .Values.initContainers.netcat.tag }}
+    imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+    command:
+      - /bin/sh
+      - /scripts/check-connectivity.sh
+    securityContext:
+      {{- toYaml .Values.initContainers.securityContext | nindent 6 }}
+    volumeMounts:
+      - name: init-scripts
+        mountPath: /scripts
+        readOnly: true
+      - name: platform-secrets
+        mountPath: /secrets
+        readOnly: true
+  - name: init-clickhouse
+    image: {{ .Values.initContainers.curl.repository }}:{{ .Values.initContainers.curl.tag }}
+    imagePullPolicy: {{ .Values.initContainers.imagePullPolicy }}
+    command:
+      - /bin/sh
+      - /scripts/init-clickhouse.sh
+    env:
+      - name: MAX_ATTEMPTS
+        value: {{ .Values.initContainers.retry.maxAttempts | quote }}
+      - name: RETRY_INTERVAL
+        value: {{ .Values.initContainers.retry.interval | quote }}
+      - name: OPERATION_TIMEOUT 
+        value: {{ .Values.initContainers.timeout.operation | quote }}
+    securityContext:
+      {{- toYaml .Values.initContainers.securityContext | nindent 6 }}
+    volumeMounts:
+      - name: init-scripts
+        mountPath: /scripts
+        readOnly: true
+      - name: platform-secrets
+        mountPath: /secrets
+        readOnly: true
+
+{{- end }}
+{{- end }}
+
+{{/*
+Init container volumes
+*/}}
+{{- define "platform.initVolumes" -}}
+{{- if .Values.initContainers.enabled }}
+- name: init-scripts
+  configMap:
+    name: {{ include "platform.fullName" . }}-init-scripts
+    defaultMode: 0755
+{{- end }}
+{{- end }}
