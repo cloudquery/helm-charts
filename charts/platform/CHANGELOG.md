@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.12.0](https://github.com/cloudquery/helm-charts/compare/platform-0.11.4...platform-0.12.0) (2025-02-21)
+
+
+### Features
+
+* Add db check to init container and better output ([#640](https://github.com/cloudquery/helm-charts/issues/640)) ([c872890](https://github.com/cloudquery/helm-charts/commit/c8728906f08ed770c8cd03990680e10a70480728))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.70.2 ([#646](https://github.com/cloudquery/helm-charts/issues/646)) ([9f36074](https://github.com/cloudquery/helm-charts/commit/9f3607406ec20b370d0152c2699fdc9cfef981e1))
+* **deps:** Update dependency cloudquery/cloud to v0.71.0 ([#648](https://github.com/cloudquery/helm-charts/issues/648)) ([83bea98](https://github.com/cloudquery/helm-charts/commit/83bea982a320215829b2586117a51b1ba1dcba56))
+* **deps:** Update dependency cloudquery/cloud to v0.72.0 ([#652](https://github.com/cloudquery/helm-charts/issues/652)) ([b97872e](https://github.com/cloudquery/helm-charts/commit/b97872e6559f592c6b687d72802516f5dcd9f0af))
+* Handle the case when no port is supplied ([#650](https://github.com/cloudquery/helm-charts/issues/650)) ([43cec72](https://github.com/cloudquery/helm-charts/commit/43cec72b00a2fe8fa534a339e708b84f1852db90))
+* Use a provided private key instead of generating one ([#651](https://github.com/cloudquery/helm-charts/issues/651)) ([0142ec0](https://github.com/cloudquery/helm-charts/commit/0142ec012da924d127b8bd1fdfe80e15c04c7e00))
+
 ## [0.11.4](https://github.com/cloudquery/helm-charts/compare/platform-0.11.3...platform-0.11.4) (2025-02-20)
 
 
