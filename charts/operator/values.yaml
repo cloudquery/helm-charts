@@ -49,6 +49,11 @@ podAnnotations: {}
 # See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/.
 podLabels: {}
 
+# -- Configures the podDisruptionBudget for the operator Deployment.
+# See ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+podDisruptionBudget:
+  minAvailable: 1
+
 # -- Configures the security context of the operator Deployment.
 # See https://kubernetes.io/docs/tasks/configure-pod-container/security-context/.
 securityContext:
