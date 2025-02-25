@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.5.0](https://github.com/cloudquery/helm-charts/compare/operator-0.4.0...operator-0.5.0) (2025-02-25)
+
+
+### Features
+
+* Adding pod disruption budget to prevent operator being migrated during node scaling ([#626](https://github.com/cloudquery/helm-charts/issues/626)) ([c03056a](https://github.com/cloudquery/helm-charts/commit/c03056a2b27c077daf4d26ec5e14a087cb7a94ae))
+* **operator:** Update CRDs to the latest version ([#649](https://github.com/cloudquery/helm-charts/issues/649)) ([df92c41](https://github.com/cloudquery/helm-charts/commit/df92c411a827eb6384c7fdce8d42f1965f4a7f49))
+* **operator:** Update CRDs to the latest version ([#658](https://github.com/cloudquery/helm-charts/issues/658)) ([12570e9](https://github.com/cloudquery/helm-charts/commit/12570e9c2bf4a67632adcb9e42de37355da025ab))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.70.2 ([#646](https://github.com/cloudquery/helm-charts/issues/646)) ([9f36074](https://github.com/cloudquery/helm-charts/commit/9f3607406ec20b370d0152c2699fdc9cfef981e1))
+* **deps:** Update dependency cloudquery/cloud to v0.71.0 ([#648](https://github.com/cloudquery/helm-charts/issues/648)) ([83bea98](https://github.com/cloudquery/helm-charts/commit/83bea982a320215829b2586117a51b1ba1dcba56))
+* **deps:** Update dependency cloudquery/cloud to v0.72.0 ([#652](https://github.com/cloudquery/helm-charts/issues/652)) ([b97872e](https://github.com/cloudquery/helm-charts/commit/b97872e6559f592c6b687d72802516f5dcd9f0af))
+* **deps:** Update dependency cloudquery/cloud to v0.73.0 ([#654](https://github.com/cloudquery/helm-charts/issues/654)) ([a2acc0b](https://github.com/cloudquery/helm-charts/commit/a2acc0b51af82bd4945b46c175fbbd08961e73e2))
+* **deps:** Update dependency cloudquery/cloud to v0.74.0 ([#656](https://github.com/cloudquery/helm-charts/issues/656)) ([a482dc4](https://github.com/cloudquery/helm-charts/commit/a482dc40e18fc0720eeccb8c5d859f977b89f0b5))
+
 ## [0.4.0](https://github.com/cloudquery/helm-charts/compare/operator-0.3.0...operator-0.4.0) (2025-02-20)
 
 
