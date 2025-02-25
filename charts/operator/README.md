@@ -2,7 +2,7 @@
 
 A Helm chart for the operator that manages syncs on the CloudQuery platform
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.69.1](https://img.shields.io/badge/AppVersion-0.69.1-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.74.0](https://img.shields.io/badge/AppVersion-0.74.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -67,6 +67,7 @@ helm upgrade --install --atomic platform -n cloudquery --create-namespace cloudq
 | nameOverride | string | `""` | Override the default name |
 | nodeSelector | object | `{}` | Configures node selectors for the operator deployment See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector. |
 | podAnnotations | object | `{}` | Configures additional labels on the operator Deployment. See https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/. |
+| podDisruptionBudget | object | `{"minAvailable":1}` | Configures the podDisruptionBudget for the operator Deployment. See ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | podLabels | object | `{}` | Configures additional labels on the operator Deployment. See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/. |
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
