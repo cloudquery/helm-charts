@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/cloudquery/helm-charts/compare/operator-0.5.1...operator-0.5.2) (2025-02-26)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.77.0 ([#663](https://github.com/cloudquery/helm-charts/issues/663)) ([18c7db2](https://github.com/cloudquery/helm-charts/commit/18c7db2dc4322b30c30199507b5053d49864974e))
+
 ## [0.5.1](https://github.com/cloudquery/helm-charts/compare/operator-0.5.0...operator-0.5.1) (2025-02-25)
 
 
