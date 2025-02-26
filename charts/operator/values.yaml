@@ -32,11 +32,11 @@ environment:
 # See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector.
 syncNodeSelector:
 #   eks.amazonaws.com/nodeclass: default
-   karpenter.sh/nodepool: test
+#   karpenter.sh/nodepool: test
 
 # -- Job annotations for sync pod assignment.
 syncJobAnnotations:
-  karpenter.sh/do-not-disrupt: "true"
+#  karpenter.sh/do-not-disrupt: "true"
 
 # -- This section builds out the service account.
 # See https://kubernetes.io/docs/concepts/security/service-accounts/.
