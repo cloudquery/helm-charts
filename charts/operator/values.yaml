@@ -28,6 +28,12 @@ environment:
   # -- The namespace to use to spawn syncs. If not provided, will be the release namespace.
   SCHEDULER_K8S_SYNC_NAMESPACE: ""
 
+# -- Node labels for sync pod assignment.
+# See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector.
+syncNodeSelector:
+#   eks.amazonaws.com/nodeclass: default
+#   karpenter.sh/nodepool: test
+
 # -- This section builds out the service account.
 # See https://kubernetes.io/docs/concepts/security/service-accounts/.
 serviceAccount:

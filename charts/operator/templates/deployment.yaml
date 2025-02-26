@@ -50,6 +50,10 @@ spec:
             - containerPort: 3001
               name: grpc
           env:
+          {{- if .Values.syncNodeSelector }}
+            - name: SCHEDULER_K8S_SYNC_NODE_LABELS
+              value: {{ include "operator.mapToList" .Values.syncNodeSelector }}
+          {{- end }}
           {{- $mergedEnv := merge  (.Values.environment | default dict ) (include "operator.defaultEnv" . | fromYaml ) }}
           {{- range $key, $val := $mergedEnv }}
             - name: {{ $key }}

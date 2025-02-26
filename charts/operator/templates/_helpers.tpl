@@ -68,3 +68,15 @@ Specifies default environment variables for the scheduler
 SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE: {{ .Release.Namespace }}
 SCHEDULER_K8S_SYNC_NAMESPACE: {{ .Release.Namespace }}
 {{- end}}
+
+{{/*
+Build node selector label map as environment list
+*/}}
+{{- define "operator.mapToList" -}}
+{{- $labels := . -}}
+{{- $result := list -}}
+{{- range $key, $value := $labels }}
+{{- $result = append $result (printf "%s=%s" $key $value) }}
+{{- end }}
+{{- join "," $result }}
+{{- end }}
