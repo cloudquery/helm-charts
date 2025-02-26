@@ -15,6 +15,9 @@ data:
   CQAPI_MANAGEDSYNC_BACKEND_URL: "{{ .Values.scheduler.address }}"
   CQAPI_MANAGEDSYNC_PLATFORM_URL: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/api"
   {{- end }}
+  {{- if .Values.otelCollector.enabled }}
+  CQAPI_MANAGEDSYNC_OTEL_COLLECTOR_URL: "opentelemetry-collector.{{ .Release.Namespace }}.svc.cluster.local:4318"
+  {{- end}}
 ---
 {{- if .Values.otelCollector.enabled }}
 apiVersion: v1
