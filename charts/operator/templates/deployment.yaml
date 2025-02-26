@@ -54,8 +54,8 @@ spec:
             - name: SCHEDULER_K8S_SYNC_NODE_LABELS
               value: {{ include "operator.mapToList" .Values.syncNodeSelector }}
           {{- end }}
-          {{- if .Values.syncNodeSelector }}
-            - name: SCHEDULER_K8S_SYNC_JOB_ANNOTATIONS=
+          {{- if .Values.syncJobAnnotations }}
+            - name: SCHEDULER_K8S_SYNC_JOB_ANNOTATIONS
               value: {{ include "operator.mapToList" .Values.syncJobAnnotations }}
           {{- end }}
           {{- $mergedEnv := merge  (.Values.environment | default dict ) (include "operator.defaultEnv" . | fromYaml ) }}
