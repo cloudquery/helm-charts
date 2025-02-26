@@ -61,6 +61,12 @@ spec:
                 description: Image is an optional container image of the CloudQuery
                   launcher to use for the sync job.
                 type: string
+              jobAnnotations:
+                additionalProperties:
+                  type: string
+                description: JobAnnotations is an optional field to specify annotations
+                  for the sync jobs.
+                type: object
               nodeSelector:
                 additionalProperties:
                   type: string
