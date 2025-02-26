@@ -70,13 +70,13 @@ SCHEDULER_K8S_SYNC_NAMESPACE: {{ .Release.Namespace }}
 {{- end}}
 
 {{/*
-Build node selector label map as environment list
+Build label map as environment list
 */}}
 {{- define "operator.mapToList" -}}
 {{- $labels := . -}}
 {{- $result := list -}}
 {{- range $key, $value := $labels }}
-{{- $result = append $result (printf "%s=%s" $key $value) }}
+{{- $result = append $result (printf "%s=%s" $key (toString $value)) }}
 {{- end }}
 {{- join "," $result }}
 {{- end }}
