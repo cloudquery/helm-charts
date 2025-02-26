@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.4](https://github.com/cloudquery/helm-charts/compare/platform-0.12.3...platform-0.12.4) (2025-02-26)
+
+
+### Bug Fixes
+
+* Allow otel collector to be configured ([#666](https://github.com/cloudquery/helm-charts/issues/666)) ([230677c](https://github.com/cloudquery/helm-charts/commit/230677c162ea19a497fb6ffcefc61087cf8f19fe))
+* **deps:** Update dependency cloudquery/cloud to v0.77.0 ([#663](https://github.com/cloudquery/helm-charts/issues/663)) ([18c7db2](https://github.com/cloudquery/helm-charts/commit/18c7db2dc4322b30c30199507b5053d49864974e))
+
 ## [0.12.3](https://github.com/cloudquery/helm-charts/compare/platform-0.12.2...platform-0.12.3) (2025-02-25)
 
 
