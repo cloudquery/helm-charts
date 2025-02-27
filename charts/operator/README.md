@@ -2,7 +2,7 @@
 
 A Helm chart for the operator that manages syncs on the CloudQuery platform
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.79.0](https://img.shields.io/badge/AppVersion-0.79.0-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.80.0](https://img.shields.io/badge/AppVersion-0.80.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -81,6 +81,8 @@ helm upgrade --install --atomic platform -n cloudquery --create-namespace cloudq
 | serviceAccount.automount | bool | `true` | Automatically mount a service account's token in the operator pod |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| syncJobAnnotations | string | `nil` | Job annotations for sync pod assignment. |
+| syncNodeSelector | string | `nil` | Node labels for sync pod assignment. See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector. |
 | tolerations | list | `[]` | Configures node tolerations for the operator deployment See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/. |
 
 ----------------------------------------------
