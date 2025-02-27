@@ -14,12 +14,14 @@ spec:
     kind: Sync
     listKind: SyncList
     plural: syncs
+    shortNames:
+    - cqs
     singular: sync
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.status
-      name: Status
+    - jsonPath: .status.phase
+      name: Phase
       type: string
     name: v1alpha1
     schema:
@@ -204,8 +206,23 @@ spec:
               exitCode:
                 format: int32
                 type: integer
-              status:
+              phase:
                 type: string
+              workerStatuses:
+                items:
+                  description: WorkerStatus defines the observed state of workers
+                    in a Sync
+                  properties:
+                    phase:
+                      description: PodPhase is a label for the condition of a pod
+                        at the current time.
+                      type: string
+                    reason:
+                      description: Reason is explaining the worker's current status
+                        if it's not running or succeeded.
+                      type: string
+                  type: object
+                type: array
             type: object
         type: object
     served: true
