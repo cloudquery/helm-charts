@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.0](https://github.com/cloudquery/helm-charts/compare/operator-0.6.0...operator-0.7.0) (2025-02-27)
+
+
+### Features
+
+* Allow configuring annotations for sync jobs ([#673](https://github.com/cloudquery/helm-charts/issues/673)) ([3b36660](https://github.com/cloudquery/helm-charts/commit/3b366600a5e494b0aac995c95387c4896b03a4a7))
+* Allow configuring nodeSelector labels for the sync jobs ([#671](https://github.com/cloudquery/helm-charts/issues/671)) ([947b768](https://github.com/cloudquery/helm-charts/commit/947b768485b4a5cf9fe0dce597ded24fab6d2afe))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.79.1 ([#674](https://github.com/cloudquery/helm-charts/issues/674)) ([e213378](https://github.com/cloudquery/helm-charts/commit/e213378dfe43e71f18b1ac0677a64009512e5b0f))
+* **deps:** Update dependency cloudquery/cloud to v0.80.0 ([#676](https://github.com/cloudquery/helm-charts/issues/676)) ([62b8727](https://github.com/cloudquery/helm-charts/commit/62b87271c9aa50adcc323952daa6cd21173f6a54))
+
 ## [0.6.0](https://github.com/cloudquery/helm-charts/compare/operator-0.5.2...operator-0.6.0) (2025-02-26)
 
 
