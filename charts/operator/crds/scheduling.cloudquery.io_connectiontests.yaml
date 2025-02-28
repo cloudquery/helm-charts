@@ -16,13 +16,13 @@ spec:
     plural: connectiontests
     shortNames:
     - ct
-    - conntest
+    - cqct
     singular: connectiontest
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.status
-      name: Status
+    - jsonPath: .status.phase
+      name: Phase
       type: string
     - jsonPath: .status.error
       name: Error
@@ -140,7 +140,7 @@ spec:
             properties:
               error:
                 type: string
-              status:
+              phase:
                 type: string
             type: object
         type: object
