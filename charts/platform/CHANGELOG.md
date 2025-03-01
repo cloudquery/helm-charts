@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.12.11](https://github.com/cloudquery/helm-charts/compare/platform-0.12.10...platform-0.12.11) (2025-03-01)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.84.0 ([#688](https://github.com/cloudquery/helm-charts/issues/688)) ([a348644](https://github.com/cloudquery/helm-charts/commit/a348644802b910b694fb4cf5f3ba4585a03f74d3))
+* **deps:** Update dependency cloudquery/cloud to v0.85.0 ([#692](https://github.com/cloudquery/helm-charts/issues/692)) ([0decde2](https://github.com/cloudquery/helm-charts/commit/0decde27a76315c6c2386aaccab1f261cd8c223b))
+* **deps:** Update otel/opentelemetry-collector-contrib Docker tag to v0.120.0 ([#691](https://github.com/cloudquery/helm-charts/issues/691)) ([9a4adda](https://github.com/cloudquery/helm-charts/commit/9a4addac6359f25280fd21fb8f257f4616a33961))
+
 ## [0.12.10](https://github.com/cloudquery/helm-charts/compare/platform-0.12.9...platform-0.12.10) (2025-02-28)
 
 
