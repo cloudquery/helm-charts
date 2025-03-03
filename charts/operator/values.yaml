@@ -28,7 +28,7 @@ environment:
   # -- The namespace to use to spawn syncs. If not provided, will be the release namespace.
   SCHEDULER_K8S_SYNC_NAMESPACE: ""
   # -- Force the namespace to SCHEDULER_K8S_SYNC_NAMESPACE.
-  SCHEDULER_K8S_SYNC_FORCE_NAMESPACE: "false"
+  SCHEDULER_K8S_SYNC_FORCE_NAMESPACE: "\"false\""
 
 # -- Node labels for sync pod assignment.
 # See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector.
