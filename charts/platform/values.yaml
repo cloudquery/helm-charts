@@ -188,6 +188,13 @@ debug:
   # -- Optional. Enable debug mode.
   enabled: false
 
+# -- ClickHouse configuration for cluster support
+clickhouse:
+  # -- Whether ClickHouse is running in a clustered environment
+  isCluster: false
+  # -- ClickHouse cluster name (required when isCluster is true)
+  clusterName: ""
+
 # -- Init Container configuration
 # @section Init Containers
 # @descriptionStart
