@@ -5,7 +5,6 @@ receivers:
         endpoint: :4318
 processors:
   filter:
-#    error_mode: ignore
     logs:
       log_record:
         - 'IsMatch(body, "table resolver finished with error|table sync finished|table resolver finished with panic") == false'
@@ -20,6 +19,10 @@ exporters:
     endpoint: ${env:CLICKHOUSE_DSN}
     database: ${env:CLICKHOUSE_DATABASE}
     create_schema: true
+    cluster_name: ${env:OTEL_CLUSTER_NAME:-}
+    table_engine:
+      name: ${env:OTEL_TABLE_ENGINE_NAME:-MergeTree}
+      params: ${env:OTEL_TABLE_ENGINE_PARAMS:-}
     ttl: 0
     timeout: 10s
     sending_queue:
@@ -37,17 +40,18 @@ extensions:
     endpoint: 0.0.0.0:13133
 
 service:
-  extensions: [health_check, zpages]
+  extensions: [ health_check, zpages ]
   pipelines:
     logs:
-      receivers: [otlp]
-      processors: [filter, batch]
-      exporters: [clickhouse]
+      receivers: [ otlp ]
+      processors: [ filter, batch ]
+      exporters: [ clickhouse ]
     traces:
-      receivers: [otlp]
-      processors: [filter, batch]
-      exporters: [clickhouse]
+      receivers: [ otlp ]
+      processors: [ filter, batch ]
+      exporters: [ clickhouse ]
     metrics:
-      receivers: [otlp]
+      receivers: [ otlp ]
       processors:
-      exporters: [nop]
+      exporters: [ nop ]
+
