@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.12.12](https://img.shields.io/badge/Version-0.12.12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.85.1](https://img.shields.io/badge/AppVersion-0.85.1-informational?style=flat-square)
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.86.2](https://img.shields.io/badge/AppVersion-0.86.2-informational?style=flat-square)
 
 ## Quickstart
 
@@ -16,6 +16,9 @@ Kubernetes: `^1.8.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| clickhouse | object | `{"clusterName":"","isCluster":false}` | ClickHouse configuration for cluster support |
+| clickhouse.clusterName | string | `""` | ClickHouse cluster name (required when isCluster is true) |
+| clickhouse.isCluster | bool | `false` | Whether ClickHouse is running in a clustered environment |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true}` | Specify the container-level security context |
 | debug.enabled | bool | `false` | Optional. Enable debug mode. |
 | externalSecrets | object | `{"cloudquerySecretsKey":"","enabled":false,"externalSecretsRoleARN":"","region":""}` | External secrets configuration |
