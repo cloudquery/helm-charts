@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.8.4](https://github.com/cloudquery/helm-charts/compare/operator-0.8.3...operator-0.8.4) (2025-03-03)
+
+
+### Bug Fixes
+
+* Adding the `SCHEDULER_K8S_SYNC_FORCE_NAMESPACE` environment variable ([#696](https://github.com/cloudquery/helm-charts/issues/696)) ([d5a34bc](https://github.com/cloudquery/helm-charts/commit/d5a34bc9442dde24fdb7194fe9602a30d07092df))
+* **deps:** Update dependency cloudquery/cloud to v0.86.1 ([#697](https://github.com/cloudquery/helm-charts/issues/697)) ([3cdfb76](https://github.com/cloudquery/helm-charts/commit/3cdfb76e3c3d5a3a4fb37a611115e3f3a5d71100))
+* **deps:** Update dependency cloudquery/cloud to v0.86.2 ([#700](https://github.com/cloudquery/helm-charts/issues/700)) ([c950f20](https://github.com/cloudquery/helm-charts/commit/c950f20de3f4201602b2c0782d4e04681ce03d9b))
+
 ## [0.8.3](https://github.com/cloudquery/helm-charts/compare/operator-0.8.2...operator-0.8.3) (2025-03-01)
 
 
