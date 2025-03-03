@@ -67,6 +67,7 @@ Specifies default environment variables for the scheduler
 {{- define "operator.defaultEnv" -}}
 SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE: {{ .Release.Namespace }}
 SCHEDULER_K8S_SYNC_NAMESPACE: {{ .Release.Namespace }}
+SCHEDULER_K8S_SYNC_FORCE_NAMESPACE: "false"
 {{- end}}
 
 {{/*
