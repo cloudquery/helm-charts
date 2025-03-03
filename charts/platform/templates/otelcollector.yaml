@@ -40,7 +40,7 @@ spec:
                   key: clickhouseDSN
             - name: CLICKHOUSE_DATABASE
               value: {{ .Values.otelCollector.database }}
-            {{-if .Values.clickhouse.clusterName }}
+            {{- if .Values.clickhouse.clusterName }}
             - name: OTEL_CLUSTER_NAME
               value: {{ .Values.clickhouse.clusterName }}
             - name: OTEL_TABLE_ENGINE_NAME
