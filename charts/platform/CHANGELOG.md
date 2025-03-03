@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.1](https://github.com/cloudquery/helm-charts/compare/platform-0.13.0...platform-0.13.1) (2025-03-03)
+
+
+### Bug Fixes
+
+* Manually update the otel config ([#701](https://github.com/cloudquery/helm-charts/issues/701)) ([e9f28da](https://github.com/cloudquery/helm-charts/commit/e9f28da8ebd432d417186ce7f0fe194c690f1c57))
+
 ## [0.13.0](https://github.com/cloudquery/helm-charts/compare/platform-0.12.12...platform-0.13.0) (2025-03-03)
 
 
