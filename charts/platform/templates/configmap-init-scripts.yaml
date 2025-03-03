@@ -125,6 +125,8 @@ data:
     max_attempts=${MAX_ATTEMPTS:-5}
     retry_interval=${RETRY_INTERVAL:-5}
     operation_timeout=${OPERATION_TIMEOUT:-10}
+    is_cluster=${CLICKHOUSE_IS_CLUSTER:-false}
+    cluster_name=${CLICKHOUSE_CLUSTER_NAME:-""}
     
     # Parse Clickhouse DSN
     parse_clickhouse_dsn() {
@@ -214,6 +216,27 @@ data:
         log_info "Waiting $retry_interval seconds before next attempt..."
         sleep $retry_interval
     done
+
+    # If using cluster, verify cluster configuration first
+    if [ "$is_cluster" = "true" ] && [ ! -z "$cluster_name" ]; then
+      log_header "Verifying ClickHouse cluster configuration"
+      CLUSTER_CHECK_QUERY="SELECT cluster FROM system.clusters WHERE cluster = '$cluster_name'"
+      CLUSTER_EXISTS=$(execute_query "$CLUSTER_CHECK_QUERY")
+      
+      if [ $? -ne 0 ]; then
+        log_error "Failed to check cluster existence"
+        exit 1
+      fi
+      
+      if [ -z "$CLUSTER_EXISTS" ]; then
+        log_error "Cluster '$cluster_name' not found in ClickHouse configuration"
+        log_info "Available clusters:"
+        execute_query "SELECT cluster FROM system.clusters"
+        exit 1
+      else
+        log_success "Verified cluster '$cluster_name' exists"
+      fi
+    fi
     
     # Check if database exists using a format that returns tab-separated values
     log_header "Checking ClickHouse database"
@@ -226,7 +249,17 @@ data:
     fi
     
     if [ -z "$DB_EXISTS" ]; then
-        log_info "Creating database $CH_DB..."
+        # Prepare the database creation query based on cluster configuration
+        if [ "$is_cluster" = "true" ] && [ ! -z "$cluster_name" ]; then
+          log_info "Using clustered mode with cluster name: $cluster_name"
+          CREATE_DB_QUERY="CREATE DATABASE IF NOT EXISTS $CH_DB ON CLUSTER $cluster_name"
+        else
+          log_info "Using standalone mode (no cluster)"
+          CREATE_DB_QUERY="CREATE DATABASE IF NOT EXISTS $CH_DB"
+        fi
+        
+        log_info "Creating database with query: $CREATE_DB_QUERY"
+        
         if ! execute_query "CREATE DATABASE IF NOT EXISTS $CH_DB"; then
             log_error "Failed to create database $CH_DB"
             exit 1

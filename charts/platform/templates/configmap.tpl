@@ -9,6 +9,7 @@ data:
   CQAPI_MIRROR_ENABLED: "true"
   CQAPI_MIRROR_ALL_PLUGINS: "true"
   CQAPI_ASSETVIEW_INTERVAL: "1m"
+  CQAPI_CLUSTER_NAME: "{{ .Values.clickhouse.clusterName }}"
   CQAPI_STORAGE_LOCAL_RELEASE_BASE_URL: "http://{{ include "platform.fullName" . }}.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/storage/files"
   CQAPI_STORAGE_LOCAL_UIASSET_BASE_URL: "/storage/files"
   {{- if .Values.scheduler.address }}

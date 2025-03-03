@@ -31,7 +31,6 @@ spec:
       serviceAccountName: {{ include "platform.serviceAccount" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-# In deployments.yaml:
       {{- if .Values.initContainers.enabled }}
       initContainers:
         - name: init-connectivity
@@ -65,13 +64,15 @@ spec:
           env:
             - name: OPERATION_TIMEOUT
               value: {{ .Values.initContainers.timeout.operation | quote }}
+            {{- if hasKey .Values "clickhouse" }}
+            - name: CLICKHOUSE_IS_CLUSTER
+              value: {{ .Values.clickhouse.isCluster | default false | quote }}
+            {{- if .Values.clickhouse.isCluster }}
+            - name: CLICKHOUSE_CLUSTER_NAME
+              value: {{ .Values.clickhouse.clusterName | quote }}
+            {{- end }}
+            {{- end }}
             - name: CLICKHOUSE_DSN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "platform.secretRef" . }}
-                  key: clickhouseDSN
-            # Using shell parameter expansion for parsing DSN
-            - name: CLICKHOUSE_HOST
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
