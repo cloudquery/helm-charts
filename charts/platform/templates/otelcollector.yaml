@@ -40,6 +40,12 @@ spec:
                   key: clickhouseDSN
             - name: CLICKHOUSE_DATABASE
               value: {{ .Values.otelCollector.database }}
+            {{-if .Values.clickhouse.clusterName }}
+            - name: OTEL_CLUSTER_NAME
+              value: {{ .Values.clickhouse.clusterName }}
+            - name: OTEL_TABLE_ENGINE_NAME
+              value: "ReplicatedMergeTree"
+            {{- end }}
           ports:
             {{- range .Values.otelCollector.service.ports }}
             - name: {{ .name }}
