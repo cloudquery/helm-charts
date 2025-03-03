@@ -2,7 +2,7 @@
 
 A Helm chart for the operator that manages syncs on the CloudQuery platform
 
-![Version: 0.8.3](https://img.shields.io/badge/Version-0.8.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.85.1](https://img.shields.io/badge/AppVersion-0.85.1-informational?style=flat-square)
+![Version: 0.8.4](https://img.shields.io/badge/Version-0.8.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.86.2](https://img.shields.io/badge/AppVersion-0.86.2-informational?style=flat-square)
 
 ## Quickstart
 
@@ -54,8 +54,9 @@ helm upgrade --install --atomic platform -n cloudquery --create-namespace cloudq
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configures node affinity for the operator deployment See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity. |
-| environment | object | `{"SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE":"","SCHEDULER_K8S_SYNC_NAMESPACE":""}` | Configures environment variables for the operator Deployment |
+| environment | object | `{"SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE":"","SCHEDULER_K8S_SYNC_FORCE_NAMESPACE":"\"false\"","SCHEDULER_K8S_SYNC_NAMESPACE":""}` | Configures environment variables for the operator Deployment |
 | environment.SCHEDULER_K8S_LEADER_ELECTION_NAMESPACE | string | `""` | The namespace to use for leader election. If not provided, will be the release namespace. |
+| environment.SCHEDULER_K8S_SYNC_FORCE_NAMESPACE | string | `"\"false\""` | Force the namespace to SCHEDULER_K8S_SYNC_NAMESPACE. |
 | environment.SCHEDULER_K8S_SYNC_NAMESPACE | string | `""` | The namespace to use to spawn syncs. If not provided, will be the release namespace. |
 | fullnameOverride | string | `""` | Override the full name |
 | image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"repository":"us-east1-docker.pkg.dev/cq-cloud-prod/platform/scheduler","tag":""}` | Configures the container image for the operator Deployment. See https://kubernetes.io/docs/concepts/containers/images/. |
