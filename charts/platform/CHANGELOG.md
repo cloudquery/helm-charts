@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0](https://github.com/cloudquery/helm-charts/compare/platform-0.12.12...platform-0.13.0) (2025-03-03)
+
+
+### Features
+
+* Add clustered clickhouse support ([#695](https://github.com/cloudquery/helm-charts/issues/695)) ([684fa2d](https://github.com/cloudquery/helm-charts/commit/684fa2da58159d513db3d33743d385bfc1077605))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.86.1 ([#697](https://github.com/cloudquery/helm-charts/issues/697)) ([3cdfb76](https://github.com/cloudquery/helm-charts/commit/3cdfb76e3c3d5a3a4fb37a611115e3f3a5d71100))
+* **deps:** Update dependency cloudquery/cloud to v0.86.2 ([#700](https://github.com/cloudquery/helm-charts/issues/700)) ([c950f20](https://github.com/cloudquery/helm-charts/commit/c950f20de3f4201602b2c0782d4e04681ce03d9b))
+
 ## [0.12.12](https://github.com/cloudquery/helm-charts/compare/platform-0.12.11...platform-0.12.12) (2025-03-01)
 
 
