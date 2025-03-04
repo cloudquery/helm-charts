@@ -54,4 +54,3 @@ service:
       receivers: [ otlp ]
       processors:
       exporters: [ nop ]
-
