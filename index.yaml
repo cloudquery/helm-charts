@@ -10448,6 +10448,33 @@ entries:
         - name: yevgenypats
           email: yp@cloudquery.io
     apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-03-05T16:20:36.068603812Z"
+    description: A Helm chart for the operator that manages syncs on the CloudQuery
+      platform
+    digest: ff2bc9c08d59cc1f5deb0d1377bc7eea6ac217162f9fc2785196f602e2476602
+    icon: https://avatars.githubusercontent.com/u/74616112
+    keywords:
+    - cloudquery
+    maintainers:
+    - email: yp@cloudquery.io
+      name: yevgenypats
+    name: operator
+    sources:
+    - https://github.com/cloudquery/helm-charts/tree/main/charts/operator
+    type: application
+    urls:
+    - https://github.com/cloudquery/helm-charts/releases/download/operator-0.8.7/operator-0.8.7.tgz
+    version: 0.8.7
+  - annotations:
+      artifacthub.io/license: MPL-2.0
+      artifacthub.io/links: |
+        - name: cloudquery
+          url: https://github.com/cloudquery/cloudquery
+      artifacthub.io/maintainers: |
+        - name: yevgenypats
+          email: yp@cloudquery.io
+    apiVersion: v2
     appVersion: 0.87.2
     created: "2025-03-05T09:59:42.456925987Z"
     description: A Helm chart for the operator that manages syncs on the CloudQuery
@@ -12237,4 +12264,4 @@ entries:
     urls:
     - https://github.com/cloudquery/helm-charts/releases/download/platform-0.1.0/platform-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-05T10:04:32.414852042Z"
+generated: "2025-03-05T16:20:36.223440184Z"
