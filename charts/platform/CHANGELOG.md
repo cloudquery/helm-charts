@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.6](https://github.com/cloudquery/helm-charts/compare/platform-0.13.5...platform-0.13.6) (2025-03-05)
+
+
+### Bug Fixes
+
+* **deps:** Update otel/opentelemetry-collector-contrib Docker tag to v0.121.0 ([#718](https://github.com/cloudquery/helm-charts/issues/718)) ([4ebda1a](https://github.com/cloudquery/helm-charts/commit/4ebda1a2bd0f615f7b197554a5c3c5069cca13ec))
+
 ## [0.13.5](https://github.com/cloudquery/helm-charts/compare/platform-0.13.4...platform-0.13.5) (2025-03-05)
 
 

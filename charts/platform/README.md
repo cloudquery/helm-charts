@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.13.5](https://img.shields.io/badge/Version-0.13.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.13.6](https://img.shields.io/badge/Version-0.13.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -59,7 +59,7 @@ Kubernetes: `^1.8.0-0`
 | livenessProbe.httpGet.port | string | `"api"` |  |
 | livenessProbe.periodSeconds | int | `60` |  |
 | nameOverride | string | `""` | Override the default name |
-| otelCollector | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true},"database":"default","enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"otel/opentelemetry-collector-contrib","tag":"0.120.0"},"podDisruptionBudget":{"minAvailable":1},"podSecurityContext":{"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}},"resources":{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"500m","memory":"512Mi"}},"service":{"ports":[{"name":"otlp-grpc","port":4317,"protocol":"TCP","targetPort":4317},{"name":"otlp-http","port":4318,"protocol":"TCP","targetPort":4318}],"type":"ClusterIP"}}` | OTEL Collector configuration |
+| otelCollector | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true},"database":"default","enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"otel/opentelemetry-collector-contrib","tag":"0.121.0"},"podDisruptionBudget":{"minAvailable":1},"podSecurityContext":{"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001,"seccompProfile":{"type":"RuntimeDefault"}},"resources":{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"500m","memory":"512Mi"}},"service":{"ports":[{"name":"otlp-grpc","port":4317,"protocol":"TCP","targetPort":4317},{"name":"otlp-http","port":4318,"protocol":"TCP","targetPort":4318}],"type":"ClusterIP"}}` | OTEL Collector configuration |
 | otelCollector.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["all"]},"readOnlyRootFilesystem":true}` | Specify the container-level security context |
 | otelCollector.database | string | `"default"` | Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN) |
 | otelCollector.enabled | bool | `true` | Optional. Enable the OTEL Collector. |
