@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.4](https://github.com/cloudquery/helm-charts/compare/platform-0.13.3...platform-0.13.4) (2025-03-05)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v0.87.1 ([#711](https://github.com/cloudquery/helm-charts/issues/711)) ([7b815e6](https://github.com/cloudquery/helm-charts/commit/7b815e68079201d341fec7c57e722e91d6b995c3))
+* **deps:** Update dependency cloudquery/cloud to v0.87.2 ([#713](https://github.com/cloudquery/helm-charts/issues/713)) ([c112036](https://github.com/cloudquery/helm-charts/commit/c112036122ff78b10f7b22f899ba224d1886f506))
+
 ## [0.13.3](https://github.com/cloudquery/helm-charts/compare/platform-0.13.2...platform-0.13.3) (2025-03-04)
 
 
