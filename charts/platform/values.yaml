@@ -123,7 +123,7 @@ otelCollector:
   enabled: true
   image:
     repository: otel/opentelemetry-collector-contrib
-    tag: "0.120.0"
+    tag: "0.121.0"
     pullPolicy: IfNotPresent
 
   # -- Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN)
