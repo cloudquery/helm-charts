@@ -247,8 +247,10 @@ data:
         log_error "Failed to check database existence"
         exit 1
     fi
+
+    DB_NAME=$(echo "$DB_EXISTS" | grep -o "$CH_DB")
     
-    if [ -z "$DB_EXISTS" ]; then
+    if [ -z "$DB_NAME" ]; then
         # Prepare the database creation query based on cluster configuration
         if [ "$is_cluster" = "true" ] && [ ! -z "$cluster_name" ]; then
           log_info "Using clustered mode with cluster name: $cluster_name"
