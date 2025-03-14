@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-pg-init
+  labels:
+    {{- include "tenant.labels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.postgresJob.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.postgresJob.ttlSecondsAfterFinished }}
+  template:
+    metadata:
+      labels:
+        {{- include "tenant.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: pg-init
+          image: "{{ .Values.postgresJob.image.repository }}:{{ .Values.postgresJob.image.tag }}"
+          imagePullPolicy: {{ .Values.postgresJob.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.postgresJob.resources | nindent 12 }}
+          env:
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: host
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: port
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: adminUser
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: adminPassword
+            - name: PGSSLMODE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: sslMode
+            - name: PGDATABASE
+              value: "postgres"
+            - name: TENANT_NAME
+              value: {{ .Values.tenant.name | quote }}
+            - name: TENANT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresSecret.secretRef }}
+                  key: tenantPassword
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+
+              echo "Creating user $TENANT_NAME..."
+              psql <<EOF
+              -- Create user if not exists
+              DO \$\$
+              BEGIN
+                IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '$TENANT_NAME') THEN
+                  CREATE USER "$TENANT_NAME" WITH PASSWORD '$TENANT_PASSWORD' LOGIN;
+                END IF;
+              END
+              \$\$;
+              EOF
+
+              echo "Checking database..."
+              DB_EXISTS=$(psql -tAc "SELECT 1 FROM pg_database WHERE datname='$TENANT_NAME'")
+              
+              if [ -z "$DB_EXISTS" ]; then
+                echo "Creating database $TENANT_NAME..."
+                psql -c "GRANT \"$TENANT_NAME\" TO \"$PGUSER\""
+                psql -c "CREATE DATABASE \"$TENANT_NAME\" OWNER \"$TENANT_NAME\""
+              fi
+
+              echo "Tenant initialization completed!"

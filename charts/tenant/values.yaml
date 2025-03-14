@@ -1,38 +1,58 @@
-# ClickHouse connection details
-clickhouse:
-  host: ""  # Will be provided during installation
-  adminUser: ""
-  adminPassword: ""
+# -- Clickhouse secrets
+clickhouseSecret:
+  # -- Required: The secret reference to use for the user-supplied clickhouse secrets
+  secretRef: "clickhouse-credentials"
 
-# PostgreSQL connection
-postgres:
-  host: ""     # Database host
-  port: "5432" # Database port
-  user: ""     # Admin username
-  password: "" # Admin password
-  sslmode: "require"
+postgresSecret:
+  # -- Required: The secret reference to use for the user-supplied postgres secrets
+  secretRef: "postgres-credentials"
 
 # Tenant configuration
 tenant:
-  id: ""
-  password: ""  # Will be auto-generated if empty
-  name: ""     # Tenant identifier (will be prefixed with tenant_)
-  postgresPassword: "" # Will be auto-generated if empty
+  name: "tenant01"  # example tenant name
 
-# Job configuration
-job:
+# PostgreSQL initialization job configuration
+postgresJob:
+  # -- Number of retries before considering a Job as failed
   backoffLimit: 4
+  # -- Time to keep completed jobs
   ttlSecondsAfterFinished: 100
+  # -- Container image configuration
   image:
-    repository: clickhouse
-    tag: 25.1.5
+    # -- PostgreSQL image repository
+    repository: bitnami/postgresql
+    # -- PostgreSQL image tag
+    tag: 17.4.0
+    # -- Image pull policy
     pullPolicy: IfNotPresent
+  # -- Resource configuration for PostgreSQL job
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
-# Resource configuration
-resources:
-  limits:
-    cpu: 200m
-    memory: 256Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi 
+# ClickHouse initialization job configuration
+clickhouseJob:
+  # -- Number of retries before considering a Job as failed
+  backoffLimit: 4
+  # -- Time to keep completed jobs
+  ttlSecondsAfterFinished: 100
+  # -- Container image configuration
+  image:
+    # -- ClickHouse image repository
+    repository: clickhouse
+    # -- ClickHouse image tag
+    tag: 25.1.5
+    # -- Image pull policy
+    pullPolicy: IfNotPresent
+  # -- Resource configuration for ClickHouse job
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi 

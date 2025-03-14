@@ -127,7 +127,7 @@ otelCollector:
     pullPolicy: IfNotPresent
 
   # -- Optional. The database to use for the ClickHouse exporter (should match the ClickHouse DSN)
-  database: "default"
+  database: "tenant_02"
 
   podDisruptionBudget:
     minAvailable: 1
