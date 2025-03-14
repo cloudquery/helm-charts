@@ -10,29 +10,56 @@ postgres:
   port: "5432" # Database port
   user: ""     # Admin username
   password: "" # Admin password
-  sslmode: "allow" # SSL mode
+  sslmode: "disable" # SSL mode (use "disable" for local connections, "require" for remote/cloud databases)
 
 # Tenant configuration
 tenant:
   id: ""
-  password: ""  # Will be auto-generated if empty
-  name: ""     # Tenant identifier (will be prefixed with tenant_)
-  postgresPassword: "" # Will be auto-generated if empty
+  clickhousePassword: ""  # Password for tenant's ClickHouse user
+  postgresPassword: ""    # Password for tenant's PostgreSQL user
 
-# Job configuration
-job:
+# PostgreSQL initialization job configuration
+postgresJob:
+  # -- Number of retries before considering a Job as failed
   backoffLimit: 4
+  # -- Time to keep completed jobs
   ttlSecondsAfterFinished: 100
+  # -- Container image configuration
   image:
-    repository: clickhouse
-    tag: 25.1.5
+    # -- PostgreSQL image repository
+    repository: bitnami/postgresql
+    # -- PostgreSQL image tag
+    tag: 17.4.0
+    # -- Image pull policy
     pullPolicy: IfNotPresent
+  # -- Resource configuration for PostgreSQL job
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
-# Resource configuration
-resources:
-  limits:
-    cpu: 200m
-    memory: 256Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi 
+# ClickHouse initialization job configuration
+clickhouseJob:
+  # -- Number of retries before considering a Job as failed
+  backoffLimit: 4
+  # -- Time to keep completed jobs
+  ttlSecondsAfterFinished: 100
+  # -- Container image configuration
+  image:
+    # -- ClickHouse image repository
+    repository: clickhouse
+    # -- ClickHouse image tag
+    tag: 25.1.5
+    # -- Image pull policy
+    pullPolicy: IfNotPresent
+  # -- Resource configuration for ClickHouse job
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi 

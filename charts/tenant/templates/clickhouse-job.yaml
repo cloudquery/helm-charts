@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-init
+  name: {{ .Release.Name }}-clickhouse-init
   labels:
     {{- include "tenant-init.labels" . | nindent 4 }}
 spec:
-  backoffLimit: {{ .Values.job.backoffLimit }}
-  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  backoffLimit: {{ .Values.clickhouseJob.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.clickhouseJob.ttlSecondsAfterFinished }}
   template:
     metadata:
       labels:
@@ -15,8 +15,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: init
-          image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag }}"
-          imagePullPolicy: {{ .Values.job.image.pullPolicy }}
+          image: "{{ .Values.clickhouseJob.image.repository }}:{{ .Values.clickhouseJob.image.tag }}"
+          imagePullPolicy: {{ .Values.clickhouseJob.image.pullPolicy }}
           env:
             - name: CH_HOST
               valueFrom:
@@ -57,11 +57,7 @@ spec:
               echo "\nUser:"
               clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD \
                 --query="SELECT name FROM system.users WHERE name = 'tenant_{{ .Values.tenant.id }}'" --format Values
-              
-              echo "\nUser grants:"
-              clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD \
-                --query="SHOW GRANTS FOR tenant_{{ .Values.tenant.id }}" --format Values
-              
+
               echo "\nTenant initialization completed successfully!"
           resources:
-            {{- toYaml .Values.resources | nindent 12 }} 
+            {{- toYaml .Values.clickhouseJob.resources | nindent 12 }} 
