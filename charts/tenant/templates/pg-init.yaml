@@ -31,12 +31,13 @@ spec:
             - |
               set -e
               echo "Starting tenant initialization..."
-              
-              # Create tenant database
-              echo "Creating database $TENANT_NAME..."
-              psql postgres <<EOF
-              CREATE DATABASE $TENANT_NAME;
-              EOF
+
+              DB_EXISTS=$(psql -tAc "SELECT 1 FROM pg_database WHERE datname='$TENANT_NAME'")
+              echo "DB_EXISTS: $DB_EXISTS"
+              if [ -z "$DB_EXISTS" ]; then
+                echo "Creating database $TENANT_NAME..."
+                psql postgres CREATE DATABASE $TENANT_NAME;
+              fi
               
               # Create tenant user and grant permissions
               echo "Creating user $TENANT_NAME..."
