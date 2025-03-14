@@ -140,6 +140,17 @@ otelCollector:
       cpu: 1000m
       memory: 1Gi
 
+  livenessProbe:
+    periodSeconds: 60
+    httpGet:
+      path: /
+      port: 13133
+  readinessProbe:
+    periodSeconds: 30
+    httpGet:
+      path: /
+      port: 13133
+
   service:
     type: ClusterIP
     ports:

@@ -54,6 +54,14 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.otelCollector.resources | nindent 12 }}
+          {{- with .Values.otelCollector.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.otelCollector.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: collector-config
               mountPath: /conf
