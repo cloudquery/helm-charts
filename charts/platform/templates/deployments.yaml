@@ -156,10 +156,15 @@ spec:
           {{- end }}
             - name: storage
               mountPath: /data/storage
+            - name: s3-storage
+              mountPath: /data/s3storage
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
+        - name: s3-storage
+          persistentVolumeClaim:
+              claimName: s3-pvc
         - name: storage
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:

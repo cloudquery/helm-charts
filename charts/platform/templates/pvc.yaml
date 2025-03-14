@@ -19,3 +19,16 @@ spec:
     requests:
       storage: {{ .Values.persistence.size }}
 {{- end }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: s3-pvc
+spec:
+  accessModes:
+    - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
+  storageClassName: "" # Required for static provisioning
+  resources:
+    requests:
+      storage: 1200Gi # Ignored, required
+  volumeName: s3-pv # Name of your PV

@@ -1,0 +1,23 @@
+persistence:
+  enabled: true
+otelCollector:
+  database: "assets" # Update this
+externalSecrets:
+ enabled: false
+letsEncrypt:
+ enabled: true
+ email: "martin@cloudquery.io"  # Update this
+ingress:
+ enabled: true
+ className: "nginx"
+ annotations:
+   cert-manager.io/cluster-issuer: letsencrypt-production
+ hosts:
+   - host: "platform.mnorbury.me"  # Update this
+     paths:
+       - path: /
+         pathType: ImplementationSpecific
+ tls:
+     - secretName: cloudquery-platform-tls
+       hosts:
+         - "platform.mnorbury.me"  # Update this

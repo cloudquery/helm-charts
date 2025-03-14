@@ -6,6 +6,7 @@ metadata:
     {{- include "platform.labels" . | nindent 4 }}
 data:
   CQAPI_LOCAL_COOKIE_SECURE: "false"
+  CQAPI_STORAGE_LOCAL_DIR: "/data/s3storage"
   CQAPI_MIRROR_ENABLED: "true"
   CQAPI_MIRROR_ALL_PLUGINS: "true"
   CQAPI_ASSETVIEW_INTERVAL: "1m"
