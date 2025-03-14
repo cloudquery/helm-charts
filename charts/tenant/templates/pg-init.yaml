@@ -9,22 +9,40 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: pg-init
-          image: postgres:15
+          image: bitnami/postgresql:17.4.0
           env:
             - name: PGHOST
-              value: {{ .Values.postgres.host | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: host
             - name: PGPORT
-              value: {{ .Values.postgres.port | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: port
             - name: PGUSER
-              value: {{ .Values.postgres.user | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: admin-user
             - name: PGPASSWORD
-              value: {{ .Values.postgres.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: admin-password
             - name: PGSSLMODE
-              value: {{ .Values.postgres.sslmode | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: ssl-mode
             - name: TENANT_NAME
               value: "tenant_{{ .Values.tenant.id }}"
             - name: TENANT_PASSWORD
-              value: {{ .Values.tenant.postgresPassword | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-creds
+                  key: tenant-password
           command:
             - /bin/sh
             - -c
@@ -33,7 +51,7 @@ spec:
               echo "Starting tenant initialization..."
 
               DB_EXISTS=$(psql -tAc "SELECT 1 FROM pg_database WHERE datname='$TENANT_NAME'")
-              echo "DB_EXISTS: $DB_EXISTS"
+              
               if [ -z "$DB_EXISTS" ]; then
                 echo "Creating database $TENANT_NAME..."
                 psql postgres CREATE DATABASE $TENANT_NAME;
@@ -55,19 +73,15 @@ spec:
               GRANT CONNECT ON DATABASE $TENANT_NAME TO $TENANT_NAME;
               EOF
               
-              # Switch to tenant database and set up permissions
-              echo "Setting up permissions..."
+              # Set up schema permissions
+              echo "Setting up schema permissions..."
               psql $TENANT_NAME <<EOF
+              -- Ensure public schema exists and set permissions
+              CREATE SCHEMA IF NOT EXISTS public;
               GRANT ALL PRIVILEGES ON SCHEMA public TO $TENANT_NAME;
               ALTER DEFAULT PRIVILEGES IN SCHEMA public 
                 GRANT ALL PRIVILEGES ON TABLES TO $TENANT_NAME;
               EOF
 
-
-              echo "Database:"
-              psql -c "SELECT datname FROM pg_database WHERE datname = '$TENANT_NAME';"
-
-              echo "User:"
-              psql -c "SELECT rolname, rolsuper FROM pg_roles WHERE rolname = '$TENANT_NAME';"
 
               echo "Tenant initialization completed!"

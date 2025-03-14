@@ -10,7 +10,7 @@ postgres:
   port: "5432" # Database port
   user: ""     # Admin username
   password: "" # Admin password
-  sslmode: "require"
+  sslmode: "allow" # SSL mode
 
 # Tenant configuration
 tenant:
