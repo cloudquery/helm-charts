@@ -1,0 +1,28 @@
+# ClickHouse connection details
+clickhouse:
+  host: ""  # Will be provided during installation
+  adminUser: ""
+  adminPassword: ""
+
+# Tenant configuration
+tenant:
+  id: ""
+  password: ""  # Will be auto-generated if empty
+
+# Job configuration
+job:
+  backoffLimit: 4
+  ttlSecondsAfterFinished: 100
+  image:
+    repository: clickhouse
+    tag: 25.1.5
+    pullPolicy: IfNotPresent
+
+# Resource configuration
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi 

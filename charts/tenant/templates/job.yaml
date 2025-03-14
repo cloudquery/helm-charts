@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-init
+  labels:
+    {{- include "tenant-init.labels" . | nindent 4 }}
+spec:
+  backoffLimit: {{ .Values.job.backoffLimit }}
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
+  template:
+    metadata:
+      labels:
+        {{- include "tenant-init.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: init
+          image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag }}"
+          imagePullPolicy: {{ .Values.job.image.pullPolicy }}
+          env:
+            - name: CH_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clickhouse-creds
+                  key: host
+            - name: CH_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clickhouse-creds
+                  key: admin-user
+            - name: CH_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clickhouse-creds
+                  key: admin-password
+            - name: TENANT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clickhouse-creds
+                  key: tenant-password
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "\nTenant initialization"
+              clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD <<EOF
+              CREATE DATABASE IF NOT EXISTS tenant_{{ .Values.tenant.id }};
+              CREATE USER IF NOT EXISTS tenant_{{ .Values.tenant.id }} IDENTIFIED WITH sha256_password BY '$TENANT_PASSWORD';
+              GRANT CURRENT GRANTS ON tenant_{{ .Values.tenant.id }}.* TO tenant_{{ .Values.tenant.id }};
+              EOF
+
+              echo "Database:"
+              clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD \
+                --query="SELECT name, engine FROM system.databases WHERE name = 'tenant_{{ .Values.tenant.id }}'" --format Values
+              
+              echo "\nUser:"
+              clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD \
+                --query="SELECT name FROM system.users WHERE name = 'tenant_{{ .Values.tenant.id }}'" --format Values
+              
+              echo "\nUser grants:"
+              clickhouse-client --host=$CH_HOST --user=$CH_ADMIN_USER --password=$CH_ADMIN_PASSWORD \
+                --query="SHOW GRANTS FOR tenant_{{ .Values.tenant.id }}" --format Values
+              
+              echo "\nTenant initialization completed successfully!"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }} 
