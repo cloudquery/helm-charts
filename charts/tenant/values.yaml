@@ -4,10 +4,20 @@ clickhouse:
   adminUser: ""
   adminPassword: ""
 
+# PostgreSQL connection
+postgres:
+  host: ""     # Database host
+  port: "5432" # Database port
+  user: ""     # Admin username
+  password: "" # Admin password
+  sslmode: "require"
+
 # Tenant configuration
 tenant:
   id: ""
   password: ""  # Will be auto-generated if empty
+  name: ""     # Tenant identifier (will be prefixed with tenant_)
+  postgresPassword: "" # Will be auto-generated if empty
 
 # Job configuration
 job:
