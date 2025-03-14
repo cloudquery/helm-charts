@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.7](https://github.com/cloudquery/helm-charts/compare/platform-0.13.6...platform-0.13.7) (2025-03-14)
+
+
+### Bug Fixes
+
+* Add liveness and readiness probes to otel-collector ([#724](https://github.com/cloudquery/helm-charts/issues/724)) ([d17180c](https://github.com/cloudquery/helm-charts/commit/d17180cf05805a466352922ddd00f0e78ee50fc4))
+* Better handling of determining database existence ([#720](https://github.com/cloudquery/helm-charts/issues/720)) ([763911e](https://github.com/cloudquery/helm-charts/commit/763911e585b3d82ee8543fb8f9ecedfa8e45b6f3))
+
 ## [0.13.6](https://github.com/cloudquery/helm-charts/compare/platform-0.13.5...platform-0.13.6) (2025-03-05)
 
 
