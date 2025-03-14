@@ -47,6 +47,7 @@ spec:
               CREATE DATABASE IF NOT EXISTS tenant_{{ .Values.tenant.id }};
               CREATE USER IF NOT EXISTS tenant_{{ .Values.tenant.id }} IDENTIFIED WITH sha256_password BY '$TENANT_PASSWORD';
               GRANT CURRENT GRANTS ON tenant_{{ .Values.tenant.id }}.* TO tenant_{{ .Values.tenant.id }};
+              GRANT SELECT ON information_schema.* TO tenant_{{ .Values.tenant.id }};
               EOF
 
               echo "Database:"
