@@ -16,7 +16,7 @@ aws:
 
 # Tenant configuration
 tenant:
-  # -- Required: Tenant name (will be used as prefix)
+  # -- Required: Tenant name
   name: "tenant01"  # example tenant name
   # -- Required: Kubernetes namespace for the tenant
   namespace: ""  # example tenant namespace
