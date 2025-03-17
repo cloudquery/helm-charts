@@ -21,7 +21,7 @@ spec:
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
               "StringEquals": {
-                "{{ .Values.aws.oidcProvider }}:sub": "system:serviceaccount:{{ .Values.tenant.namespace }}:default"
+                "{{ .Values.aws.oidcProvider }}:sub": "system:serviceaccount:{{ include "tenant.namespace" . }}:{{ .Values.tenant.name }}"
               }
             }
           }
