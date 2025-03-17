@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Release.Name }}-pg-init
+  namespace: {{ include "tenant.namespace" . }}
   labels:
     {{- include "tenant.labels" . | nindent 4 }}
 spec:

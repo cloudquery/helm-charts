@@ -30,4 +30,8 @@ Selector labels
 {{- define "tenant.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "tenant.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }} 
+{{- end }}
+
+{{- define "tenant.namespace" -}}
+    {{ .Values.tenant.namespace | default .Release.Namespace }}
+{{- end -}}

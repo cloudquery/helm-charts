@@ -1,3 +1,4 @@
+{{- if .Values.tenant.createRole }}
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
@@ -20,7 +21,7 @@ spec:
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
               "StringEquals": {
-                "{{ .Values.aws.oidcProvider }}:sub": "system:serviceaccount:{{ .Values.tenant.namespace }}:{{ .Values.tenant.name }}"
+                "{{ .Values.aws.oidcProvider }}:sub": "system:serviceaccount:{{ .Values.tenant.namespace }}:default"
               }
             }
           }
@@ -41,3 +42,4 @@ spec:
   tags:
     - key: ManagedBy
       value: Kubernetes
+{{- end }}
