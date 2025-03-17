@@ -7,9 +7,19 @@ postgresSecret:
   # -- Required: The secret reference to use for the user-supplied postgres secrets
   secretRef: "postgres-credentials"
 
+# AWS configuration
+aws:
+  # -- Required: AWS OIDC provider URL
+  oidcProvider: ""
+  # -- Required: AWS account ID
+  accountId: ""
+
 # Tenant configuration
 tenant:
+  # -- Required: Tenant name (will be used as prefix)
   name: "tenant01"  # example tenant name
+  # -- Required: Kubernetes namespace for the tenant
+  namespace: "default"
 
 # PostgreSQL initialization job configuration
 postgresJob:

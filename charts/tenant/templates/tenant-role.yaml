@@ -1,0 +1,43 @@
+apiVersion: iam.services.k8s.aws/v1alpha1
+kind: Role
+metadata:
+  name: {{ .Values.tenant.name }}-sync-role
+  labels:
+    {{- include "tenant.labels" . | nindent 4 }}
+spec:
+  name: {{ .Values.tenant.name }}-sync-role
+  maxSessionDuration: 3600
+  description: "IAM role for tenant {{ .Values.tenant.name }}"
+  assumeRolePolicyDocument: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::{{ .Values.aws.accountId }}:oidc-provider/{{ .Values.aws.oidcProvider }}"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "{{ .Values.aws.oidcProvider }}:sub": "system:serviceaccount:{{ .Values.tenant.namespace }}:{{ .Values.tenant.name }}"
+              }
+            }
+          }
+        ]
+      }
+  inlinePolicies:
+    assume-role-policy: |
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Action": "sts:AssumeRole",
+                  "Resource": "arn:aws:iam::*:role/*"
+              }
+          ]
+      }
+  tags:
+    - key: ManagedBy
+      value: Kubernetes
