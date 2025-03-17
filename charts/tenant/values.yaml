@@ -19,7 +19,7 @@ tenant:
   # -- Required: Tenant name (will be used as prefix)
   name: "tenant01"  # example tenant name
   # -- Required: Kubernetes namespace for the tenant
-  namespace: "tenant01"  # example tenant namespace
+  namespace: ""  # example tenant namespace
   # -- Optional: Whether to create RBAC role for the tenant
   createRole: false  # Set to false to skip role creation
 
