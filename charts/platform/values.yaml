@@ -263,3 +263,5 @@ testingSecret:
   activationKey: ""
   postgresqlDSN: ""
   clickhouseDSN: ""
+  rudderstackBackendWriteKey: ""
+  rudderstackFrontendWriteKey: ""

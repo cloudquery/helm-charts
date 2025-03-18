@@ -5,5 +5,7 @@ testingSecret:
   activationKey: ""
   postgresqlDSN: "postgres://postgres:pass@172.17.0.1:5432/postgres?sslmode=disable"
   clickhouseDSN: "clickhouse://user:pass@172.17.0.1:9000/assets"
+  rudderstackBackendWriteKey: "testRudderStackKey"
+  rudderstackFrontendWriteKey: "testRudderStackKey"
 otelCollector:
   database: "assets"

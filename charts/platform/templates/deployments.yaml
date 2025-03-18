@@ -121,12 +121,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
-                  key: rudderstack_backend_write_key
+                  key: rudderstackBackendWriteKey
             - name: NEXT_PUBLIC_RUDDERSTACK_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
-                  key: rudderstack_frontend_write_key
+                  key: rudderstackFrontendWriteKey
             - name: CQAPI_RUDDERSTACK_IGNORE
               value: "false"
             - name: NEXT_PUBLIC_RUDDERSTACK_DATAPLANE_URL
