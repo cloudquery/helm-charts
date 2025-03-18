@@ -117,6 +117,20 @@ spec:
                 secretKeyRef:
                   name: {{ include "platform.secretRef" . }}
                   key: privateKey
+            - name: CQAPI_RUDDERSTACK_WRITE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: rudderstackBackendWriteKey
+            - name: NEXT_PUBLIC_RUDDERSTACK_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: rudderstackFrontendWriteKey
+            - name: CQAPI_RUDDERSTACK_IGNORE
+              value: "false"
+            - name: NEXT_PUBLIC_RUDDERSTACK_DATAPLANE_URL
+              value: "https://analytics-events.cloudquery.io"
           ports:
             - name: proxy
               containerPort: {{ .Values.service.targetPort }}
