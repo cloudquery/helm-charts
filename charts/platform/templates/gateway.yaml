@@ -1,0 +1,63 @@
+{{- if .Values.gateway.enabled -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: {{ include "platform.fullName" . }}
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+  {{- with .Values.gateway.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.gateway.className }}
+  gatewayClassName: {{ . }}
+  {{- end }}
+  listeners:
+    - name: {{ include "platform.fullName" . }}-80
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+      routes:
+        - kind: HTTPRoute
+          name: platform-http
+    - name: {{ include "platform.fullName" . }}-8123
+      protocol: HTTP
+      port: 8123
+      allowedRoutes:
+        namespaces:
+          from: Same
+      routes:
+        - kind: HTTPRoute
+          name: platform-ch-http-proxy
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "platform.fullName" . }}-http
+spec:
+  parentRefs:
+  - name: platform
+    sectionName: platform-80
+    port: 80
+  rules:
+  - backendRefs:
+    - name: platform
+      port: 3000
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "platform.fullName" . }}-ch-http-proxy
+spec:
+  parentRefs:
+  - name: platform
+    sectionName: platform-8123
+    port: 8123
+  rules:
+  - backendRefs:
+    - name: platform
+      port: 8123
+{{- end }}

@@ -50,6 +50,8 @@ service:
   type: ClusterIP
   port: 3000
   targetPort: 3000
+  clickhouseProxyPort: 8123
+  clickhouseProxyTargetPort: 8123
   annotations: {}
 
 # -- Specify the scheduler configuration
@@ -194,6 +196,13 @@ ingress:
   #  - secretName: local-cloudquery-io-tls
   #    hosts:
   #      - local.cloudquery.io
+  #
+# This block is for setting up the gateway
+gateway:
+  # -- Optional. Enable gateway.
+  enabled: false
+  annotations: {}
+  className: "something-else"
 
 debug:
   # -- Optional. Enable debug mode.

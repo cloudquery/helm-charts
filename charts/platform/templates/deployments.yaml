@@ -144,6 +144,9 @@ spec:
             - name: storage
               containerPort: 4445
               protocol: TCP
+            - name: ch-http-proxy
+              containerPort: 8123
+              protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
