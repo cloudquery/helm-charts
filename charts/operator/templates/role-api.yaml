@@ -50,6 +50,7 @@ rules:
   - scheduling.cloudquery.io
   resources:
   - connectiontests
+  - migrations
   - syncs
   verbs:
   - create
@@ -63,6 +64,7 @@ rules:
   - scheduling.cloudquery.io
   resources:
   - connectiontests/status
+  - migrations/status
   - syncs/status
   verbs:
   - get
