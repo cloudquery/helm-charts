@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/cloudquery/helm-charts/compare/platform-0.14.0...platform-0.15.0) (2025-03-21)
+
+
+### Features
+
+* Adding S3 CSI ([#730](https://github.com/cloudquery/helm-charts/issues/730)) ([b32f8ce](https://github.com/cloudquery/helm-charts/commit/b32f8cea53b48a0b89073f7e4ecba643eff86f77))
+
 ## [0.14.0](https://github.com/cloudquery/helm-charts/compare/platform-0.13.6...platform-0.14.0) (2025-03-18)
 
 
