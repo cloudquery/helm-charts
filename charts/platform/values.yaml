@@ -98,8 +98,8 @@ persistence:
     region: "us-east-1"
     # S3-specific settings
     mountOptions:
-      - "uid=1000"
-      - "gid=1000"
+      - "uid=10001"
+      - "gid=3001"
 
 # -- Additional volumes on the output Deployment definition.
 volumes:

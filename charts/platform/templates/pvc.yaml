@@ -32,5 +32,5 @@ spec:
   resources:
     requests:
       storage: 1200Gi # Ignored, required
-  volumeName: s3-pv # Name of your PV
+  volumeName: {{ include "platform.fullName" . }}-s3-pv # Name of your PV
 {{- end }}
