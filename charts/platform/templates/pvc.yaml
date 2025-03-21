@@ -1,4 +1,4 @@
-{{- if .Values.persistence.enabled }}
+{{- if and .Values.persistence.enabled (eq (.Values.persistence.mode | default "EBS") "EBS") }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -20,10 +20,11 @@ spec:
       storage: {{ .Values.persistence.size }}
 {{- end }}
 ---
+{{- if and .Values.persistence.enabled (eq (.Values.persistence.mode | default "EBS") "S3") }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: s3-pvc
+  name: {{ include "platform.fullName" . }}-s3-pvc
 spec:
   accessModes:
     - ReadWriteMany # Supported options: ReadWriteMany / ReadOnlyMany
@@ -32,3 +33,4 @@ spec:
     requests:
       storage: 1200Gi # Ignored, required
   volumeName: s3-pv # Name of your PV
+{{- end }}

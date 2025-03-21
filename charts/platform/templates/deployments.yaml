@@ -156,19 +156,18 @@ spec:
           {{- end }}
             - name: storage
               mountPath: /data/storage
-            - name: s3-storage
-              mountPath: /data/s3storage
       volumes:
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        - name: s3-storage
-          persistentVolumeClaim:
-              claimName: s3-pvc
         - name: storage
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
+            {{- if eq (.Values.persistence.mode | default "EBS") "EBS" }}
             claimName: {{ include "platform.fullName" . }}-pvc
+            {{- else if eq (.Values.persistence.mode | default "EBS") "S3" }}
+            claimName: {{ include "platform.fullName" . }}-s3-pvc
+            {{- end }}
           {{- else }}
           emptyDir: {}
           {{- end }}
