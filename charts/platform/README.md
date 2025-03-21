@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -67,6 +67,11 @@ Kubernetes: `^1.8.0-0`
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.annotations | object | `{}` |  |
 | persistence.enabled | bool | `false` |  |
+| persistence.mode | string | `"EBS"` |  |
+| persistence.s3.bucketName | string | `"my-application-data"` |  |
+| persistence.s3.mountOptions[0] | string | `"uid=10001"` |  |
+| persistence.s3.mountOptions[1] | string | `"gid=3001"` |  |
+| persistence.s3.region | string | `"us-east-1"` |  |
 | persistence.size | string | `"100Gi"` |  |
 | persistence.type | string | `"gp2"` |  |
 | platformSecrets | object | `{"secretRef":"cq-platform-secrets"}` | Platform secrets configuration |
