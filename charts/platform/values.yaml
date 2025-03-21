@@ -79,11 +79,27 @@ readinessProbe:
 
 persistence:
   enabled: false
+
+  # Keep existing fields at the top level for backward compatibility
+  # These will be used for EBS storage (default)
   type: "gp2"
   accessModes:
     - ReadWriteOnce
   size: 100Gi
   annotations: {}
+
+  # New field to select storage type one of EBS or S3
+  # When not specified, defaults to "EBS" for backward compatibility
+  mode: "EBS"
+
+  # New S3 specific configuration section
+  s3:
+    bucketName: "my-application-data"
+    region: "us-east-1"
+    # S3-specific settings
+    mountOptions:
+      - "uid=10001"
+      - "gid=3001"
 
 # -- Additional volumes on the output Deployment definition.
 volumes:
