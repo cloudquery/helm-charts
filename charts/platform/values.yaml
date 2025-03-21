@@ -88,7 +88,7 @@ persistence:
   size: 100Gi
   annotations: {}
 
-  # New field to select storage type
+  # New field to select storage type one of EBS or S3
   # When not specified, defaults to "EBS" for backward compatibility
   mode: "EBS"
 
