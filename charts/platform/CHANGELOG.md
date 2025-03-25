@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.4](https://github.com/cloudquery/helm-charts/compare/platform-0.16.3...platform-0.16.4) (2025-03-25)
+
+
+### Bug Fixes
+
+* Switch to using queue URL instead ([#743](https://github.com/cloudquery/helm-charts/issues/743)) ([61d5b07](https://github.com/cloudquery/helm-charts/commit/61d5b07b96692f60e67a6e4f91cf95ddf0ba7f36))
+
 ## [0.16.3](https://github.com/cloudquery/helm-charts/compare/platform-0.16.2...platform-0.16.3) (2025-03-25)
 
 
