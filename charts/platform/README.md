@@ -2,7 +2,7 @@
 
 Helm chart for installing the CloudQuery self-hosted platform
 
-![Version: 0.16.3](https://img.shields.io/badge/Version-0.16.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
+![Version: 0.16.4](https://img.shields.io/badge/Version-0.16.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.0](https://img.shields.io/badge/AppVersion-1.1.0-informational?style=flat-square)
 
 ## Quickstart
 
@@ -85,7 +85,7 @@ Kubernetes: `^1.8.0-0`
 | readinessProbe.periodSeconds | int | `30` |  |
 | replicaCount | int | `1` | The number of replicas to deploy |
 | resources | object | `{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"500m","memory":"512Mi"}}` | Deployment resources |
-| s3Source | object | `{"bucketName":"","bucketRegion":"","enabled":false,"externalId":"","iamRole":"","queueAccountId":"","queueName":""}` | Specify the S3 source configuration |
+| s3Source | object | `{"bucketName":"","bucketRegion":"","enabled":false,"externalId":"","iamRole":"","queueUrl":""}` | Specify the S3 source configuration |
 | scheduler | object | `{"address":"scheduler-operator:3001"}` | Specify the scheduler configuration |
 | service | object | `{"annotations":{},"port":3000,"targetPort":3000,"type":"ClusterIP"}` | Specify the ports the container exposes |
 | serviceAccount.annotations | object | `{}` |  |
