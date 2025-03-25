@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.5](https://github.com/cloudquery/helm-charts/compare/platform-0.16.4...platform-0.16.5) (2025-03-25)
+
+
+### Bug Fixes
+
+* Manual update to `1.2.0` cloudquery container ([#745](https://github.com/cloudquery/helm-charts/issues/745)) ([ccf46aa](https://github.com/cloudquery/helm-charts/commit/ccf46aaef619358053196368da624a25dfdafc59))
+
 ## [0.16.4](https://github.com/cloudquery/helm-charts/compare/platform-0.16.3...platform-0.16.4) (2025-03-25)
 
 
