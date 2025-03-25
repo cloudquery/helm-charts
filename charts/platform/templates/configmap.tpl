@@ -20,12 +20,12 @@ data:
   CQAPI_MANAGEDSYNC_OTEL_COLLECTOR_URL: "opentelemetry-collector.{{ .Release.Namespace }}.svc.cluster.local:4318"
   {{- end }}
   {{- if .Values.s3Source.enabled }}
-  CQAPI_ENABLE_S3_SOURCE=true
-  CQAPI_S3_SOURCE_IAM_ROLE={{ .Values.s3Source.iamRole }}
-  CQAPI_S3_SOURCE_QUEUE_NAME={{ .Values.s3Source.queueName }}
-  CQAPI_S3_SOURCE_QUEUE_ACCOUNT_ID={{ .Values.s3Source.queueAccountId }}
-  CQAPI_S3_SOURCE_BUCKET_NAME={{ .Values.s3Source.bucketName }}
-  CQAPI_S3_SOURCE_BUCKET_REGION={{ .Values.s3Source.bucketRegion }}
+  CQAPI_ENABLE_S3_SOURCE: true
+  CQAPI_S3_SOURCE_IAM_ROLE: {{ .Values.s3Source.iamRole }}
+  CQAPI_S3_SOURCE_QUEUE_NAME: {{ .Values.s3Source.queueName }}
+  CQAPI_S3_SOURCE_QUEUE_ACCOUNT_ID: {{ .Values.s3Source.queueAccountId }}
+  CQAPI_S3_SOURCE_BUCKET_NAME: {{ .Values.s3Source.bucketName }}
+  CQAPI_S3_SOURCE_BUCKET_REGION: {{ .Values.s3Source.bucketRegion }}
   {{- end }}
 ---
 {{- if .Values.otelCollector.enabled }}
