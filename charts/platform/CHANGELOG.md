@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.2](https://github.com/cloudquery/helm-charts/compare/platform-0.16.1...platform-0.16.2) (2025-03-25)
+
+
+### Bug Fixes
+
+* Force helm value to string ([#739](https://github.com/cloudquery/helm-charts/issues/739)) ([90438b4](https://github.com/cloudquery/helm-charts/commit/90438b4185a02f1a4ec999a80ec1185cebf4477d))
+
 ## [0.16.1](https://github.com/cloudquery/helm-charts/compare/platform-0.16.0...platform-0.16.1) (2025-03-25)
 
 
