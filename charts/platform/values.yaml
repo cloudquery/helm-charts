@@ -60,6 +60,7 @@ scheduler:
 s3Source:
   enabled: false
   iamRole: ""
+  externalId: ""
   queueName: ""
   queueAccountId: ""
   bucketName: ""

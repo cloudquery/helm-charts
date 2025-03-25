@@ -22,6 +22,7 @@ data:
   {{- if .Values.s3Source.enabled }}
   CQAPI_ENABLE_S3_SOURCE: "true"
   CQAPI_S3_SOURCE_IAM_ROLE: {{ .Values.s3Source.iamRole }}
+  CQAPI_S3_SOURCE_EXTERNAL_ID: {{ .Values.s3Source.externalId }}
   CQAPI_S3_SOURCE_QUEUE_NAME: {{ .Values.s3Source.queueName }}
   CQAPI_S3_SOURCE_QUEUE_ACCOUNT_ID: {{ .Values.s3Source.queueAccountId | toString | quote }}
   CQAPI_S3_SOURCE_BUCKET_NAME: {{ .Values.s3Source.bucketName }}
