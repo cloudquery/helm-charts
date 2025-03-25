@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.3](https://github.com/cloudquery/helm-charts/compare/platform-0.16.2...platform-0.16.3) (2025-03-25)
+
+
+### Bug Fixes
+
+* Adding external ID ([#741](https://github.com/cloudquery/helm-charts/issues/741)) ([c9ec1ec](https://github.com/cloudquery/helm-charts/commit/c9ec1ecb2e017d01d6375504a0c26cf91ea0dac0))
+
 ## [0.16.2](https://github.com/cloudquery/helm-charts/compare/platform-0.16.1...platform-0.16.2) (2025-03-25)
 
 
