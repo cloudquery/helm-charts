@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.16.0](https://github.com/cloudquery/helm-charts/compare/platform-0.15.0...platform-0.16.0) (2025-03-25)
+
+
+### Features
+
+* Adding S3 source environment variables ([#735](https://github.com/cloudquery/helm-charts/issues/735)) ([d41dcb3](https://github.com/cloudquery/helm-charts/commit/d41dcb3671804b7c483a4af53819b3101da38215))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloud to v1.1.0 ([#732](https://github.com/cloudquery/helm-charts/issues/732)) ([5e9ac36](https://github.com/cloudquery/helm-charts/commit/5e9ac36a9798646a0a5672da21df8537d2a8ae21))
+* Set configmap variables correctly ([#736](https://github.com/cloudquery/helm-charts/issues/736)) ([d50e1bf](https://github.com/cloudquery/helm-charts/commit/d50e1bff831bb4ae33c0957ba2ac8c0b9acf2f7e))
+
 ## [0.15.0](https://github.com/cloudquery/helm-charts/compare/platform-0.14.0...platform-0.15.0) (2025-03-21)
 
 
