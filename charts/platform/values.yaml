@@ -61,8 +61,7 @@ s3Source:
   enabled: false
   iamRole: ""
   externalId: ""
-  queueName: ""
-  queueAccountId: ""
+  queueUrl: ""
   bucketName: ""
   bucketRegion: ""
 
