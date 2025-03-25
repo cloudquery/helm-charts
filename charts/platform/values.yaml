@@ -56,6 +56,16 @@ service:
 scheduler:
   address: scheduler-operator:3001
 
+# -- Specify the S3 source configuration
+s3Source:
+  enabled: false
+  iamRole: ""
+  queueName: ""
+  queueAccountId: ""
+  bucketName: ""
+  bucketRegion: ""
+
+
 # -- Deployment resources
 resources:
   requests:
