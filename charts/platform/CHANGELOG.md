@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/cloudquery/helm-charts/compare/platform-0.16.0...platform-0.16.1) (2025-03-25)
+
+
+### Bug Fixes
+
+* Change to string instead of boolean ([#737](https://github.com/cloudquery/helm-charts/issues/737)) ([1c569c6](https://github.com/cloudquery/helm-charts/commit/1c569c648f2ced5c291bb531df3face5e8ff5577))
+
 ## [0.16.0](https://github.com/cloudquery/helm-charts/compare/platform-0.15.0...platform-0.16.0) (2025-03-25)
 
 
