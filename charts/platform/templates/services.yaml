@@ -12,9 +12,13 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: proxy
+      targetPort: {{ .Values.service.targetPort}}
       protocol: TCP
       name: proxy
+    - port: {{ .Values.service.clickhouseProxyPort}}
+      targetPort: {{ .Values.service.clickhouseProxyTargetPort}}
+      protocol: TCP
+      name: ch-http-proxy
   selector:
     {{- include "platform.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: application
