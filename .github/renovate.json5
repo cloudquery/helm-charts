@@ -13,8 +13,7 @@
       ],
       depNameTemplate: 'cloudquery/cloudquery',
       datasourceTemplate: 'github-releases',
-      versioningTemplate: 'loose',
-      extractVersionTemplate: '^cli-v(?<version>.+)\\.\\d$',
+      extractVersionTemplate: '^cli-v(?<version>.+)$',
     },
     {
       customType: 'regex',
@@ -26,7 +25,6 @@
       ],
       depNameTemplate: 'cloudquery/cloud',
       datasourceTemplate: 'github-releases',
-      versioningTemplate: 'loose',
       extractVersionTemplate: '^v(?<version>.+)$',
     },
     {
@@ -39,7 +37,6 @@
       ],
       depNameTemplate: 'cloudquery/cloud',
       datasourceTemplate: 'github-releases',
-      versioningTemplate: 'loose',
       extractVersionTemplate: '^v(?<version>.+)$',
     },
   ],
