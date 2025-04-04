@@ -131,6 +131,16 @@ spec:
               value: "false"
             - name: NEXT_PUBLIC_RUDDERSTACK_DATAPLANE_URL
               value: "https://analytics-events.cloudquery.io"
+            - name: CQAPI_LOCAL_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: adminEmail
+            - name: CQAPI_LOCAL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform.secretRef" . }}
+                  key: adminPassword
           ports:
             - name: proxy
               containerPort: {{ .Values.service.targetPort }}
