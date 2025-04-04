@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/cloudquery/helm-charts/compare/platform-0.16.7...platform-0.17.0) (2025-04-04)
+
+
+### Features
+
+* Adds user and password support. ([#763](https://github.com/cloudquery/helm-charts/issues/763)) ([67486e8](https://github.com/cloudquery/helm-charts/commit/67486e808dff0196c3adab1ca57ca9880998adc6))
+
 ## [0.16.7](https://github.com/cloudquery/helm-charts/compare/platform-0.16.6...platform-0.16.7) (2025-04-01)
 
 
