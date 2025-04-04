@@ -7,5 +7,7 @@ testingSecret:
   clickhouseDSN: "clickhouse://user:pass@172.17.0.1:9000/assets"
   rudderstackBackendWriteKey: "testRudderStackKey"
   rudderstackFrontendWriteKey: "testRudderStackKey"
+  adminEmail: "admin@localhost"
+  adminPassword: "pass"
 otelCollector:
   database: "assets"
