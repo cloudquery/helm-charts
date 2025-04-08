@@ -9,9 +9,6 @@ keywords:
   - cloudquery
 sources:
   - https://github.com/cloudquery/helm-charts/tree/main/charts/platform
-maintainers:
-  - name: yevgenypats
-    email: yp@cloudquery.io
 version: 0.17.2
 appVersion: 1.5.0
 deprecated: true
