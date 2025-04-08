@@ -9,7 +9,7 @@ keywords:
   - cloudquery
 sources:
   - https://github.com/cloudquery/helm-charts/tree/main/charts/platform
-version: 0.17.2
+version: 0.17.3
 appVersion: 1.5.0
 deprecated: true
 annotations:
