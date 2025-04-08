@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.6](https://github.com/cloudquery/helm-charts/compare/operator-0.10.5...operator-0.10.6) (2025-04-08)
+
+
+### Bug Fixes
+
+* Deprecate the `platform` and `operator` helm charts ([#770](https://github.com/cloudquery/helm-charts/issues/770)) ([d6af0fb](https://github.com/cloudquery/helm-charts/commit/d6af0fb202aa65ecda6891200e374f911ce02527))
+
 ## [0.10.5](https://github.com/cloudquery/helm-charts/compare/operator-0.10.4...operator-0.10.5) (2025-04-07)
 
 
