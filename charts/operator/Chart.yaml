@@ -12,6 +12,7 @@ maintainers:
 type: application
 version: 0.10.5
 appVersion: 1.5.0
+deprecated: true
 annotations:
   artifacthub.io/license: MPL-2.0
   artifacthub.io/links: |
