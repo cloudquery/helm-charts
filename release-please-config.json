@@ -9,14 +9,8 @@
     }
   ],
   "packages": {
-    "charts/platform": {
-      "component": "platform"
-    },
     "charts/cloudquery": {
       "component": "cloudquery"
-    },
-    "charts/operator": {
-      "component": "operator"
     }
   },
   "separate-pull-requests": true,
