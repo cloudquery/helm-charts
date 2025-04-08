@@ -15,30 +15,6 @@
       datasourceTemplate: 'github-releases',
       extractVersionTemplate: '^cli-v(?<version>.+)$',
     },
-    {
-      customType: 'regex',
-      fileMatch: [
-        '^charts/platform/Chart.yaml$',
-      ],
-      matchStrings: [
-        'appVersion: (?<currentValue>.*)',
-      ],
-      depNameTemplate: 'cloudquery/cloud',
-      datasourceTemplate: 'github-releases',
-      extractVersionTemplate: '^v(?<version>.+)$',
-    },
-    {
-      customType: 'regex',
-      fileMatch: [
-        '^charts/operator/Chart.yaml$',
-      ],
-      matchStrings: [
-        'appVersion: (?<currentValue>.*)',
-      ],
-      depNameTemplate: 'cloudquery/cloud',
-      datasourceTemplate: 'github-releases',
-      extractVersionTemplate: '^v(?<version>.+)$',
-    },
   ],
   packageRules: [
     {
@@ -62,49 +38,8 @@
       },
     },
     {
-      matchManagers: [
-        'helm-values',
-        'helmv3',
-      ],
       matchSourceUrls: [
-        'https://github.com/cloudquery/cloud',
-      ],
-      postUpgradeTasks: {
-        commands: [
-          "sed -i \"s/^version.*/version: $(grep '^version' charts/platform/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/platform/Chart.yaml",
-          'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
-        ],
-        fileFilters: [
-          'charts/platform/Chart.yaml',
-          'charts/platform/README.md',
-        ],
-        executionMode: 'update',
-      },
-    },
-    {
-      matchManagers: [
-        'helm-values',
-        'helmv3',
-      ],
-      matchSourceUrls: [
-        'https://github.com/cloudquery/cloud',
-      ],
-      postUpgradeTasks: {
-        commands: [
-          "sed -i \"s/^version.*/version: $(grep '^version' charts/operator/Chart.yaml | cut -d\" \" -f2 | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')/g\" charts/operator/Chart.yaml",
-          'docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0',
-        ],
-        fileFilters: [
-          'charts/operator/Chart.yaml',
-          'charts/operator/README.md',
-        ],
-        executionMode: 'update',
-      },
-    },
-    {
-      matchSourceUrls: [
-        'https://github.com/cloudquery/cloudquery',
-        'https://github.com/cloudquery/cloud',
+        'https://github.com/cloudquery/cloudquery'
       ],
       commitMessagePrefix: 'fix(deps): ',
     },
