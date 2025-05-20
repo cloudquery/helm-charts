@@ -8,6 +8,7 @@ metadata:
   {{- include "cloudquery.annotations" . }}
 spec:
   backoffLimit: 0
+  ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished | default 259200 }}
   template:
     metadata:
       labels:
