@@ -82,6 +82,8 @@ cronJobFailedJobsLimit: 1
 job:
   # -- Create a job that runs once upon installation.
   enabled: false
+  # -- (int) How long to retain the job after it has finished. Default is 259200 seconds (3 days).
+  ttlSecondsAfterFinished: 259200
 
 # -- CloudQuery cloudquery.yml content
 # @default -- The chart will use a default CloudQuery aws config
