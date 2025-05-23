@@ -20,6 +20,7 @@ spec:
         {{- include "cloudquery.labels" . | nindent 8 }}
     spec:
       backoffLimit: 0
+      ttlSecondsAfterFinished: {{ .Values.cronJobTTLSecondsAfterFinished | default 259200 }}
       template:
         metadata:
           labels:
