@@ -1,5 +1,20 @@
 # Changelog
 
+## [38.1.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.0.3...cloudquery-38.1.0) (2025-05-23)
+
+
+### Features
+
+* Add ttlSecondsAfterFinished configuration to chart ([#788](https://github.com/cloudquery/helm-charts/issues/788)) ([6e6077c](https://github.com/cloudquery/helm-charts/commit/6e6077c643e3e30f1fcedabb855e4294f40f9944))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloudquery to v6.19.2 ([#785](https://github.com/cloudquery/helm-charts/issues/785)) ([58176d8](https://github.com/cloudquery/helm-charts/commit/58176d8216f7462c5bac36c6739ce4202591bb5e))
+* **deps:** Update dependency cloudquery/cloudquery to v6.20.0 ([#787](https://github.com/cloudquery/helm-charts/issues/787)) ([04ea08f](https://github.com/cloudquery/helm-charts/commit/04ea08f44918aa2f1290e1675839eec257341510))
+* **deps:** Update dependency cloudquery/cloudquery to v6.20.1 ([#789](https://github.com/cloudquery/helm-charts/issues/789)) ([80cb71a](https://github.com/cloudquery/helm-charts/commit/80cb71a6d592cbbe4c63ea0580f2b8b04d8cba9d))
+* **deps:** Update dependency cloudquery/cloudquery to v6.20.2 ([#790](https://github.com/cloudquery/helm-charts/issues/790)) ([f146fee](https://github.com/cloudquery/helm-charts/commit/f146fee1692f45366495d14c95640738891c526b))
+
 ## [38.0.3](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.0.2...cloudquery-38.0.3) (2025-05-08)
 
 
