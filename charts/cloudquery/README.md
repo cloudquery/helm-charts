@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 38.0.3](https://img.shields.io/badge/Version-38.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.19.1](https://img.shields.io/badge/AppVersion-6.19.1-informational?style=flat-square)
+![Version: 38.1.0](https://img.shields.io/badge/Version-38.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.20.2](https://img.shields.io/badge/AppVersion-6.20.2-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -46,6 +46,7 @@ Kubernetes: `^1.8.0-0`
 | image.repository | string | `"cloudquery/cloudquery"` |  |
 | image.tag | string | `nil` | Overrides the image tag whose default is the chart appVersion |
 | job.enabled | bool | `false` | Create a job that runs once upon installation. |
+| job.ttlSecondsAfterFinished | int | `259200` | How long to retain the job after it has finished. Default is 259200 seconds (3 days). |
 | labels | object | `{}` | Optional. Additional labels to be applied to all resources. |
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |
