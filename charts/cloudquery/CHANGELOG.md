@@ -1,5 +1,12 @@
 # Changelog
 
+## [38.2.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.1.0...cloudquery-38.2.0) (2025-05-23)
+
+
+### Features
+
+* Add ttlSecondsAfterFinished to cron as well ([#791](https://github.com/cloudquery/helm-charts/issues/791)) ([1601000](https://github.com/cloudquery/helm-charts/commit/16010000fe06f9c23ed23074b10481082e57f3d5))
+
 ## [38.1.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.0.3...cloudquery-38.1.0) (2025-05-23)
 
 

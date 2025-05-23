@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 38.1.0](https://img.shields.io/badge/Version-38.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.20.2](https://img.shields.io/badge/AppVersion-6.20.2-informational?style=flat-square)
+![Version: 38.2.0](https://img.shields.io/badge/Version-38.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.20.2](https://img.shields.io/badge/AppVersion-6.20.2-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -38,6 +38,7 @@ Kubernetes: `^1.8.0-0`
 | cronJobPodAnnotations | object | `{}` | Optional. CronJob Pod annotations. |
 | cronJobPodLabels | object | `{}` | Optional. CronJob Pod labels. |
 | cronJobSuspend | bool | `false` | Optional. Disable the execution of the Cronjob |
+| cronJobTTLSecondsAfterFinished | int | `259200` | How long to retain the job created by cron after it has finished. Default is 259200 seconds (3 days). |
 | deploymentAnnotations | object | `{}` | Optional. Admin Deployment annotations. |
 | envRenderSecret | object | `{}` | Sensible environment variables that will be rendered as new secret object This can be useful for auth tokens, etc Make sure not to commit sensitive values to git!! Better use AWS Secret manager (or any other) |
 | fullnameOverride | string | `""` |  |
