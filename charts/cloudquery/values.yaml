@@ -78,6 +78,8 @@ schedule: "0 */6 * * *"
 cronJobLimit: 3
 # -- (int) Number of failed cronjobs to retain.
 cronJobFailedJobsLimit: 1
+# -- (int) How long to retain the job created by cron after it has finished. Default is 259200 seconds (3 days).
+cronJobTTLSecondsAfterFinished: 259200
 
 job:
   # -- Create a job that runs once upon installation.
