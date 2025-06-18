@@ -36,6 +36,19 @@ serviceAccount:
   # -- Additional custom label for the ServiceAccount
   labels: {}
 
+# -- RBAC configuration
+rbac:
+  # -- Create the ClusterRole and ClusterRoleBinding
+  create: false
+  # -- Name of the ClusterRole and ClusterRoleBinding
+  name: cloudquery-read-only
+  # -- API version of the ClusterRoleBinding
+  apiVersion: v1
+  # -- Additional labels to be applied to the ClusterRole and ClusterRoleBinding
+  labels: {}
+  # -- Additional annotations to be applied to the ClusterRole and ClusterRoleBinding
+  annotations: {}
+
 admin:
   # -- Enable admin container
   # useful for debugging into cloudquery
@@ -111,7 +124,6 @@ volumes:
 
 # Optional. Additional volumes to mount in the pod.
 volumeMounts:
-
 
 resources:
   # -- Optional. Resource requests/ limit for admin pod.
