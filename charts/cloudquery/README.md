@@ -22,7 +22,7 @@ Kubernetes: `^1.8.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| <https://grafana.github.io/helm-charts> | promtail | 6.16.6 |
+| https://grafana.github.io/helm-charts | promtail | 6.16.6 |
 
 ## Values
 
@@ -32,7 +32,7 @@ Kubernetes: `^1.8.0-0`
 | annotations | object | `{}` | Optional. Additional annotations to be applied to all resources. |
 | config | string | The chart will use a default CloudQuery aws config | CloudQuery cloudquery.yml content |
 | containerSecurityContext | object | See [values.yaml](./values.yaml) | Container security context |
-| cronJobAdditionalArgs | list | `[]` | Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format) More information at: <https://www.cloudquery.io/docs/reference/cli/cloudquery> |
+| cronJobAdditionalArgs | list | `[]` | Optional. Additional CLI arguments to pass to the scheduled sync job (e.g. setting log format) More information at: https://www.cloudquery.io/docs/reference/cli/cloudquery |
 | cronJobFailedJobsLimit | int | `1` | Number of failed cronjobs to retain. |
 | cronJobLimit | int | `3` | Number of successful cronjobs to retain. |
 | cronJobPodAnnotations | object | `{}` | Optional. CronJob Pod annotations. |
@@ -60,15 +60,15 @@ Kubernetes: `^1.8.0-0`
 | rbac.name | string | `"cloudquery-read-only"` | Name of the ClusterRole and ClusterRoleBinding |
 | resources.admin | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for admin pod. |
 | resources.cronJob | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for cronJob. |
-| schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: <https://crontab.guru/#0_0>_*_*_* |
+| schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
 | secretRef | string | `nil` | Reference to an external secret that contains sensible environment variables This option is useful to avoid store sensitive values in Git. You need to create the secret manually and reference it. If secretRef is used, the envRenderSecret parameter will be omitted (in case that it has content). |
 | securityContext | object | `{"fsGroup":1001}` | Pod security context |
-| serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: <https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html> eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
+| serviceAccount.annotations | object | `{}` | Additional custom annotations for the ServiceAccount to associate an AWS IAM role with service-account you need to add the following annotations. For more info checkout: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ROLE |
 | serviceAccount.autoMount | bool | `false` | Auto-mount the service account token in the pod |
 | serviceAccount.enabled | bool | `false` | Enable service account (Note: Service Account will only be automatically created if `serviceAccount.name` is not set) |
 | serviceAccount.labels | object | `{}` | Additional custom label for the ServiceAccount |
 | serviceAccount.name | string | `""` | Name of an already existing service account. Setting this value disables the automatic service account creation |
-| tplConfig | bool | `false` | Pass the configuration directives and envRenderSecret through Helm's templating engine. # ref: <https://helm.sh/docs/developing_charts/#using-the-tpl-function> |
+| tplConfig | bool | `false` | Pass the configuration directives and envRenderSecret through Helm's templating engine. # ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function |
 | volumeMounts | string | `nil` |  |
 | volumes | string | `nil` |  |
 
