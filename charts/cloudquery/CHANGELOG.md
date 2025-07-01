@@ -1,5 +1,12 @@
 # Changelog
 
+## [38.2.2](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.2.1...cloudquery-38.2.2) (2025-07-01)
+
+
+### Bug Fixes
+
+* **deps:** Update Helm release promtail to v6.17.0 ([#800](https://github.com/cloudquery/helm-charts/issues/800)) ([25fcc2a](https://github.com/cloudquery/helm-charts/commit/25fcc2a9fc3f36b1bd85cdb5028758de399646bd))
+
 ## [38.2.1](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.2.0...cloudquery-38.2.1) (2025-06-23)
 
 
