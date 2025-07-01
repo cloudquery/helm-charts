@@ -1,6 +1,6 @@
 # cloudquery
 
-![Version: 38.2.1](https://img.shields.io/badge/Version-38.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.21.0](https://img.shields.io/badge/AppVersion-6.21.0-informational?style=flat-square)
+![Version: 38.2.2](https://img.shields.io/badge/Version-38.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.21.0](https://img.shields.io/badge/AppVersion-6.21.0-informational?style=flat-square)
 
 Open source high performance data integration platform designed for security and infrastructure teams.
 
@@ -22,7 +22,7 @@ Kubernetes: `^1.8.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://grafana.github.io/helm-charts | promtail | 6.16.6 |
+| https://grafana.github.io/helm-charts | promtail | 6.17.0 |
 
 ## Values
 
