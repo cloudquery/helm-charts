@@ -52,6 +52,12 @@ Kubernetes: `^1.8.0-0`
 | nameOverride | string | `""` | Partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Optional. Adds the nodeSelector to the admin pod and cronjob. |
 | promtail | object | See [values.yaml](./values.yaml) | Promtail sub-chart configuration |
+| rbac | object | `{"annotations":{},"apiVersion":"v1","create":false,"labels":{},"name":"cloudquery-read-only"}` | RBAC configuration |
+| rbac.annotations | object | `{}` | Additional annotations to be applied to the ClusterRole and ClusterRoleBinding |
+| rbac.apiVersion | string | `"v1"` | API version of the ClusterRoleBinding |
+| rbac.create | bool | `false` | Create the ClusterRole and ClusterRoleBinding |
+| rbac.labels | object | `{}` | Additional labels to be applied to the ClusterRole and ClusterRoleBinding |
+| rbac.name | string | `"cloudquery-read-only"` | Name of the ClusterRole and ClusterRoleBinding |
 | resources.admin | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for admin pod. |
 | resources.cronJob | object | `{"requests":{"cpu":"1000m","memory":"1024Mi"}}` | Optional. Resource requests/ limit for cronJob. |
 | schedule | string | `"0 */6 * * *"` | Schedule fetch time Every 6 hours. More information at: https://crontab.guru/#0_0_*_*_* |
