@@ -1,5 +1,18 @@
 # Changelog
 
+## [38.3.0](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.2.5...cloudquery-38.3.0) (2025-08-27)
+
+
+### Features
+
+* Add support for rbac resources ([#797](https://github.com/cloudquery/helm-charts/issues/797)) ([24bce19](https://github.com/cloudquery/helm-charts/commit/24bce19110e254096240baf0d453293af6d3a31c))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloudquery to v6.26.3 ([#818](https://github.com/cloudquery/helm-charts/issues/818)) ([140b00b](https://github.com/cloudquery/helm-charts/commit/140b00bec116e2ac448797df995a40444250ce35))
+* **deps:** Update dependency cloudquery/cloudquery to v6.27.0 ([#820](https://github.com/cloudquery/helm-charts/issues/820)) ([966d214](https://github.com/cloudquery/helm-charts/commit/966d2143bd5474693ae6099d47919140a293a7e2))
+
 ## [38.2.5](https://github.com/cloudquery/helm-charts/compare/cloudquery-38.2.4...cloudquery-38.2.5) (2025-08-01)
 
 
