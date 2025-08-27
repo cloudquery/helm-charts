@@ -77,6 +77,17 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the cluster role to use
+*/}}
+{{- define "cloudquery.clusterRoleName" -}}
+{{- if .Values.rbac.create }}
+{{- default (include "cloudquery.fullname" .) .Values.rbac.name }}
+{{- else }}
+{{- default "default" .Values.rbac.name }}
+{{- end }}
+{{- end }}
+
+{{/*
 Return the image to use depending on the AppVersion and image tag defined
 */}}
 {{- define "cloudquery.image" -}}
