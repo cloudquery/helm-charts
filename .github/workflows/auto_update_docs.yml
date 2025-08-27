@@ -27,7 +27,7 @@ jobs:
             const lastPartOfBranch = context.ref.split('-').pop();
             return lastPartOfBranch;
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           file_pattern: charts/${{ steps.component.outputs.result }}/README.md
           commit_message: "chore: Update docs"
