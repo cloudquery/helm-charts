@@ -5,6 +5,9 @@ on:
     branches:
       - release-please-*
 
+permissions:
+  contents: read
+
 jobs:
   docs:
     runs-on: ubuntu-latest
