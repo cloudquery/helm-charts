@@ -24,10 +24,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: 3.13.7
+          python-version: 3.14.0
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.7.0
+        uses: helm/chart-testing-action@v2.8.0
 
       - name: Run chart-testing (lint PR)
         if: ${{ !startsWith(github.head_ref || '', 'release-please-') }}
