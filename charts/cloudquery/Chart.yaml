@@ -26,6 +26,6 @@ annotations:
       email: yp@cloudquery.io
 dependencies:
   - name: promtail
-    version: 6.17.0
+    version: 6.17.1
     repository: https://grafana.github.io/helm-charts
     condition: promtail.enabled
