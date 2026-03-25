@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ secrets.GH_CQ_BOT }}
 
@@ -22,7 +22,7 @@ jobs:
           docker run --rm --volume "$(pwd):/helm-docs" -u "$(id -u)" jnorwood/helm-docs:v1.11.0
 
       - name: Get component from branch name
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         id: component
         with:
           result-encoding: string
@@ -30,7 +30,7 @@ jobs:
             const lastPartOfBranch = context.ref.split('-').pop();
             return lastPartOfBranch;
 
-      - uses: stefanzweifel/git-auto-commit-action@v7
+      - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
         with:
           file_pattern: charts/${{ steps.component.outputs.result }}/README.md
           commit_message: "chore: Update docs"
