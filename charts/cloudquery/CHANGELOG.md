@@ -1,5 +1,14 @@
 # Changelog
 
+## [39.0.2](https://github.com/cloudquery/helm-charts/compare/cloudquery-39.0.1...cloudquery-39.0.2) (2026-05-01)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency cloudquery/cloudquery to v6.35.5 ([#877](https://github.com/cloudquery/helm-charts/issues/877)) ([d977b83](https://github.com/cloudquery/helm-charts/commit/d977b839fe286f8824ffc28ac9b6f63548e85b7e))
+* **deps:** Update dependency cloudquery/cloudquery to v6.35.6 ([#879](https://github.com/cloudquery/helm-charts/issues/879)) ([c9942c1](https://github.com/cloudquery/helm-charts/commit/c9942c12bb9f1b55e4e559276d48b537c73b189e))
+* **deps:** Update dependency cloudquery/cloudquery to v6.35.7 ([#880](https://github.com/cloudquery/helm-charts/issues/880)) ([3f31ad7](https://github.com/cloudquery/helm-charts/commit/3f31ad7baeba23299a34763ea2f1bc8ed61195e0))
+
 ## [39.0.1](https://github.com/cloudquery/helm-charts/compare/cloudquery-39.0.0...cloudquery-39.0.1) (2026-03-27)
 
 
