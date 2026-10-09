@@ -14,7 +14,7 @@ sources:
 maintainers:
   - name: yevgenypats
     email: yp@cloudquery.io
-version: 39.0.4
+version: 40.0.0
 appVersion: 6.47.0
 annotations:
   artifacthub.io/license: MPL-2.0
