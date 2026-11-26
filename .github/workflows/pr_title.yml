@@ -7,10 +7,12 @@ on:
       - opened
       - edited
       - synchronize
+  merge_group:
 permissions:
   pull-requests: read
 jobs:
   main:
+    if: github.event_name == 'pull_request'
     name: Validate PR title
     runs-on: ubuntu-latest
     steps:
