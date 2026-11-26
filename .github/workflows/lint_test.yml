@@ -2,7 +2,9 @@
 # https://github.com/helm/charts-repo-actions-demo/blob/main/.github/workflows/lint-test.yaml
 name: Lint and Test Charts
 
-on: pull_request
+on:
+  pull_request:
+  merge_group:
 permissions:
   contents: read
 jobs:
